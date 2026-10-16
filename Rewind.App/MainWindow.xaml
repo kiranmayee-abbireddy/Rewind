@@ -138,7 +138,7 @@
                         <ListBox x:Name="SessionsList" SelectionChanged="SessionsList_SelectionChanged" 
                                  Background="Transparent" BorderThickness="0" 
                                  ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-                                 ScrollViewer.VerticalScrollBarVisibility="Auto">
+                                 ScrollViewer.VerticalScrollBarVisibility="Hidden">
                             <ListBox.ItemContainerStyle>
                                 <Style TargetType="ListBoxItem">
                                     <Setter Property="Background" Value="Transparent"/>
@@ -277,8 +277,8 @@
                         <TextBlock x:Name="BugCountLabel" Text="0 bugs saved" HorizontalAlignment="Right" FontSize="12" Foreground="{DynamicResource TextSecondaryBrush}"/>
                     </Grid>
 
-                    <!-- Bugs Items Control / List -->
-                    <ListBox x:Name="BugsList" Background="Transparent" BorderThickness="0" MouseDoubleClick="BugsList_MouseDoubleClick" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                    <!-- Bugs Items Control / List (Scrollable without visible scrollbar) -->
+                    <ListBox x:Name="BugsList" Background="Transparent" BorderThickness="0" MouseDoubleClick="BugsList_MouseDoubleClick" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Hidden">
                         <ListBox.ItemContainerStyle>
                             <Style TargetType="ListBoxItem">
                                 <Setter Property="Background" Value="Transparent"/>

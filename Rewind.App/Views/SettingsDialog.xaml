@@ -38,8 +38,8 @@
             </Grid>
         </Border>
 
-        <!-- Scrollable Settings Body (Prevents Any Screen Overflow) -->
-        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" Padding="20,16">
+        <!-- Scrollable Settings Body (Prevents Any Screen Overflow, Hidden Visual Scrollbar) -->
+        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Disabled" Padding="20,16">
             <StackPanel>
                 <!-- Appearance Theme Preference -->
                 <TextBlock Text="Visual Appearance &amp; Color Theme" FontSize="12.5" FontWeight="SemiBold" Foreground="{DynamicResource TextPrimaryBrush}" Margin="0,0,0,4"/>

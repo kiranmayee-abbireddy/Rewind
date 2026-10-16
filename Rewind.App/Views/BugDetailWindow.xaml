@@ -98,8 +98,8 @@
                 </Grid>
             </Border>
 
-            <!-- Metadata & QA Report Fields -->
-            <ScrollViewer Grid.Column="1" VerticalScrollBarVisibility="Auto">
+            <!-- Metadata & QA Report Fields (Scrollable without scrollbar) -->
+            <ScrollViewer Grid.Column="1" VerticalScrollBarVisibility="Hidden">
                 <StackPanel>
                     <!-- Observed Behavior -->
                     <TextBlock Text="Observed Behavior / Description" FontSize="12.5" FontWeight="SemiBold" Foreground="{DynamicResource TextPrimaryBrush}" Margin="0,0,0,6"/>
