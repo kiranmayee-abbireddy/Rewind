@@ -63,6 +63,86 @@ namespace Rewind.App.Views
                 }
                 catch { }
             }
+
+            if (File.Exists(bug.ClipPath))
+            {
+                try
+                {
+                    ClipMediaPlayer.Source = new Uri(bug.ClipPath, UriKind.Absolute);
+                    ClipMediaPlayer.MediaOpened += (s, e) =>
+                    {
+                        if (ClipMediaPlayer.NaturalDuration.HasTimeSpan)
+                        {
+                            MediaPositionSlider.Maximum = ClipMediaPlayer.NaturalDuration.TimeSpan.TotalSeconds;
+                            UpdateMediaTimeLabel(TimeSpan.Zero, ClipMediaPlayer.NaturalDuration.TimeSpan);
+                        }
+                    };
+
+                    _mediaTimer = new System.Windows.Threading.DispatcherTimer
+                    {
+                        Interval = TimeSpan.FromMilliseconds(200)
+                    };
+                    _mediaTimer.Tick += (s, e) =>
+                    {
+                        if (!_isUserDraggingSlider && ClipMediaPlayer.NaturalDuration.HasTimeSpan)
+                        {
+                            MediaPositionSlider.Value = ClipMediaPlayer.Position.TotalSeconds;
+                            UpdateMediaTimeLabel(ClipMediaPlayer.Position, ClipMediaPlayer.NaturalDuration.TimeSpan);
+                        }
+                    };
+                }
+                catch { }
+            }
+
+            Closed += (s, e) =>
+            {
+                _mediaTimer?.Stop();
+                ClipMediaPlayer.Close();
+            };
+
+            MediaPositionSlider.PreviewMouseDown += (s, e) => _isUserDraggingSlider = true;
+            MediaPositionSlider.PreviewMouseUp += (s, e) => _isUserDraggingSlider = false;
+        }
+
+        private System.Windows.Threading.DispatcherTimer? _mediaTimer;
+        private bool _isPlaying;
+        private bool _isUserDraggingSlider;
+
+        private void TogglePlayMedia_Click(object sender, RoutedEventArgs e)
+        {
+            if (_isPlaying)
+            {
+                ClipMediaPlayer.Pause();
+                _mediaTimer?.Stop();
+                _isPlaying = false;
+                PlayPauseMediaBtn.Content = "▶ Play";
+            }
+            else
+            {
+                ThumbnailImage.Visibility = Visibility.Collapsed;
+                ClipMediaPlayer.Play();
+                _mediaTimer?.Start();
+                _isPlaying = true;
+                PlayPauseMediaBtn.Content = "⏸ Pause";
+            }
+        }
+
+        private void MediaPositionSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            if (ClipMediaPlayer.NaturalDuration.HasTimeSpan)
+            {
+                var target = TimeSpan.FromSeconds(MediaPositionSlider.Value);
+                if (Math.Abs((ClipMediaPlayer.Position - target).TotalSeconds) > 0.5)
+                {
+                    ClipMediaPlayer.Position = target;
+                }
+                UpdateMediaTimeLabel(target, ClipMediaPlayer.NaturalDuration.TimeSpan);
+            }
+        }
+
+        private void UpdateMediaTimeLabel(TimeSpan current, TimeSpan total)
+        {
+            MediaTimeLabel.Text = $"{current:mm\\:ss} / {total:mm\\:ss}";
         }
 
         private void PlayVideo_Click(object sender, RoutedEventArgs e)

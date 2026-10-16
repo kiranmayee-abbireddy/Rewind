@@ -46,8 +46,21 @@
             <TextBlock Text="Global Preservation Hotkey" FontSize="12" FontWeight="SemiBold" Margin="0,0,0,4"/>
             <TextBox x:Name="HotkeyBox" Text="Ctrl+Shift+R" IsReadOnly="True" Background="#161B22" Foreground="#FFFFFF" BorderBrush="#30363D" Padding="6,4" Margin="0,0,0,14"/>
 
+            <!-- Storage Directory & Usage Visualization -->
+            <TextBlock Text="Local Storage Directory &amp; Usage" FontSize="12" FontWeight="SemiBold" Margin="0,0,0,4"/>
+            <Grid Margin="0,0,0,8">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <TextBox x:Name="StorageDirBox" IsReadOnly="True" Background="#161B22" Foreground="#FFFFFF" BorderBrush="#30363D" Padding="6,4"/>
+                <Button Grid.Column="1" Content="Open Folder" Click="OpenStorageFolder_Click" Style="{StaticResource SecondaryButton}" Margin="6,0,0,0"/>
+            </Grid>
+            <ProgressBar x:Name="StorageProgressBar" Height="6" Minimum="0" Maximum="100" Value="15" Foreground="#58A6FF" Background="#21262D" BorderThickness="0" Margin="0,0,0,4"/>
+            <TextBlock x:Name="StorageUsageLabel" Text="Calculating storage consumption..." FontSize="10" Foreground="#8B949E" Margin="0,0,0,14"/>
+
             <!-- AI Assistant Toggle -->
-            <CheckBox x:Name="AiEnabledCheck" IsChecked="True" Margin="0,6,0,0">
+            <CheckBox x:Name="AiEnabledCheck" IsChecked="True" Margin="0,4,0,0">
                 <StackPanel>
                     <TextBlock Text="Enable AI Bug Report Assistant" FontWeight="SemiBold" Foreground="#F0F6FC"/>
                     <TextBlock Text="Automatically drafts reproduction steps and titles from preserved footage." FontSize="11" Foreground="#8B949E"/>
