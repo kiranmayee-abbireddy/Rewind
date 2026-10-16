@@ -47,22 +47,46 @@
                     <Button Content="Clear Redactions" Click="ClearRedactions_Click" Style="{StaticResource SecondaryButton}" Padding="6,2" FontSize="10" Opacity="0.85"/>
                 </Grid>
 
-                <!-- Timeline Sliders -->
+                <!-- Timeline Dual Sliders & Playback Controls -->
                 <StackPanel Grid.Row="1">
-                    <Grid Margin="0,0,0,6">
-                        <TextBlock x:Name="RangeLabel" Text="Preserving last 30.0s of history" FontSize="12" FontWeight="SemiBold" Foreground="#58A6FF"/>
-                        <TextBlock x:Name="TimeBoundsLabel" Text="00:00 → 00:00" HorizontalAlignment="Right" FontSize="11" Foreground="#8B949E"/>
+                    <Grid Margin="0,0,0,8">
+                        <StackPanel Orientation="Horizontal">
+                            <Button x:Name="PlayPreviewBtn" Content="▶ Play" Click="PlayPreview_Click" Style="{StaticResource SecondaryButton}" Padding="8,3" FontSize="11" Margin="0,0,8,0"/>
+                            <TextBlock x:Name="RangeLabel" Text="Preserving 30.0s of history" FontSize="12" FontWeight="SemiBold" Foreground="#58A6FF" VerticalAlignment="Center"/>
+                        </StackPanel>
+                        <TextBlock x:Name="TimeBoundsLabel" Text="00:00 → 00:00" HorizontalAlignment="Right" FontSize="11" Foreground="#8B949E" VerticalAlignment="Center"/>
                     </Grid>
 
-                    <TextBlock Text="Clip Start Offset (seconds before now):" FontSize="11" Foreground="#8B949E"/>
-                    <Slider x:Name="StartSlider" Minimum="5" Maximum="60" Value="30" TickFrequency="5" IsSnapToTickEnabled="True" ValueChanged="Slider_ValueChanged" Margin="0,2,0,8"/>
+                    <!-- Start Slider -->
+                    <Grid Margin="0,0,0,4">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="80"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="50"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="Start Time:" FontSize="11" Foreground="#8B949E" VerticalAlignment="Center"/>
+                        <Slider Grid.Column="1" x:Name="StartSlider" Minimum="0" Maximum="60" Value="0" ValueChanged="Slider_ValueChanged" VerticalAlignment="Center"/>
+                        <TextBlock Grid.Column="2" x:Name="StartValueLabel" Text="00:00" HorizontalAlignment="Right" FontSize="11" Foreground="#F0F6FC" VerticalAlignment="Center"/>
+                    </Grid>
+
+                    <!-- End Slider -->
+                    <Grid Margin="0,0,0,8">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="80"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="50"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="End Time:" FontSize="11" Foreground="#8B949E" VerticalAlignment="Center"/>
+                        <Slider Grid.Column="1" x:Name="EndSlider" Minimum="0" Maximum="60" Value="60" ValueChanged="Slider_ValueChanged" VerticalAlignment="Center"/>
+                        <TextBlock Grid.Column="2" x:Name="EndValueLabel" Text="00:00" HorizontalAlignment="Right" FontSize="11" Foreground="#F0F6FC" VerticalAlignment="Center"/>
+                    </Grid>
 
                     <!-- Quick Preset Selectors -->
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,0,4">
                         <TextBlock Text="Quick Presets: " FontSize="11" Foreground="#8B949E" VerticalAlignment="Center" Margin="0,0,6,0"/>
-                        <Button Content="15s" Click="Preset15_Click" Style="{StaticResource SecondaryButton}" Padding="6,2" FontSize="11" Margin="0,0,4,0"/>
-                        <Button Content="30s" Click="Preset30_Click" Style="{StaticResource SecondaryButton}" Padding="6,2" FontSize="11" Margin="0,0,4,0"/>
-                        <Button Content="60s" Click="Preset60_Click" Style="{StaticResource SecondaryButton}" Padding="6,2" FontSize="11"/>
+                        <Button Content="Last 15s" Click="Preset15_Click" Style="{StaticResource SecondaryButton}" Padding="6,2" FontSize="11" Margin="0,0,4,0"/>
+                        <Button Content="Last 30s" Click="Preset30_Click" Style="{StaticResource SecondaryButton}" Padding="6,2" FontSize="11" Margin="0,0,4,0"/>
+                        <Button Content="Last 60s" Click="Preset60_Click" Style="{StaticResource SecondaryButton}" Padding="6,2" FontSize="11"/>
                     </StackPanel>
                 </StackPanel>
             </Grid>

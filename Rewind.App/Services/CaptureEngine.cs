@@ -87,6 +87,31 @@ namespace Rewind.App.Services
         [System.Runtime.InteropServices.DllImport("user32.dll")]
         private static extern bool GetWindowRect(IntPtr hWnd, out RECT lpRect);
 
+        [System.Runtime.InteropServices.DllImport("user32.dll")]
+        private static extern bool GetCursorInfo(out CURSORINFO pci);
+
+        [System.Runtime.InteropServices.DllImport("user32.dll")]
+        private static extern bool DrawIconEx(IntPtr hdc, int xLeft, int yTop, IntPtr hIcon, int cxWidth, int cyWidth, int istepIfAniCur, IntPtr hbrFlickerFreeDraw, int diFlags);
+
+        private const int CURSOR_SHOWING = 0x00000001;
+        private const int DI_NORMAL = 0x0003;
+
+        [System.Runtime.InteropServices.StructLayout(System.Runtime.InteropServices.LayoutKind.Sequential)]
+        private struct POINT
+        {
+            public int x;
+            public int y;
+        }
+
+        [System.Runtime.InteropServices.StructLayout(System.Runtime.InteropServices.LayoutKind.Sequential)]
+        private struct CURSORINFO
+        {
+            public int cbSize;
+            public int flags;
+            public IntPtr hCursor;
+            public POINT ptScreenPos;
+        }
+
         [System.Runtime.InteropServices.StructLayout(System.Runtime.InteropServices.LayoutKind.Sequential)]
         private struct RECT
         {
@@ -137,6 +162,27 @@ namespace Rewind.App.Services
                         using (var g = Graphics.FromImage(bmp))
                         {
                             g.CopyFromScreen(srcX, srcY, 0, 0, new System.Drawing.Size(width, height), CopyPixelOperation.SourceCopy);
+
+                            // Render cursor into the captured frame
+                            try
+                            {
+                                var ci = new CURSORINFO { cbSize = System.Runtime.InteropServices.Marshal.SizeOf<CURSORINFO>() };
+                                if (GetCursorInfo(out ci) && ci.flags == CURSOR_SHOWING && ci.hCursor != IntPtr.Zero)
+                                {
+                                    var cursorX = ci.ptScreenPos.x - srcX;
+                                    var cursorY = ci.ptScreenPos.y - srcY;
+                                    var hdc = g.GetHdc();
+                                    try
+                                    {
+                                        DrawIconEx(hdc, cursorX, cursorY, ci.hCursor, 0, 0, 0, IntPtr.Zero, DI_NORMAL);
+                                    }
+                                    finally
+                                    {
+                                        g.ReleaseHdc(hdc);
+                                    }
+                                }
+                            }
+                            catch { }
                         }
 
                         var fileName = $"frame_{timestamp:000000.00}.jpg";
@@ -307,6 +353,36 @@ namespace Rewind.App.Services
                 }
             }
             return latestPath;
+        }
+
+        public string? GetFrameAtTime(double targetTimeSeconds)
+        {
+            double closestDiff = double.MaxValue;
+            string? closestPath = null;
+            foreach (var kvp in _frames)
+            {
+                var diff = Math.Abs(kvp.Key - targetTimeSeconds);
+                if (diff < closestDiff && File.Exists(kvp.Value))
+                {
+                    closestDiff = diff;
+                    closestPath = kvp.Value;
+                }
+            }
+            return closestPath;
+        }
+
+        public System.Collections.Generic.List<(double Time, string Path)> GetAvailableFrames()
+        {
+            var list = new System.Collections.Generic.List<(double Time, string Path)>();
+            foreach (var kvp in _frames)
+            {
+                if (File.Exists(kvp.Value))
+                {
+                    list.Add((kvp.Key, kvp.Value));
+                }
+            }
+            list.Sort((a, b) => a.Time.CompareTo(b.Time));
+            return list;
         }
 
         private static ImageCodecInfo GetEncoder(ImageFormat format)

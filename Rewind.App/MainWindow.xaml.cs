@@ -245,7 +245,7 @@ namespace Rewind.App
             var elapsed = _captureEngine.CurrentElapsedSeconds;
             var thumb = _captureEngine.GetLatestThumbnail();
 
-            var dialog = new TimelineEditorDialog(elapsed, thumb);
+            var dialog = new TimelineEditorDialog(elapsed, thumb, _captureEngine.GetFrameAtTime);
             if (dialog.ShowDialog() == true)
             {
                 if (_activeSession == null) CreateNewSession();

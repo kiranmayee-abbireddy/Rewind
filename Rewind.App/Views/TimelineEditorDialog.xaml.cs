@@ -8,6 +8,7 @@ namespace Rewind.App.Views
     public partial class TimelineEditorDialog : Window
     {
         private readonly double _currentElapsed;
+        private readonly Func<double, string?>? _frameLookup;
         public string BugTitle { get; private set; } = string.Empty;
         public double ClipStartSeconds { get; private set; }
         public double ClipEndSeconds { get; private set; }
@@ -18,25 +19,53 @@ namespace Rewind.App.Views
         private System.Windows.Shapes.Rectangle? _currentRect;
         private bool _isDrawingRedaction;
 
-        public TimelineEditorDialog(double currentElapsedSeconds, string? thumbnailPath)
+        private System.Windows.Threading.DispatcherTimer? _previewTimer;
+        private bool _isPreviewPlaying;
+        private double _previewPlayhead;
+
+        public TimelineEditorDialog(double currentElapsedSeconds, string? thumbnailPath, Func<double, string?>? frameLookup = null)
         {
             InitializeComponent();
-            _currentElapsed = Math.Max(5, currentElapsedSeconds);
+            _currentElapsed = Math.Max(1.0, currentElapsedSeconds);
+            _frameLookup = frameLookup;
 
-            // Set slider bounds
-            StartSlider.Maximum = Math.Min(60, _currentElapsed);
-            StartSlider.Value = Math.Min(30, StartSlider.Maximum);
+            var minTime = Math.Max(0, _currentElapsed - 60.0);
+            var maxTime = _currentElapsed;
+
+            StartSlider.Minimum = minTime;
+            StartSlider.Maximum = maxTime;
+            EndSlider.Minimum = minTime;
+            EndSlider.Maximum = maxTime;
+
+            // Default to past 30s or available window
+            StartSlider.Value = Math.Max(minTime, maxTime - 30.0);
+            EndSlider.Value = maxTime;
 
             UpdateLabels();
+            ShowFrame(thumbnailPath);
 
-            if (!string.IsNullOrEmpty(thumbnailPath) && File.Exists(thumbnailPath))
+            _previewTimer = new System.Windows.Threading.DispatcherTimer
+            {
+                Interval = TimeSpan.FromMilliseconds(100)
+            };
+            _previewTimer.Tick += PreviewTimer_Tick;
+
+            Closed += (s, e) =>
+            {
+                _previewTimer?.Stop();
+            };
+        }
+
+        private void ShowFrame(string? path)
+        {
+            if (!string.IsNullOrEmpty(path) && File.Exists(path))
             {
                 try
                 {
                     var bitmap = new BitmapImage();
                     bitmap.BeginInit();
                     bitmap.CacheOption = BitmapCacheOption.OnLoad;
-                    bitmap.UriSource = new Uri(thumbnailPath, UriKind.Absolute);
+                    bitmap.UriSource = new Uri(path, UriKind.Absolute);
                     bitmap.EndInit();
                     PreviewImage.Source = bitmap;
                 }
@@ -46,42 +75,100 @@ namespace Rewind.App.Views
 
         private void Slider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
+            if (StartSlider == null || EndSlider == null) return;
+
+            // Ensure start does not exceed end
+            if (sender == StartSlider && StartSlider.Value > EndSlider.Value)
+            {
+                EndSlider.Value = Math.Min(EndSlider.Maximum, StartSlider.Value + 1.0);
+            }
+            else if (sender == EndSlider && EndSlider.Value < StartSlider.Value)
+            {
+                StartSlider.Value = Math.Max(StartSlider.Minimum, EndSlider.Value - 1.0);
+            }
+
             UpdateLabels();
+
+            // Live scrub image based on adjusted slider
+            if (_frameLookup != null)
+            {
+                var targetTime = (sender == StartSlider) ? StartSlider.Value : EndSlider.Value;
+                var framePath = _frameLookup(targetTime);
+                ShowFrame(framePath);
+            }
+        }
+
+        private void PlayPreview_Click(object sender, RoutedEventArgs e)
+        {
+            if (_isPreviewPlaying)
+            {
+                _previewTimer?.Stop();
+                _isPreviewPlaying = false;
+                PlayPreviewBtn.Content = "▶ Play";
+            }
+            else
+            {
+                _previewPlayhead = StartSlider.Value;
+                _previewTimer?.Start();
+                _isPreviewPlaying = true;
+                PlayPreviewBtn.Content = "⏸ Pause";
+            }
+        }
+
+        private void PreviewTimer_Tick(object? sender, EventArgs e)
+        {
+            _previewPlayhead += 0.1;
+            if (_previewPlayhead > EndSlider.Value)
+            {
+                _previewPlayhead = StartSlider.Value;
+            }
+
+            if (_frameLookup != null)
+            {
+                var framePath = _frameLookup(_previewPlayhead);
+                ShowFrame(framePath);
+            }
         }
 
         private void Preset15_Click(object sender, RoutedEventArgs e)
         {
-            StartSlider.Value = Math.Min(15, StartSlider.Maximum);
+            EndSlider.Value = _currentElapsed;
+            StartSlider.Value = Math.Max(StartSlider.Minimum, _currentElapsed - 15.0);
         }
 
         private void Preset30_Click(object sender, RoutedEventArgs e)
         {
-            StartSlider.Value = Math.Min(30, StartSlider.Maximum);
+            EndSlider.Value = _currentElapsed;
+            StartSlider.Value = Math.Max(StartSlider.Minimum, _currentElapsed - 30.0);
         }
 
         private void Preset60_Click(object sender, RoutedEventArgs e)
         {
-            StartSlider.Value = Math.Min(60, StartSlider.Maximum);
+            EndSlider.Value = _currentElapsed;
+            StartSlider.Value = Math.Max(StartSlider.Minimum, _currentElapsed - 60.0);
         }
 
         private void UpdateLabels()
         {
-            if (RangeLabel == null || TimeBoundsLabel == null) return;
+            if (RangeLabel == null || TimeBoundsLabel == null || StartValueLabel == null || EndValueLabel == null) return;
 
-            var duration = StartSlider.Value;
-            var start = Math.Max(0, _currentElapsed - duration);
-            var end = _currentElapsed;
+            var start = StartSlider.Value;
+            var end = EndSlider.Value;
+            var duration = Math.Max(0.1, end - start);
 
-            RangeLabel.Text = $"Preserving last {duration:0.0}s of footage";
+            StartValueLabel.Text = $"{TimeSpan.FromSeconds(start):mm\\:ss}";
+            EndValueLabel.Text = $"{TimeSpan.FromSeconds(end):mm\\:ss}";
+
+            RangeLabel.Text = $"Preserving {duration:0.0}s clip";
             TimeBoundsLabel.Text = $"{TimeSpan.FromSeconds(start):mm\\:ss} → {TimeSpan.FromSeconds(end):mm\\:ss}";
         }
 
         private void Save_Click(object sender, RoutedEventArgs e)
         {
+            _previewTimer?.Stop();
             BugTitle = string.IsNullOrWhiteSpace(BugTitleBox.Text) ? "Bug @" + DateTime.Now.ToString("HH:mm:ss") : BugTitleBox.Text.Trim();
-            var duration = StartSlider.Value;
-            ClipStartSeconds = Math.Max(0, _currentElapsed - duration);
-            ClipEndSeconds = _currentElapsed;
+            ClipStartSeconds = StartSlider.Value;
+            ClipEndSeconds = EndSlider.Value;
             EnableAiDraft = AiAssistCheck.IsChecked ?? false;
 
             DialogResult = true;
