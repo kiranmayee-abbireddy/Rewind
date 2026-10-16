@@ -5,6 +5,8 @@ VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rewind.App", "Rewind.App\Rewind.App.csproj", "{39C3FDD9-9CCA-4E6E-8995-4E925BB845A1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rewind.Tests", "Rewind.Tests\Rewind.Tests.csproj", "{C7A206B9-684E-4733-BFE0-BF1AEF494C94}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +20,9 @@ Global
 		{39C3FDD9-9CCA-4E6E-8995-4E925BB845A1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{39C3FDD9-9CCA-4E6E-8995-4E925BB845A1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{39C3FDD9-9CCA-4E6E-8995-4E925BB845A1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C7A206B9-684E-4733-BFE0-BF1AEF494C94}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C7A206B9-684E-4733-BFE0-BF1AEF494C94}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C7A206B9-684E-4733-BFE0-BF1AEF494C94}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C7A206B9-684E-4733-BFE0-BF1AEF494C94}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
