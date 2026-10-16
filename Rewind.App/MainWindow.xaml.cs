@@ -397,7 +397,8 @@ namespace Rewind.App
             {
                 _appSettings = dlg.Settings;
                 _aiAssistant.IsEnabled = _appSettings.AiEnabled;
-                SettingsSummaryText.Text = $"Buffer: {_appSettings.BufferDurationSeconds}s @ {_appSettings.FrameRate}fps";
+                _captureEngine.CaptureSourceMode = _appSettings.CaptureSource;
+                SettingsSummaryText.Text = $"Buffer: {_appSettings.BufferDurationSeconds}s @ {_appSettings.FrameRate}fps • {_appSettings.CaptureSource}";
             }
         }
     }

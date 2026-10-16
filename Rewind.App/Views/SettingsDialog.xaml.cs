@@ -19,6 +19,8 @@ namespace Rewind.App.Views
             else if (current.FrameRate == 60) FpsCombo.SelectedIndex = 2;
             else FpsCombo.SelectedIndex = 0;
 
+            SourceCombo.SelectedIndex = current.CaptureSource.Contains("Window") || current.CaptureSource.Contains("Foreground") ? 1 : 0;
+
             AiEnabledCheck.IsChecked = current.AiEnabled;
             AudioEnabledCheck.IsChecked = current.RecordMicrophone;
 
@@ -87,6 +89,7 @@ namespace Rewind.App.Views
                 2 => 60,
                 _ => 15
             };
+            Settings.CaptureSource = SourceCombo.SelectedIndex == 1 ? "Active Foreground Window" : "Primary Display (Entire Screen)";
             Settings.AiEnabled = AiEnabledCheck.IsChecked ?? true;
             Settings.RecordMicrophone = AudioEnabledCheck.IsChecked ?? false;
 
