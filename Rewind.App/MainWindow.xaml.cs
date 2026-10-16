@@ -291,11 +291,23 @@ namespace Rewind.App
             }
         }
 
-        private void GenerateReport_Click(object sender, RoutedEventArgs e)
+        private async void GenerateReport_Click(object sender, RoutedEventArgs e)
         {
             if (_activeSession == null) return;
             var bugsList = _dbService.GetBugsForSession(_activeSession.Id);
-            var md = ReportGenerator.GenerateMarkdownReport(_activeSession, bugsList);
+
+            string? aiSummary = null;
+            if (_aiAssistant.IsEnabled && bugsList.Count > 0)
+            {
+                var sbTitles = new System.Text.StringBuilder();
+                for (int i = 0; i < bugsList.Count; i++)
+                {
+                    sbTitles.AppendLine($"• Bug #{i + 1}: {bugsList[i].Title} (Status: {bugsList[i].Status})");
+                }
+                aiSummary = await _aiAssistant.SummarizeSessionReportAsync(_activeSession.Title, bugsList.Count, sbTitles.ToString());
+            }
+
+            var md = ReportGenerator.GenerateMarkdownReport(_activeSession, bugsList, aiExecutiveSummary: aiSummary);
             var reportWin = new ReportPreviewWindow(md);
             reportWin.ShowDialog();
         }

@@ -7,7 +7,7 @@ namespace Rewind.App.Services
 {
     public class ReportGenerator
     {
-        public static string GenerateMarkdownReport(Session session, List<Bug> bugs, string testerName = "Tester")
+        public static string GenerateMarkdownReport(Session session, List<Bug> bugs, string testerName = "Tester", string? aiExecutiveSummary = null)
         {
             var sb = new StringBuilder();
 
@@ -19,6 +19,13 @@ namespace Rewind.App.Services
             sb.AppendLine($"**Capture Source:** {session.CaptureSource}");
             sb.AppendLine($"**Total Preserved Bugs:** {bugs.Count}");
             sb.AppendLine();
+
+            if (!string.IsNullOrWhiteSpace(aiExecutiveSummary))
+            {
+                sb.AppendLine("### 🤖 AI Executive Summary");
+                sb.AppendLine($"> {aiExecutiveSummary.Replace("\n", "\n> ")}");
+                sb.AppendLine();
+            }
 
             if (!string.IsNullOrWhiteSpace(session.Notes))
             {
