@@ -216,6 +216,21 @@ namespace Rewind.App
                 _activeSession!.Status = "Completed";
                 _activeSession.EndedAt = DateTime.UtcNow;
                 _dbService.SaveSession(_activeSession);
+
+                var sessionBugs = _dbService.GetBugsForSession(_activeSession.Id);
+                if (sessionBugs.Count > 0)
+                {
+                    var reviewPrompt = MessageBox.Show(
+                        $"Testing session '{_activeSession.Title}' is completed with {sessionBugs.Count} bug(s) preserved.\n\nWould you like to review all captured bugs and evidence now?",
+                        "Session Completed — Review Bugs",
+                        MessageBoxButton.YesNo,
+                        MessageBoxImage.Information);
+
+                    if (reviewPrompt == MessageBoxResult.Yes)
+                    {
+                        GenerateReport_Click(this, new RoutedEventArgs());
+                    }
+                }
             }
             else
             {
@@ -336,52 +351,11 @@ namespace Rewind.App
                     _dbService.SaveBug(bug);
                     Bugs.Add(bug);
                     BugCountLabel.Text = $"{Bugs.Count} bugs saved";
-                    ProcessingStatusText.Text = $"✔ Bug '{bug.Title}' successfully preserved with immutable video evidence!";
+                    ProcessingStatusText.Text = $"✔ Saved: '{bug.Title}'! Continue testing or click Stop/Review when done.";
 
                     // Ensure SessionsList selection is visually synchronized with the active session
                     SessionsList.SelectedItem = _activeSession;
-
-                    // Open Bug Detail Editor right after preservation
-                    var detail = new BugDetailWindow(bug);
-                    if (detail.ShowDialog() == true)
-                    {
-                        if (detail.IsDeleted)
-                        {
-                            _dbService.DeleteBug(bug.Id);
-                            Bugs.Remove(bug);
-                        }
-                        else
-                        {
-                            // If title was updated in detail window, keep video file name synchronized
-                            try
-                            {
-                                var updatedSanitized = SanitizeFileName(bug.Title);
-                                if (!string.IsNullOrWhiteSpace(updatedSanitized))
-                                {
-                                    var updatedClip = Path.Combine(clipsDir, $"{updatedSanitized}_{bug.Id.Substring(0, 8)}.mp4");
-                                    if (!bug.ClipPath.Equals(updatedClip, StringComparison.OrdinalIgnoreCase) && File.Exists(bug.ClipPath))
-                                    {
-                                        if (File.Exists(updatedClip)) File.Delete(updatedClip);
-                                        File.Move(bug.ClipPath, updatedClip);
-                                        bug.ClipPath = updatedClip;
-
-                                        var oldThumb = Path.ChangeExtension(bug.ClipPath, ".jpg");
-                                        var newThumb = Path.ChangeExtension(updatedClip, ".jpg");
-                                        if (File.Exists(oldThumb))
-                                        {
-                                            if (File.Exists(newThumb)) File.Delete(newThumb);
-                                            File.Move(oldThumb, newThumb);
-                                            bug.ThumbnailPath = newThumb;
-                                        }
-                                    }
-                                }
-                            }
-                            catch { }
-
-                            _dbService.SaveBug(bug);
-                        }
-                        LoadBugsForActiveSession();
-                    }
+                    LoadBugsForActiveSession();
                 }
                 catch (Exception ex)
                 {

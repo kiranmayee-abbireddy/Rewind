@@ -34,16 +34,17 @@ namespace Rewind.App.Services
         {
             var fallback = new RuleBasedLocalAiAssistant();
             var prompt = $@"You are an expert QA Software Test Engineer.
-A tester captured a {durationSeconds:0.0}s bug evidence video clip.
-User's notes / test case: ""{userCaseOrContext}""
+A software tester provided this defect note / test observation:
+""{userCaseOrContext}""
+(Evidence duration: {durationSeconds:0.0}s).
 
-Generate a clear, professional defect report in concise format:
-TITLE: [Concise 3-7 word bug title describing the core failure, using professional QA phrasing without brackets or quotes]
-OBSERVED: [Clear description of what went wrong]
-REPRO: [Numbered 1-4 step reproduction sequence]
-SUGGESTIONS: [Technical severity rating & suggestions]
+Rewrite and elevate this into a clean, professional QA defect report:
+TITLE: [Concise 3-8 word bug title summarizing the defect clearly and accurately based on the tester's note, without quotes or brackets]
+OBSERVED: [Rewrite the tester's note into 1-2 polished, clear sentences describing the exact defect observed]
+REPRO: [1-3 concise reproduction steps derived directly from the user's test scenario]
+SUGGESTIONS: [Severity rating and recommended technical check]
 
-Do not include conversational preamble. Respond directly with TITLE:, OBSERVED:, REPRO:, and SUGGESTIONS:.";
+Do not include conversational preamble. Output only TITLE:, OBSERVED:, REPRO:, and SUGGESTIONS:.";
 
             // Try configured model first (e.g. llama3:latest)
             var result = await TryGenerateWithModelAsync(_modelName, prompt, userCaseOrContext, durationSeconds);

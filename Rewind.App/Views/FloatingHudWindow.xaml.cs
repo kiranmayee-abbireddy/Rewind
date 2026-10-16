@@ -42,26 +42,34 @@ namespace Rewind.App.Views
             Dispatcher.Invoke(() =>
             {
                 var span = TimeSpan.FromSeconds(elapsedSeconds);
-                BufferTimeText.Text = $"{span.Minutes:00}:{span.Seconds:00}";
+                var timeStr = $"{span.Minutes:00}:{span.Seconds:00}";
+                BufferTimeText.Text = timeStr;
+                MiniBufferTimeText.Text = timeStr;
+
+                System.Windows.Media.Brush statusBrush;
+                string statusLabel;
 
                 if (state == "Recording")
                 {
-                    StatusDot.Background = (System.Windows.Media.Brush)FindResource("DangerBrush");
-                    StatusText.Text = "REC";
-                    StatusText.Foreground = (System.Windows.Media.Brush)FindResource("DangerBrush");
+                    statusBrush = (System.Windows.Media.Brush)FindResource("DangerBrush");
+                    statusLabel = "REC";
                 }
                 else if (state == "Paused")
                 {
-                    StatusDot.Background = (System.Windows.Media.Brush)FindResource("WarningBrush");
-                    StatusText.Text = "PAUSE";
-                    StatusText.Foreground = (System.Windows.Media.Brush)FindResource("WarningBrush");
+                    statusBrush = (System.Windows.Media.Brush)FindResource("WarningBrush");
+                    statusLabel = "PAUSE";
                 }
                 else
                 {
-                    StatusDot.Background = (System.Windows.Media.Brush)FindResource("TextSecondaryBrush");
-                    StatusText.Text = "IDLE";
-                    StatusText.Foreground = (System.Windows.Media.Brush)FindResource("TextSecondaryBrush");
+                    statusBrush = (System.Windows.Media.Brush)FindResource("TextSecondaryBrush");
+                    statusLabel = "IDLE";
                 }
+
+                StatusDot.Background = statusBrush;
+                StatusText.Text = statusLabel;
+                StatusText.Foreground = statusBrush;
+
+                MiniStatusDot.Background = statusBrush;
             });
         }
 
@@ -77,19 +85,34 @@ namespace Rewind.App.Views
 
         private void ToggleMinimize_Click(object sender, RoutedEventArgs e)
         {
-            ExpandedContent.Visibility = Visibility.Collapsed;
+            HudCapsule.Visibility = Visibility.Collapsed;
+            MinimizedCapsule.Visibility = Visibility.Visible;
         }
 
-        private void LogoOrb_MouseDown(object sender, MouseButtonEventArgs e)
+        private void MinimizedCapsule_MouseDown(object sender, MouseButtonEventArgs e)
         {
             if (e.ChangedButton == MouseButton.Left)
             {
-                // If minimized, clicking the logo orb restores the expanded controls
-                if (ExpandedContent.Visibility == Visibility.Collapsed)
+                if (e.ClickCount == 2)
                 {
-                    ExpandedContent.Visibility = Visibility.Visible;
+                    OnOpenMainRequested?.Invoke();
+                }
+                else
+                {
+                    // Single click restores the full HUD capsule
+                    MinimizedCapsule.Visibility = Visibility.Collapsed;
+                    HudCapsule.Visibility = Visibility.Visible;
                     e.Handled = true;
                 }
+            }
+        }
+
+        private void MiniPreserve_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ChangedButton == MouseButton.Left)
+            {
+                e.Handled = true;
+                OnPreserveRequested?.Invoke();
             }
         }
     }
