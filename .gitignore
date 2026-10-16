@@ -2,8 +2,12 @@
 PRD.md
 PRD*.md
 
-# Dependencies
+# Dependencies & Build artifacts
 node_modules/
+bin/
+obj/
+*/bin/
+*/obj/
 dist/
 dist-electron/
 release/
