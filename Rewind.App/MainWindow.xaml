@@ -20,13 +20,18 @@
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
 
-                <!-- Brand -->
-                <StackPanel Grid.Row="0" Margin="0,0,0,16">
+                <!-- Brand Logomark & Title -->
+                <StackPanel Grid.Row="0" Margin="0,0,0,20">
                     <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                        <TextBlock Text="⏪" FontSize="20" Margin="0,0,8,0"/>
-                        <TextBlock Text="REWIND" FontSize="20" FontWeight="Bold" Foreground="#F0F6FC"/>
+                        <Border Width="36" Height="36" CornerRadius="10" Background="{StaticResource LogoOrbGradient}" Margin="0,0,10,0">
+                            <Path Data="{StaticResource RewindArrowsGeometry}" Fill="#FFFFFF" Stretch="Uniform" Width="17" Height="17" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <StackPanel VerticalAlignment="Center">
+                            <TextBlock Text="REWIND" FontSize="20" FontWeight="Black" Foreground="#F3F6FC"/>
+                            <TextBlock Text="EVIDENCE RECORDER" FontSize="9.5" FontWeight="SemiBold" Foreground="#388BFD" Margin="0,-2,0,0"/>
+                        </StackPanel>
                     </StackPanel>
-                    <TextBlock Text="Never lose a bug because you forgot to record." FontSize="11" Foreground="#8B949E" Margin="0,4,0,0" TextWrapping="Wrap"/>
+                    <TextBlock Text="Continuous rolling screen buffer with immutable video preservation for manual QA." FontSize="11.5" Foreground="#94A3B8" Margin="0,8,0,0" TextWrapping="Wrap"/>
                 </StackPanel>
 
                 <!-- New Session Button -->

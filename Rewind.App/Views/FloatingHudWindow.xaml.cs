@@ -15,19 +15,16 @@ namespace Rewind.App.Views
             PositionWindow();
         }
 
-        private void MascotOrb_MouseDown(object sender, MouseButtonEventArgs e)
+        private void HudCapsule_MouseDown(object sender, MouseButtonEventArgs e)
         {
             if (e.ChangedButton == MouseButton.Left)
             {
-                // Dragging or clicking
                 if (e.ClickCount == 2)
                 {
                     OnOpenMainRequested?.Invoke();
                 }
                 else
                 {
-                    // Toggle Action Deck visibility on single click, or drag
-                    ActionDeck.Visibility = ActionDeck.Visibility == Visibility.Visible ? Visibility.Collapsed : Visibility.Visible;
                     try { DragMove(); } catch { }
                 }
             }
