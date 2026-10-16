@@ -73,29 +73,24 @@ namespace Rewind.App.Views
             var distTop = Math.Abs(Top - workingArea.Top);
             var distBottom = Math.Abs((workingArea.Bottom - h) - Top);
 
-            // Horizontal Snap (Left/Right dock -> Vertical bar orientation)
-            bool isVerticalEdge = false;
+            // Horizontal Snap
             if (distLeft < SnapDistance)
             {
                 Left = workingArea.Left + EdgeMargin;
-                isVerticalEdge = true;
             }
             else if (distRight < SnapDistance)
             {
                 Left = workingArea.Right - w - EdgeMargin;
-                isVerticalEdge = true;
             }
 
-            // Vertical Snap (Top/Bottom dock -> Horizontal bar orientation)
+            // Vertical Snap
             if (distTop < SnapDistance)
             {
                 Top = workingArea.Top + EdgeMargin;
-                isVerticalEdge = false;
             }
             else if (distBottom < SnapDistance)
             {
                 Top = workingArea.Bottom - h - EdgeMargin;
-                isVerticalEdge = false;
             }
 
             // Ensure window never escapes the screen boundary
@@ -161,54 +156,65 @@ namespace Rewind.App.Views
         }
 
         private Point _miniMouseDownScreenPos;
-        private bool _isMiniMouseDown;
+        private Point _miniWindowStartPos;
         private bool _isMiniDragging;
 
         private void MinimizedCapsule_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            _miniMouseDownScreenPos = PointToScreen(e.GetPosition(this));
-            _isMiniMouseDown = true;
-            _isMiniDragging = false;
-
             if (e.ClickCount == 2)
             {
                 OnOpenMainRequested?.Invoke();
-                _isMiniMouseDown = false;
                 e.Handled = true;
+                return;
             }
+
+            _miniMouseDownScreenPos = PointToScreen(e.GetPosition(this));
+            _miniWindowStartPos = new Point(Left, Top);
+            _isMiniDragging = false;
+            MinimizedCapsule.CaptureMouse();
+            e.Handled = true;
         }
 
         private void MinimizedCapsule_MouseMove(object sender, MouseEventArgs e)
         {
-            if (_isMiniMouseDown && e.LeftButton == MouseButtonState.Pressed && !_isMiniDragging)
+            if (MinimizedCapsule.IsMouseCaptured && e.LeftButton == MouseButtonState.Pressed)
             {
-                var currentScreenPos = PointToScreen(e.GetPosition(this));
-                var dx = Math.Abs(currentScreenPos.X - _miniMouseDownScreenPos.X);
-                var dy = Math.Abs(currentScreenPos.Y - _miniMouseDownScreenPos.Y);
+                var currentScreen = PointToScreen(e.GetPosition(this));
+                var dx = currentScreen.X - _miniMouseDownScreenPos.X;
+                var dy = currentScreen.Y - _miniMouseDownScreenPos.Y;
 
-                if (dx > SystemParameters.MinimumHorizontalDragDistance || dy > SystemParameters.MinimumVerticalDragDistance)
+                if (!_isMiniDragging && (Math.Abs(dx) > 3 || Math.Abs(dy) > 3))
                 {
                     _isMiniDragging = true;
-                    try
-                    {
-                        DragMove();
-                        SnapToNearestEdge();
-                    }
-                    catch { }
-                    _isMiniMouseDown = false;
+                }
+
+                if (_isMiniDragging)
+                {
+                    Left = _miniWindowStartPos.X + dx;
+                    Top = _miniWindowStartPos.Y + dy;
                 }
             }
         }
 
         private void MinimizedCapsule_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            if (_isMiniMouseDown && !_isMiniDragging)
+            if (MinimizedCapsule.IsMouseCaptured)
             {
-                ExpandCapsule();
+                MinimizedCapsule.ReleaseMouseCapture();
+
+                if (_isMiniDragging)
+                {
+                    SnapToNearestEdge();
+                }
+                else
+                {
+                    // Clean single click -> Expand immediately
+                    ExpandCapsule();
+                }
+
+                _isMiniDragging = false;
                 e.Handled = true;
             }
-            _isMiniMouseDown = false;
-            _isMiniDragging = false;
         }
 
         private void MinimizedCapsule_MouseRightButtonUp(object sender, MouseButtonEventArgs e)
