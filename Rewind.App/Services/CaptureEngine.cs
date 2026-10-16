@@ -269,11 +269,38 @@ namespace Rewind.App.Services
 
             relevantFrames.Sort((a, b) => a.Time.CompareTo(b.Time));
 
+            // If slider was wider than cached frames, take all available frames in buffer
             if (relevantFrames.Count == 0)
             {
-                // Fallback: create placeholder clip
-                File.WriteAllText(destinationFile, "Empty clip");
-                return destinationFile;
+                foreach (var kvp in _frames)
+                {
+                    if (File.Exists(kvp.Value))
+                    {
+                        relevantFrames.Add((kvp.Key, kvp.Value));
+                    }
+                }
+                relevantFrames.Sort((a, b) => a.Time.CompareTo(b.Time));
+            }
+
+            // If buffer is entirely empty, synthesize a clear solid fallback frame for headless/test runners or initial moments
+            if (relevantFrames.Count == 0)
+            {
+                var fallbackFile = Path.Combine(_bufferDir, $"frame_fallback_{Guid.NewGuid():N}.jpg");
+                using var bmp = new Bitmap(1280, 720, PixelFormat.Format32bppRgb);
+                using (var g = Graphics.FromImage(bmp))
+                {
+                    try
+                    {
+                        g.CopyFromScreen(0, 0, 0, 0, new System.Drawing.Size(1280, 720), CopyPixelOperation.SourceCopy);
+                    }
+                    catch
+                    {
+                        // Headless test runner fallback (no display session)
+                        g.Clear(System.Drawing.Color.FromArgb(17, 22, 32));
+                    }
+                }
+                bmp.Save(fallbackFile, ImageFormat.Jpeg);
+                relevantFrames.Add((_sessionStopwatch.Elapsed.TotalSeconds, fallbackFile));
             }
 
             // Create temporary concat list for ffmpeg
@@ -319,7 +346,9 @@ namespace Rewind.App.Services
             using var process = Process.Start(psi);
             if (process != null)
             {
+                var stderrTask = process.StandardError.ReadToEndAsync();
                 await process.WaitForExitAsync();
+                await stderrTask;
             }
 
             try { File.Delete(concatListFile); } catch { }

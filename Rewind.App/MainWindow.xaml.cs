@@ -150,7 +150,7 @@ namespace Rewind.App
             {
                 if (state == "Recording")
                 {
-                    MainStatusDot.Fill = (System.Windows.Media.Brush)FindResource("DangerBrush");
+                    MainStatusDot.Background = (System.Windows.Media.Brush)FindResource("DangerBrush");
                     MainStatusLabel.Text = "RECORDING";
                     MainStatusLabel.Foreground = (System.Windows.Media.Brush)FindResource("DangerBrush");
                     StartStopCaptureBtn.Content = "⏹ Stop Capture";
@@ -160,14 +160,14 @@ namespace Rewind.App
                 }
                 else if (state == "Paused")
                 {
-                    MainStatusDot.Fill = (System.Windows.Media.Brush)FindResource("WarningBrush");
+                    MainStatusDot.Background = (System.Windows.Media.Brush)FindResource("WarningBrush");
                     MainStatusLabel.Text = "PAUSED";
                     MainStatusLabel.Foreground = (System.Windows.Media.Brush)FindResource("WarningBrush");
                     PauseResumeBtn.Content = "▶ Resume";
                 }
                 else
                 {
-                    MainStatusDot.Fill = (System.Windows.Media.Brush)FindResource("TextSecondaryBrush");
+                    MainStatusDot.Background = (System.Windows.Media.Brush)FindResource("TextSecondaryBrush");
                     MainStatusLabel.Text = "IDLE";
                     MainStatusLabel.Foreground = (System.Windows.Media.Brush)FindResource("TextSecondaryBrush");
                     StartStopCaptureBtn.Content = "▶ Start Capture";
@@ -266,14 +266,25 @@ namespace Rewind.App
                 var clipsDir = Path.Combine(_dbService.BaseDirectory, "sessions", _activeSession!.Id, "clips");
                 var clipFile = Path.Combine(clipsDir, $"bug_{bug.Id}_{DateTime.Now:HHmmss}.mp4");
 
+                // Update UI state to show processing and ask user to wait
+                ProcessingStatusText.Text = "⏳ Encoding MP4 video clip & applying redactions... please wait.";
+                PreservationProgressBar.Visibility = Visibility.Visible;
+                PreservationProgressBar.IsIndeterminate = true;
+                PreserveBugBtn.IsEnabled = false;
+
                 try
                 {
-                    await _captureEngine.PreserveClipAsync(bug.ClipStartSeconds, bug.ClipEndSeconds, clipFile, dialog.NormalizedRedactions);
+                    await Task.Run(async () =>
+                    {
+                        await _captureEngine.PreserveClipAsync(bug.ClipStartSeconds, bug.ClipEndSeconds, clipFile, dialog.NormalizedRedactions);
+                    });
+
                     bug.ClipPath = clipFile;
                     bug.ThumbnailPath = Path.ChangeExtension(clipFile, ".jpg");
 
                     if (dialog.EnableAiDraft && _aiAssistant.IsEnabled)
                     {
+                        ProcessingStatusText.Text = $"🤖 Querying {_aiAssistant.ProviderName} to analyze footage and rewrite title... please wait.";
                         var userContext = !string.IsNullOrWhiteSpace(dialog.TestCaseContext) ? dialog.TestCaseContext : dialog.BugTitle;
                         var analysis = await _aiAssistant.AnalyzeClipAsync(clipFile, bug.DurationSeconds, userContext);
                         bug.AiAssisted = true;
@@ -292,6 +303,7 @@ namespace Rewind.App
                     _dbService.SaveBug(bug);
                     Bugs.Add(bug);
                     BugCountLabel.Text = $"{Bugs.Count} bugs saved";
+                    ProcessingStatusText.Text = $"✔ Bug '{bug.Title}' successfully preserved with immutable video evidence!";
 
                     // Open Bug Detail Editor right after preservation
                     var detail = new BugDetailWindow(bug);
@@ -311,7 +323,14 @@ namespace Rewind.App
                 }
                 catch (Exception ex)
                 {
+                    ProcessingStatusText.Text = $"❌ Preservation failed: {ex.Message}";
                     MessageBox.Show($"Could not preserve bug footage: {ex.Message}", "Clip Preservation Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+                }
+                finally
+                {
+                    PreservationProgressBar.Visibility = Visibility.Collapsed;
+                    PreservationProgressBar.IsIndeterminate = false;
+                    PreserveBugBtn.IsEnabled = _captureEngine.IsRunning;
                 }
             }
         }
