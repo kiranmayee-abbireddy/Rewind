@@ -52,14 +52,14 @@
                     </ListBox>
                 </DockPanel>
 
-                <!-- Footer Settings Status -->
-                <Border Grid.Row="3" Background="#21262D" CornerRadius="6" Padding="8" Margin="0,12,0,0">
+                <!-- Footer Settings Status Button -->
+                <Button Grid.Row="3" Click="OpenSettings_Click" Style="{StaticResource SecondaryButton}" HorizontalContentAlignment="Left" Padding="10" Margin="0,12,0,0">
                     <StackPanel>
-                        <TextBlock Text="⚙ Settings" FontWeight="SemiBold" FontSize="11" Foreground="#8B949E"/>
-                        <TextBlock Text="Buffer: 60s @ 15fps (H.264)" FontSize="10" Foreground="#C9D1D9" Margin="0,2,0,0"/>
-                        <TextBlock Text="Storage: Local SQLite / MP4" FontSize="10" Foreground="#C9D1D9"/>
+                        <TextBlock Text="⚙ Settings &amp; Profiles" FontWeight="SemiBold" FontSize="11" Foreground="#58A6FF"/>
+                        <TextBlock x:Name="SettingsSummaryText" Text="Buffer: 60s @ 15fps" FontSize="10" Foreground="#C9D1D9" Margin="0,2,0,0"/>
+                        <TextBlock Text="Hotkey: Ctrl+Shift+R" FontSize="10" Foreground="#8B949E"/>
                     </StackPanel>
-                </Border>
+                </Button>
             </Grid>
         </Border>
 

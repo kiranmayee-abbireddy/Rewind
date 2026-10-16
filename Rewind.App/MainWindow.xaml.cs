@@ -18,6 +18,8 @@ namespace Rewind.App
         private readonly RuleBasedLocalAiAssistant _aiAssistant;
         private readonly FloatingHudWindow _hudWindow;
         private readonly DispatcherTimer _statusTimer;
+        private readonly GlobalHotkeyManager _hotkeyManager;
+        private AppSettings _appSettings = new();
 
         private Session? _activeSession;
         public ObservableCollection<Session> Sessions { get; } = new();
@@ -29,9 +31,20 @@ namespace Rewind.App
 
             _dbService = new DatabaseService();
             _aiAssistant = new RuleBasedLocalAiAssistant();
+            _hotkeyManager = new GlobalHotkeyManager();
+            _hotkeyManager.HotkeyPressed += () =>
+            {
+                Dispatcher.Invoke(() =>
+                {
+                    if (_captureEngine?.IsRunning == true)
+                    {
+                        OpenPreserveBugFlow();
+                    }
+                });
+            };
 
             var bufferDir = Path.Combine(_dbService.BaseDirectory, "buffer");
-            _captureEngine = new CaptureEngine(bufferDir, bufferSeconds: 60, fps: 15);
+            _captureEngine = new CaptureEngine(bufferDir, bufferSeconds: _appSettings.BufferDurationSeconds, fps: _appSettings.FrameRate);
             _captureEngine.StateChanged += OnCaptureStateChanged;
 
             _hudWindow = new FloatingHudWindow();
@@ -41,6 +54,12 @@ namespace Rewind.App
                 Show();
                 WindowState = WindowState.Normal;
                 Activate();
+            };
+
+            Loaded += (s, e) =>
+            {
+                var handle = new System.Windows.Interop.WindowInteropHelper(this).Handle;
+                _hotkeyManager.Register(handle, System.Windows.Input.ModifierKeys.Control | System.Windows.Input.ModifierKeys.Shift, System.Windows.Input.Key.R);
             };
 
             // Setup timer to update status UI
@@ -56,6 +75,7 @@ namespace Rewind.App
 
             Closed += (s, e) =>
             {
+                _hotkeyManager.Dispose();
                 _captureEngine.Dispose();
                 _hudWindow.Close();
             };
@@ -338,6 +358,17 @@ namespace Rewind.App
                     _dbService.SaveBug(bug);
                 }
                 LoadBugsForActiveSession();
+            }
+        }
+
+        private void OpenSettings_Click(object sender, RoutedEventArgs e)
+        {
+            var dlg = new SettingsDialog(_appSettings);
+            if (dlg.ShowDialog() == true)
+            {
+                _appSettings = dlg.Settings;
+                _aiAssistant.IsEnabled = _appSettings.AiEnabled;
+                SettingsSummaryText.Text = $"Buffer: {_appSettings.BufferDurationSeconds}s @ {_appSettings.FrameRate}fps";
             }
         }
     }
