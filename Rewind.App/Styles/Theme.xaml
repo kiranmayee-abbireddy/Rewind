@@ -20,6 +20,7 @@
     <SolidColorBrush x:Key="BgSecondaryBrush" Color="{StaticResource BgSecondaryColor}" />
     <SolidColorBrush x:Key="BgCardBrush" Color="{StaticResource BgCardColor}" />
     <SolidColorBrush x:Key="BorderBrush" Color="{StaticResource BorderColor}" />
+    <SolidColorBrush x:Key="BorderFocusBrush" Color="{StaticResource BorderFocusColor}" />
     <SolidColorBrush x:Key="TextPrimaryBrush" Color="{StaticResource TextPrimaryColor}" />
     <SolidColorBrush x:Key="TextSecondaryBrush" Color="{StaticResource TextSecondaryColor}" />
     <SolidColorBrush x:Key="AccentBrush" Color="{StaticResource AccentColor}" />
@@ -175,7 +176,7 @@
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="true">
-                            <Setter TargetName="border" Property="BorderBrush" Value="{DynamicResource BorderFocusColor}"/>
+                            <Setter TargetName="border" Property="BorderBrush" Value="{DynamicResource BorderFocusBrush}"/>
                         </Trigger>
                         <Trigger Property="IsFocused" Value="true">
                             <Setter TargetName="border" Property="BorderBrush" Value="{DynamicResource AccentBrush}"/>
@@ -211,7 +212,7 @@
         </Border>
         <ControlTemplate.Triggers>
             <Trigger Property="IsMouseOver" Value="true">
-                <Setter TargetName="templateRoot" Property="BorderBrush" Value="{DynamicResource BorderFocusColor}"/>
+                <Setter TargetName="templateRoot" Property="BorderBrush" Value="{DynamicResource BorderFocusBrush}"/>
                 <Setter TargetName="arrow" Property="Fill" Value="{DynamicResource TextPrimaryBrush}"/>
             </Trigger>
             <Trigger Property="IsChecked" Value="true">
@@ -258,7 +259,7 @@
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="true">
-                            <Setter TargetName="toggleButton" Property="BorderBrush" Value="{DynamicResource BorderFocusColor}"/>
+                            <Setter TargetName="toggleButton" Property="BorderBrush" Value="{DynamicResource BorderFocusBrush}"/>
                         </Trigger>
                         <Trigger Property="IsFocused" Value="true">
                             <Setter TargetName="toggleButton" Property="BorderBrush" Value="{DynamicResource AccentBrush}"/>
@@ -316,7 +317,7 @@
         <Setter Property="FontSize" Value="12"/>
         <Setter Property="Padding" Value="14,7"/>
         <Setter Property="BorderThickness" Value="1"/>
-        <Setter Property="BorderBrush" Value="{DynamicResource BorderFocusColor}"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource BorderFocusBrush}"/>
         <Setter Property="Cursor" Value="Hand"/>
         <Setter Property="Template">
             <Setter.Value>
@@ -355,7 +356,7 @@
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="secBorder" Property="BorderBrush" Value="{DynamicResource BorderFocusColor}"/>
+                            <Setter TargetName="secBorder" Property="BorderBrush" Value="{DynamicResource BorderFocusBrush}"/>
                             <Setter TargetName="secBorder" Property="Background" Value="{DynamicResource BgSecondaryBrush}"/>
                         </Trigger>
                     </ControlTemplate.Triggers>

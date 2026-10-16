@@ -277,6 +277,7 @@ namespace Rewind.App.Services
             SyncBrush(dict, "BgSecondaryBrush", "BgSecondaryColor");
             SyncBrush(dict, "BgCardBrush", "BgCardColor");
             SyncBrush(dict, "BorderBrush", "BorderColor");
+            SyncBrush(dict, "BorderFocusBrush", "BorderFocusColor");
             SyncBrush(dict, "TextPrimaryBrush", "TextPrimaryColor");
             SyncBrush(dict, "TextSecondaryBrush", "TextSecondaryColor");
             SyncBrush(dict, "AccentBrush", "AccentColor");
