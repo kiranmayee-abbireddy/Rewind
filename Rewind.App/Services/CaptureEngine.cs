@@ -231,6 +231,12 @@ namespace Rewind.App.Services
 
             try { File.Delete(concatListFile); } catch { }
 
+            // Validate clip file integrity per PRD: Never claim successful save when evidence not persisted
+            if (!File.Exists(destinationFile) || new FileInfo(destinationFile).Length == 0)
+            {
+                throw new InvalidOperationException($"Failed to assemble valid MP4 evidence clip at {destinationFile}");
+            }
+
             // Extract thumbnail
             var thumbFile = Path.ChangeExtension(destinationFile, ".jpg");
             if (File.Exists(relevantFrames[^1].Path))

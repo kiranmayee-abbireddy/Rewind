@@ -87,6 +87,13 @@ namespace Rewind.App
             var existing = _dbService.GetSessions();
             foreach (var s in existing)
             {
+                // Crash recovery per PRD FR-06: An interrupted session must not be left as active or completed
+                if (s.Status == "Recording")
+                {
+                    s.Status = "Interrupted (Recovered)";
+                    s.EndedAt = DateTime.UtcNow;
+                    _dbService.SaveSession(s);
+                }
                 Sessions.Add(s);
             }
             SessionsList.ItemsSource = Sessions;
@@ -256,37 +263,44 @@ namespace Rewind.App
                 var clipsDir = Path.Combine(_dbService.BaseDirectory, "sessions", _activeSession!.Id, "clips");
                 var clipFile = Path.Combine(clipsDir, $"bug_{bug.Id}_{DateTime.Now:HHmmss}.mp4");
 
-                await _captureEngine.PreserveClipAsync(bug.ClipStartSeconds, bug.ClipEndSeconds, clipFile);
-                bug.ClipPath = clipFile;
-                bug.ThumbnailPath = Path.ChangeExtension(clipFile, ".jpg");
-
-                if (dialog.EnableAiDraft && _aiAssistant.IsEnabled)
+                try
                 {
-                    var analysis = await _aiAssistant.AnalyzeClipAsync(clipFile, bug.DurationSeconds);
-                    bug.AiAssisted = true;
-                    bug.ObservedBehavior = analysis.ObservedBehavior;
-                    bug.ReproductionSteps = analysis.ReproSteps;
-                    bug.AiSuggestions = analysis.Suggestions;
+                    await _captureEngine.PreserveClipAsync(bug.ClipStartSeconds, bug.ClipEndSeconds, clipFile);
+                    bug.ClipPath = clipFile;
+                    bug.ThumbnailPath = Path.ChangeExtension(clipFile, ".jpg");
+
+                    if (dialog.EnableAiDraft && _aiAssistant.IsEnabled)
+                    {
+                        var analysis = await _aiAssistant.AnalyzeClipAsync(clipFile, bug.DurationSeconds);
+                        bug.AiAssisted = true;
+                        bug.ObservedBehavior = analysis.ObservedBehavior;
+                        bug.ReproductionSteps = analysis.ReproSteps;
+                        bug.AiSuggestions = analysis.Suggestions;
+                    }
+
+                    _dbService.SaveBug(bug);
+                    Bugs.Add(bug);
+                    BugCountLabel.Text = $"{Bugs.Count} bugs saved";
+
+                    // Open Bug Detail Editor right after preservation
+                    var detail = new BugDetailWindow(bug);
+                    if (detail.ShowDialog() == true)
+                    {
+                        if (detail.IsDeleted)
+                        {
+                            _dbService.DeleteBug(bug.Id);
+                            Bugs.Remove(bug);
+                        }
+                        else
+                        {
+                            _dbService.SaveBug(bug);
+                        }
+                        LoadBugsForActiveSession();
+                    }
                 }
-
-                _dbService.SaveBug(bug);
-                Bugs.Add(bug);
-                BugCountLabel.Text = $"{Bugs.Count} bugs saved";
-
-                // Open Bug Detail Editor right after preservation
-                var detail = new BugDetailWindow(bug);
-                if (detail.ShowDialog() == true)
+                catch (Exception ex)
                 {
-                    if (detail.IsDeleted)
-                    {
-                        _dbService.DeleteBug(bug.Id);
-                        Bugs.Remove(bug);
-                    }
-                    else
-                    {
-                        _dbService.SaveBug(bug);
-                    }
-                    LoadBugsForActiveSession();
+                    MessageBox.Show($"Could not preserve bug footage: {ex.Message}", "Clip Preservation Error", MessageBoxButton.OK, MessageBoxImage.Warning);
                 }
             }
         }
