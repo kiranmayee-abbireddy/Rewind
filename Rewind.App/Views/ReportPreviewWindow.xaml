@@ -10,10 +10,20 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <StackPanel Grid.Row="0" Margin="0,0,0,16">
-            <TextBlock Text="Session QA Report (Markdown)" FontSize="18" FontWeight="Bold"/>
-            <TextBlock Text="Edit, review, or copy this report directly into Jira, GitHub Issues, or Slack." FontSize="12" Foreground="#8B949E" Margin="0,4,0,0"/>
-        </StackPanel>
+        <Grid Grid.Row="0" Margin="0,0,0,16">
+            <StackPanel>
+                <TextBlock Text="Consolidated QA Bug Report" FontSize="18" FontWeight="Bold"/>
+                <TextBlock Text="Edit, review, or export report formatted for Jira, GitHub Issues, or CI/CD pipelines." FontSize="12" Foreground="#8B949E" Margin="0,4,0,0"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
+                <TextBlock Text="Format: " VerticalAlignment="Center" Foreground="#8B949E" Margin="0,0,6,0"/>
+                <ComboBox x:Name="FormatCombo" SelectionChanged="FormatCombo_SelectionChanged" Background="#161B22" Foreground="#FFFFFF" BorderBrush="#30363D" Width="130">
+                    <ComboBoxItem Content="Markdown (.md)" IsSelected="True"/>
+                    <ComboBoxItem Content="Jira Markup"/>
+                    <ComboBoxItem Content="JSON Data"/>
+                </ComboBox>
+            </StackPanel>
+        </Grid>
 
         <TextBox Grid.Row="1" x:Name="ReportBox" Background="#161B22" Foreground="#F0F6FC" BorderBrush="#30363D" FontFamily="Consolas, Cascadia Code, Courier New" FontSize="13" AcceptsReturn="True" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" Padding="12" Margin="0,0,0,16"/>
 

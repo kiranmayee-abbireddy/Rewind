@@ -322,7 +322,10 @@ namespace Rewind.App
             }
 
             var md = ReportGenerator.GenerateMarkdownReport(_activeSession, bugsList, aiExecutiveSummary: aiSummary);
-            var reportWin = new ReportPreviewWindow(md);
+            var jira = ReportGenerator.GenerateJiraFormat(_activeSession, bugsList);
+            var json = ReportGenerator.GenerateJsonReport(_activeSession, bugsList, aiExecutiveSummary: aiSummary);
+
+            var reportWin = new ReportPreviewWindow(md, jira, json);
             reportWin.ShowDialog();
         }
 
