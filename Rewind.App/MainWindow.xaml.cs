@@ -88,13 +88,14 @@ namespace Rewind.App
                 }
             };
 
-            // Fix WindowChrome fullscreen/maximize taskbar overflow
+            // Fix WindowChrome fullscreen/maximize bounds so the window never overflows screen or taskbar
             StateChanged += (s, e) =>
             {
                 if (WindowState == WindowState.Maximized)
                 {
-                    // WindowChrome extends beyond working area by resize border thickness (~7-8px)
-                    RootWindowGrid.Margin = new Thickness(7);
+                    MaxHeight = SystemParameters.WorkArea.Height;
+                    MaxWidth = SystemParameters.WorkArea.Width;
+                    RootWindowGrid.Margin = new Thickness(0);
                     if (MaximizeIconPath != null)
                     {
                         MaximizeIconPath.Data = (System.Windows.Media.Geometry)FindResource("WinRestoreGeometry");
@@ -102,6 +103,8 @@ namespace Rewind.App
                 }
                 else
                 {
+                    MaxHeight = double.PositiveInfinity;
+                    MaxWidth = double.PositiveInfinity;
                     RootWindowGrid.Margin = new Thickness(0);
                     if (MaximizeIconPath != null)
                     {

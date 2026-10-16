@@ -39,9 +39,13 @@ namespace Rewind.App.Views
 
             var baseDir = System.IO.Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.LocalApplicationData), "Rewind");
             StorageDirBox.Text = baseDir;
-            CalculateStorageUsage(baseDir);
 
-            Loaded += async (s, e) => await DetectAvailableModelsAsync();
+            Loaded += async (s, e) =>
+            {
+                // Run disk I/O in background so dialog opens instantaneously
+                await CalculateStorageUsageAsync(baseDir);
+                await DetectAvailableModelsAsync();
+            };
         }
 
         private async void RefreshModels_Click(object sender, RoutedEventArgs e)
@@ -115,20 +119,25 @@ namespace Rewind.App.Views
             ModelStatusText.Foreground = (System.Windows.Media.Brush)FindResource("WarningBrush");
         }
 
-        private void CalculateStorageUsage(string dir)
+        private async System.Threading.Tasks.Task CalculateStorageUsageAsync(string dir)
         {
             try
             {
-                if (System.IO.Directory.Exists(dir))
+                var (mb, count) = await System.Threading.Tasks.Task.Run(() =>
                 {
+                    if (!System.IO.Directory.Exists(dir)) return (0.0, 0);
                     long totalBytes = 0;
                     var files = System.IO.Directory.GetFiles(dir, "*.*", System.IO.SearchOption.AllDirectories);
                     foreach (var file in files)
                     {
-                        totalBytes += new System.IO.FileInfo(file).Length;
+                        try { totalBytes += new System.IO.FileInfo(file).Length; } catch { }
                     }
-                    var mb = totalBytes / (1024.0 * 1024.0);
-                    StorageUsageLabel.Text = $"Total disk footprint: {mb:0.0} MB used across {files.Length} clips/metadata files.";
+                    return (totalBytes / (1024.0 * 1024.0), files.Length);
+                });
+
+                if (count > 0)
+                {
+                    StorageUsageLabel.Text = $"Total disk footprint: {mb:0.0} MB used across {count} clips/metadata files.";
                     StorageProgressBar.Value = System.Math.Min(100, (int)(mb / 5.0)); // proportional to 500MB target
                 }
                 else
@@ -166,7 +175,7 @@ namespace Rewind.App.Views
             }
         }
 
-        private void PurgeBuffer_Click(object sender, RoutedEventArgs e)
+        private async void PurgeBuffer_Click(object sender, RoutedEventArgs e)
         {
             try
             {
@@ -180,7 +189,7 @@ namespace Rewind.App.Views
                     }
                 }
                 MessageBox.Show("Rolling buffer temporary files purged successfully.", "Buffer Cleaned", MessageBoxButton.OK, MessageBoxImage.Information);
-                CalculateStorageUsage(System.IO.Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.LocalApplicationData), "Rewind"));
+                await CalculateStorageUsageAsync(System.IO.Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.LocalApplicationData), "Rewind"));
             }
             catch (Exception ex)
             {

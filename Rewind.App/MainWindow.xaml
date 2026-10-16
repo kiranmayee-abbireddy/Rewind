@@ -97,67 +97,52 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
-            <!-- Sidebar: Sessions List & Controls (Responsive DockPanel: Settings Card Always Anchored to Bottom) -->
-            <Border Grid.Column="0" Background="{DynamicResource BgSecondaryBrush}" BorderBrush="{DynamicResource BorderBrush}" BorderThickness="0,0,1,0" Padding="14,14,14,14">
-                <DockPanel LastChildFill="True">
-                    <!-- Clean Header Identity & Avocado Companion Showcase -->
-                    <Border DockPanel.Dock="Top" Background="{DynamicResource BgCardBrush}" BorderBrush="{DynamicResource BorderBrush}" BorderThickness="1" CornerRadius="8" Padding="12,10" Margin="0,0,0,12">
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto"/>
-                                <ColumnDefinition Width="*"/>
-                            </Grid.ColumnDefinitions>
-                            <!-- Guac the Avocado QA Companion -->
-                            <ContentControl Template="{StaticResource AvocadoMascot}" Margin="0,0,12,0" VerticalAlignment="Center" ToolTip="Guac — Your REWIND QA Companion"/>
-                            <StackPanel Grid.Column="1" VerticalAlignment="Center">
-                                <TextBlock Text="REWIND" FontSize="14.5" FontWeight="Bold" Foreground="{DynamicResource TextPrimaryBrush}"/>
-                                <TextBlock Text="Evidence Recorder" FontSize="11" Foreground="{DynamicResource TextSecondaryBrush}" Margin="0,2,0,0"/>
+            <!-- Sidebar: Sessions List & Controls (Structured 3-Row Grid: Settings Card Guaranteed Visible in Any Resolution & Fullscreen) -->
+            <Border Grid.Column="0" Background="{DynamicResource BgSecondaryBrush}" BorderBrush="{DynamicResource BorderBrush}" BorderThickness="0,0,1,0" Padding="14,14,14,14" ClipToBounds="True">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <!-- Row 0: Mascot Header, New Session & Past Sessions Title -->
+                        <RowDefinition Height="Auto"/>
+                        <!-- Row 1: Past Sessions List (Takes Remaining Vertical Space, Scrollable) -->
+                        <RowDefinition Height="*"/>
+                        <!-- Row 2: Settings & Profiles Card (Fixed Height at Bottom, NEVER Cut Off) -->
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <!-- Top Controls: Header Mascot & New Session Button -->
+                    <StackPanel Grid.Row="0">
+                        <!-- Clean Header Identity & Avocado Companion Showcase -->
+                        <Border Background="{DynamicResource BgCardBrush}" BorderBrush="{DynamicResource BorderBrush}" BorderThickness="1" CornerRadius="8" Padding="12,10" Margin="0,0,0,12">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <!-- Guac the Avocado QA Companion -->
+                                <ContentControl Template="{StaticResource AvocadoMascot}" Margin="0,0,12,0" VerticalAlignment="Center" ToolTip="Guac — Your REWIND QA Companion"/>
+                                <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                                    <TextBlock Text="REWIND" FontSize="14.5" FontWeight="Bold" Foreground="{DynamicResource TextPrimaryBrush}"/>
+                                    <TextBlock Text="Evidence Recorder" FontSize="11" Foreground="{DynamicResource TextSecondaryBrush}" Margin="0,2,0,0"/>
+                                </StackPanel>
+                            </Grid>
+                        </Border>
+
+                        <!-- New Session Action Button -->
+                        <Button Click="NewSession_Click" Style="{StaticResource PrimaryButton}" Height="34" Margin="0,0,0,12" Padding="0">
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                <Path Data="{StaticResource PlusGeometry}" Fill="#FFFFFF" Stretch="Uniform" Width="11" Height="11" Margin="0,0,7,0" VerticalAlignment="Center"/>
+                                <TextBlock Text="New Session" FontSize="12.5" FontWeight="SemiBold" VerticalAlignment="Center"/>
                             </StackPanel>
+                        </Button>
+
+                        <!-- Past Sessions Header Label -->
+                        <Grid Margin="2,0,2,8">
+                            <TextBlock Text="PAST SESSIONS" FontSize="10.5" FontWeight="Bold" Foreground="{DynamicResource TextSecondaryBrush}"/>
                         </Grid>
-                    </Border>
+                    </StackPanel>
 
-                    <!-- New Session Action Button -->
-                    <Button DockPanel.Dock="Top" Click="NewSession_Click" Style="{StaticResource PrimaryButton}" Height="34" Margin="0,0,0,12" Padding="0">
-                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
-                            <Path Data="{StaticResource PlusGeometry}" Fill="#FFFFFF" Stretch="Uniform" Width="11" Height="11" Margin="0,0,7,0" VerticalAlignment="Center"/>
-                            <TextBlock Text="New Session" FontSize="12.5" FontWeight="SemiBold" VerticalAlignment="Center"/>
-                        </StackPanel>
-                    </Button>
-
-                    <!-- Persistent Footer Settings Card (Permanently Anchored to Bottom in Fullscreen & Any Height) -->
-                    <Border DockPanel.Dock="Bottom" Background="{DynamicResource BgCardBrush}" BorderBrush="{DynamicResource BorderBrush}" BorderThickness="1" CornerRadius="8" Padding="10" Margin="0,10,0,0">
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto"/>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="Auto"/>
-                            </Grid.ColumnDefinitions>
-                            
-                            <!-- Settings Icon -->
-                            <Border Grid.Column="0" Width="28" Height="28" CornerRadius="6" Background="{DynamicResource BgSecondaryBrush}" VerticalAlignment="Center" Margin="0,0,10,0">
-                                <Path Data="{StaticResource GearGeometry}" Fill="{DynamicResource TextSecondaryBrush}" Stretch="Uniform" Width="13" Height="13" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                            </Border>
-
-                            <!-- Settings Details -->
-                            <StackPanel Grid.Column="1" VerticalAlignment="Center">
-                                <TextBlock Text="Settings &amp; Profiles" FontWeight="SemiBold" FontSize="11.5" Foreground="{DynamicResource TextPrimaryBrush}"/>
-                                <TextBlock x:Name="SettingsSummaryText" Text="Buffer: 60s @ 15fps" FontSize="10" Foreground="{DynamicResource TextSecondaryBrush}" Margin="0,1,0,0" TextTrimming="CharacterEllipsis"/>
-                            </StackPanel>
-
-                            <!-- Open Dialog Button -->
-                            <Button x:Name="SidebarSettingsEditBtn" Grid.Column="2" Click="OpenSettings_Click" Style="{StaticResource SecondaryButton}" VerticalAlignment="Center" Padding="8,4" FontSize="11" Margin="6,0,0,0">
-                                <TextBlock Text="Edit" Foreground="{DynamicResource TextSecondaryBrush}" FontSize="11"/>
-                            </Button>
-                        </Grid>
-                    </Border>
-
-                    <!-- Past Sessions Header Label -->
-                    <Grid DockPanel.Dock="Top" Margin="2,0,2,8">
-                        <TextBlock Text="PAST SESSIONS" FontSize="10.5" FontWeight="Bold" Foreground="{DynamicResource TextSecondaryBrush}"/>
-                    </Grid>
-                    
                     <!-- Session History List (Fills Center, Scrolls Gracefully with No Visual Scrollbars) -->
-                    <ListBox x:Name="SessionsList" SelectionChanged="SessionsList_SelectionChanged" 
+                    <ListBox Grid.Row="1" x:Name="SessionsList" SelectionChanged="SessionsList_SelectionChanged" 
                              Background="Transparent" BorderThickness="0" 
                              ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                              ScrollViewer.VerticalScrollBarVisibility="Hidden">
@@ -223,7 +208,34 @@
                             </DataTemplate>
                         </ListBox.ItemTemplate>
                     </ListBox>
-                </DockPanel>
+
+                    <!-- Persistent Footer Settings Card (Guaranteed Row 2, Always Fully Visible in Fullscreen & Any Height) -->
+                    <Border Grid.Row="2" Background="{DynamicResource BgCardBrush}" BorderBrush="{DynamicResource BorderBrush}" BorderThickness="1" CornerRadius="8" Padding="10" Margin="0,10,0,0">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            
+                            <!-- Settings Icon -->
+                            <Border Grid.Column="0" Width="28" Height="28" CornerRadius="6" Background="{DynamicResource BgSecondaryBrush}" VerticalAlignment="Center" Margin="0,0,10,0">
+                                <Path Data="{StaticResource GearGeometry}" Fill="{DynamicResource TextSecondaryBrush}" Stretch="Uniform" Width="13" Height="13" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+
+                            <!-- Settings Details -->
+                            <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                                <TextBlock Text="Settings &amp; Profiles" FontWeight="SemiBold" FontSize="11.5" Foreground="{DynamicResource TextPrimaryBrush}"/>
+                                <TextBlock x:Name="SettingsSummaryText" Text="Buffer: 60s @ 15fps" FontSize="10" Foreground="{DynamicResource TextSecondaryBrush}" Margin="0,1,0,0" TextTrimming="CharacterEllipsis"/>
+                            </StackPanel>
+
+                            <!-- Open Dialog Button -->
+                            <Button x:Name="SidebarSettingsEditBtn" Grid.Column="2" Click="OpenSettings_Click" Style="{StaticResource SecondaryButton}" VerticalAlignment="Center" Padding="8,4" FontSize="11" Margin="6,0,0,0">
+                                <TextBlock Text="Edit" Foreground="{DynamicResource TextSecondaryBrush}" FontSize="11"/>
+                            </Button>
+                        </Grid>
+                    </Border>
+                </Grid>
             </Border>
 
             <!-- Main Workspace Area -->
