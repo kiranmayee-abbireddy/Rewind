@@ -87,6 +87,28 @@ namespace Rewind.App
                 }
             };
 
+            // Fix WindowChrome fullscreen/maximize taskbar overflow
+            StateChanged += (s, e) =>
+            {
+                if (WindowState == WindowState.Maximized)
+                {
+                    // WindowChrome extends beyond working area by resize border thickness (~7-8px)
+                    RootWindowGrid.Margin = new Thickness(7);
+                    if (MaximizeIconPath != null)
+                    {
+                        MaximizeIconPath.Data = (System.Windows.Media.Geometry)FindResource("WinRestoreGeometry");
+                    }
+                }
+                else
+                {
+                    RootWindowGrid.Margin = new Thickness(0);
+                    if (MaximizeIconPath != null)
+                    {
+                        MaximizeIconPath.Data = (System.Windows.Media.Geometry)FindResource("WinMaximizeGeometry");
+                    }
+                }
+            };
+
             Loaded += (s, e) =>
             {
                 var handle = new System.Windows.Interop.WindowInteropHelper(this).Handle;
@@ -575,7 +597,10 @@ namespace Rewind.App
 
         private void OpenSettings_Click(object sender, RoutedEventArgs e)
         {
-            var dlg = new SettingsDialog(_appSettings);
+            var dlg = new SettingsDialog(_appSettings)
+            {
+                Owner = this
+            };
             _isModalDialogOpen = true;
             var wasRunning = _captureEngine.IsRunning && !_captureEngine.IsPaused;
             if (wasRunning) _captureEngine.Pause();
