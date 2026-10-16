@@ -258,8 +258,8 @@ namespace Rewind.App.Services
                 filterChain = $"-vf \"{string.Join(",", filters)}\" ";
             }
 
-            // Run ffmpeg to encode into standard MP4 with redactions
-            var ffmpegArgs = $"-y -f concat -safe 0 -i \"{concatListFile}\" {filterChain}-c:v libx264 -pix_fmt yuv420p -r {_fps} \"{destinationFile}\"";
+            // Run ffmpeg to encode into standard MP4 with redactions and faststart for instant streaming/WPF playback
+            var ffmpegArgs = $"-y -f concat -safe 0 -i \"{concatListFile}\" {filterChain}-c:v libx264 -pix_fmt yuv420p -movflags +faststart -r {_fps} \"{destinationFile}\"";
 
             var psi = new ProcessStartInfo
             {

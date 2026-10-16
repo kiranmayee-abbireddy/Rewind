@@ -68,7 +68,10 @@ namespace Rewind.App.Views
             {
                 try
                 {
+                    ClipMediaPlayer.LoadedBehavior = MediaState.Manual;
+                    ClipMediaPlayer.UnloadedBehavior = MediaState.Manual;
                     ClipMediaPlayer.Source = new Uri(bug.ClipPath, UriKind.Absolute);
+
                     ClipMediaPlayer.MediaOpened += (s, e) =>
                     {
                         if (ClipMediaPlayer.NaturalDuration.HasTimeSpan)
@@ -76,6 +79,25 @@ namespace Rewind.App.Views
                             MediaPositionSlider.Maximum = ClipMediaPlayer.NaturalDuration.TimeSpan.TotalSeconds;
                             UpdateMediaTimeLabel(TimeSpan.Zero, ClipMediaPlayer.NaturalDuration.TimeSpan);
                         }
+                    };
+
+                    ClipMediaPlayer.MediaEnded += (s, e) =>
+                    {
+                        ClipMediaPlayer.Stop();
+                        _mediaTimer?.Stop();
+                        _isPlaying = false;
+                        PlayPauseMediaBtn.Content = "▶ Play";
+                        MediaPositionSlider.Value = 0;
+                        ThumbnailImage.Visibility = Visibility.Visible;
+                    };
+
+                    ClipMediaPlayer.MediaFailed += (s, e) =>
+                    {
+                        _mediaTimer?.Stop();
+                        _isPlaying = false;
+                        PlayPauseMediaBtn.Content = "▶ Play";
+                        ThumbnailImage.Visibility = Visibility.Visible;
+                        ClipPathLabel.Text = $"Video playback error: {e.ErrorException?.Message}. Click 'Play Video in Player' above.";
                     };
 
                     _mediaTimer = new System.Windows.Threading.DispatcherTimer
@@ -101,7 +123,14 @@ namespace Rewind.App.Views
             };
 
             MediaPositionSlider.PreviewMouseDown += (s, e) => _isUserDraggingSlider = true;
-            MediaPositionSlider.PreviewMouseUp += (s, e) => _isUserDraggingSlider = false;
+            MediaPositionSlider.PreviewMouseUp += (s, e) =>
+            {
+                _isUserDraggingSlider = false;
+                if (ClipMediaPlayer.NaturalDuration.HasTimeSpan)
+                {
+                    ClipMediaPlayer.Position = TimeSpan.FromSeconds(MediaPositionSlider.Value);
+                }
+            };
         }
 
         private System.Windows.Threading.DispatcherTimer? _mediaTimer;
