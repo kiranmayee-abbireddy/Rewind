@@ -541,6 +541,66 @@ namespace Rewind.App
             CreateNewSession();
         }
 
+        private void DeleteSessionItem_Click(object sender, RoutedEventArgs e)
+        {
+            e.Handled = true;
+            if (sender is Button btn && btn.Tag is Session session)
+            {
+                DeleteSessionWithConfirmation(session);
+            }
+        }
+
+        private void DeleteActiveSession_Click(object sender, RoutedEventArgs e)
+        {
+            if (_activeSession != null)
+            {
+                DeleteSessionWithConfirmation(_activeSession);
+            }
+        }
+
+        private void DeleteSessionWithConfirmation(Session session)
+        {
+            var bugs = _dbService.GetBugsForSession(session.Id);
+            var confirmMsg = bugs.Count > 0
+                ? $"Are you sure you want to permanently delete session '{session.Title}' along with its {bugs.Count} saved bug evidence clip(s)?"
+                : $"Are you sure you want to delete session '{session.Title}'?";
+
+            var result = MessageBox.Show(confirmMsg, "Delete Session", MessageBoxButton.YesNo, MessageBoxImage.Warning);
+            if (result != MessageBoxResult.Yes) return;
+
+            if (_activeSession?.Id == session.Id && _captureEngine.IsRunning)
+            {
+                _captureEngine.Stop();
+            }
+
+            // Remove all associated clips and files on disk
+            try
+            {
+                var sessionClipsDir = Path.Combine(_dbService.BaseDirectory, "sessions", session.Id);
+                if (Directory.Exists(sessionClipsDir))
+                {
+                    Directory.Delete(sessionClipsDir, recursive: true);
+                }
+            }
+            catch { }
+
+            // Delete from database
+            _dbService.DeleteSession(session.Id);
+            Sessions.Remove(session);
+
+            if (_activeSession?.Id == session.Id)
+            {
+                if (Sessions.Count > 0)
+                {
+                    SelectSession(Sessions[0]);
+                }
+                else
+                {
+                    CreateNewSession();
+                }
+            }
+        }
+
         private void SessionsList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (SessionsList.SelectedItem is Session session)
