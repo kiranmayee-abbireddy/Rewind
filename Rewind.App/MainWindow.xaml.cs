@@ -15,7 +15,7 @@ namespace Rewind.App
     {
         private readonly DatabaseService _dbService;
         private readonly CaptureEngine _captureEngine;
-        private readonly RuleBasedLocalAiAssistant _aiAssistant;
+        private IAiAssistantService _aiAssistant;
         private readonly FloatingHudWindow _hudWindow;
         private readonly DispatcherTimer _statusTimer;
         private readonly GlobalHotkeyManager _hotkeyManager;
@@ -30,7 +30,7 @@ namespace Rewind.App
             InitializeComponent();
 
             _dbService = new DatabaseService();
-            _aiAssistant = new RuleBasedLocalAiAssistant();
+            _aiAssistant = new OllamaAiAssistant(_appSettings.OllamaEndpoint, _appSettings.OllamaModel);
             _hotkeyManager = new GlobalHotkeyManager();
             _hotkeyManager.HotkeyPressed += () =>
             {
@@ -274,8 +274,16 @@ namespace Rewind.App
 
                     if (dialog.EnableAiDraft && _aiAssistant.IsEnabled)
                     {
-                        var analysis = await _aiAssistant.AnalyzeClipAsync(clipFile, bug.DurationSeconds);
+                        var userContext = !string.IsNullOrWhiteSpace(dialog.TestCaseContext) ? dialog.TestCaseContext : dialog.BugTitle;
+                        var analysis = await _aiAssistant.AnalyzeClipAsync(clipFile, bug.DurationSeconds, userContext);
                         bug.AiAssisted = true;
+
+                        // Rewrite bug title with AI professional synthesis if user requested AI
+                        if (!string.IsNullOrWhiteSpace(analysis.Title))
+                        {
+                            bug.Title = analysis.Title;
+                        }
+
                         bug.ObservedBehavior = analysis.ObservedBehavior;
                         bug.ReproductionSteps = analysis.ReproSteps;
                         bug.AiSuggestions = analysis.Suggestions;
@@ -399,9 +407,12 @@ namespace Rewind.App
             if (dlg.ShowDialog() == true)
             {
                 _appSettings = dlg.Settings;
-                _aiAssistant.IsEnabled = _appSettings.AiEnabled;
+                _aiAssistant = new OllamaAiAssistant(_appSettings.OllamaEndpoint, _appSettings.OllamaModel)
+                {
+                    IsEnabled = _appSettings.AiEnabled
+                };
                 _captureEngine.CaptureSourceMode = _appSettings.CaptureSource;
-                SettingsSummaryText.Text = $"Buffer: {_appSettings.BufferDurationSeconds}s @ {_appSettings.FrameRate}fps • {_appSettings.CaptureSource}";
+                SettingsSummaryText.Text = $"Buffer: {_appSettings.BufferDurationSeconds}s @ {_appSettings.FrameRate}fps • {_appSettings.OllamaModel}";
             }
         }
     }

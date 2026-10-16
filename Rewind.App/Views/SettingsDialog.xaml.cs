@@ -23,6 +23,11 @@ namespace Rewind.App.Views
 
             AiEnabledCheck.IsChecked = current.AiEnabled;
             AudioEnabledCheck.IsChecked = current.RecordMicrophone;
+            OllamaHostBox.Text = string.IsNullOrWhiteSpace(current.OllamaEndpoint) ? "http://localhost:11434" : current.OllamaEndpoint;
+
+            if (current.OllamaModel == "llama3:latest") OllamaModelCombo.SelectedIndex = 1;
+            else if (current.OllamaModel == "gemma3:1b") OllamaModelCombo.SelectedIndex = 2;
+            else OllamaModelCombo.SelectedIndex = 0;
 
             var baseDir = System.IO.Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.LocalApplicationData), "Rewind");
             StorageDirBox.Text = baseDir;
@@ -92,6 +97,13 @@ namespace Rewind.App.Views
             Settings.CaptureSource = SourceCombo.SelectedIndex == 1 ? "Active Foreground Window" : "Primary Display (Entire Screen)";
             Settings.AiEnabled = AiEnabledCheck.IsChecked ?? true;
             Settings.RecordMicrophone = AudioEnabledCheck.IsChecked ?? false;
+            Settings.OllamaEndpoint = string.IsNullOrWhiteSpace(OllamaHostBox.Text) ? "http://localhost:11434" : OllamaHostBox.Text.Trim();
+            Settings.OllamaModel = OllamaModelCombo.SelectedIndex switch
+            {
+                1 => "llama3:latest",
+                2 => "gemma3:1b",
+                _ => "qwen3:4b"
+            };
 
             DialogResult = true;
             Close();

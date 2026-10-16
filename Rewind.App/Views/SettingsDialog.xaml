@@ -59,13 +59,32 @@
             <ProgressBar x:Name="StorageProgressBar" Height="6" Minimum="0" Maximum="100" Value="15" Foreground="#58A6FF" Background="#21262D" BorderThickness="0" Margin="0,0,0,4"/>
             <TextBlock x:Name="StorageUsageLabel" Text="Calculating storage consumption..." FontSize="10" Foreground="#8B949E" Margin="0,0,0,14"/>
 
-            <!-- AI Assistant Toggle -->
+            <!-- AI Assistant & Ollama Settings -->
             <CheckBox x:Name="AiEnabledCheck" IsChecked="True" Margin="0,4,0,8">
                 <StackPanel>
                     <TextBlock Text="Enable AI Bug Report Assistant" FontWeight="SemiBold" Foreground="#F0F6FC"/>
-                    <TextBlock Text="Automatically drafts reproduction steps and titles from preserved footage." FontSize="11" Foreground="#8B949E"/>
+                    <TextBlock Text="Drafts reproduction steps and synthesizes user test cases into professional titles." FontSize="11" Foreground="#8B949E"/>
                 </StackPanel>
             </CheckBox>
+
+            <Grid Margin="0,0,0,10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <StackPanel Grid.Column="0" Margin="0,0,6,0">
+                    <TextBlock Text="Ollama Model" FontSize="11" Foreground="#8B949E" Margin="0,0,0,2"/>
+                    <ComboBox x:Name="OllamaModelCombo" Background="#161B22" Foreground="#FFFFFF" BorderBrush="#30363D">
+                        <ComboBoxItem Content="qwen3:4b (Recommended)" IsSelected="True"/>
+                        <ComboBoxItem Content="llama3:latest"/>
+                        <ComboBoxItem Content="gemma3:1b"/>
+                    </ComboBox>
+                </StackPanel>
+                <StackPanel Grid.Column="1" Margin="6,0,0,0">
+                    <TextBlock Text="Ollama Host URL" FontSize="11" Foreground="#8B949E" Margin="0,0,0,2"/>
+                    <TextBox x:Name="OllamaHostBox" Text="http://localhost:11434" Background="#161B22" Foreground="#FFFFFF" BorderBrush="#30363D" Padding="6,4"/>
+                </StackPanel>
+            </Grid>
 
             <!-- Optional Audio Capture Toggle (PRD Open Decision #4) -->
             <CheckBox x:Name="AudioEnabledCheck" IsChecked="False" Margin="0,4,0,0">

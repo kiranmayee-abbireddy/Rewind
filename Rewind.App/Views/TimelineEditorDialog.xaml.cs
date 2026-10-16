@@ -10,6 +10,7 @@ namespace Rewind.App.Views
         private readonly double _currentElapsed;
         private readonly Func<double, string?>? _frameLookup;
         public string BugTitle { get; private set; } = string.Empty;
+        public string TestCaseContext { get; private set; } = string.Empty;
         public double ClipStartSeconds { get; private set; }
         public double ClipEndSeconds { get; private set; }
         public bool EnableAiDraft { get; private set; }
@@ -166,7 +167,22 @@ namespace Rewind.App.Views
         private void Save_Click(object sender, RoutedEventArgs e)
         {
             _previewTimer?.Stop();
-            BugTitle = string.IsNullOrWhiteSpace(BugTitleBox.Text) ? "Bug @" + DateTime.Now.ToString("HH:mm:ss") : BugTitleBox.Text.Trim();
+            TestCaseContext = TestCaseBox?.Text?.Trim() ?? string.Empty;
+
+            var userTitle = BugTitleBox?.Text?.Trim() ?? string.Empty;
+            if (!string.IsNullOrWhiteSpace(userTitle))
+            {
+                BugTitle = userTitle;
+            }
+            else if (!string.IsNullOrWhiteSpace(TestCaseContext))
+            {
+                BugTitle = TestCaseContext;
+            }
+            else
+            {
+                BugTitle = "Bug @" + DateTime.Now.ToString("HH:mm:ss");
+            }
+
             ClipStartSeconds = StartSlider.Value;
             ClipEndSeconds = EndSlider.Value;
             EnableAiDraft = AiAssistCheck.IsChecked ?? false;

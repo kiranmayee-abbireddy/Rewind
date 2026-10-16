@@ -18,15 +18,25 @@
             <TextBlock Text="Select the relevant time interval prior to bug discovery to save as immutable evidence." FontSize="12" Foreground="#8B949E" Margin="0,4,0,0"/>
         </StackPanel>
 
-        <!-- Bug Title Field -->
-        <Grid Grid.Row="1" Margin="0,0,0,16">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-            <TextBlock Text="Bug Title:" VerticalAlignment="Center" FontWeight="SemiBold" Margin="0,0,12,0"/>
-            <TextBox Grid.Column="1" x:Name="BugTitleBox" Background="#161B22" Foreground="#FFFFFF" BorderBrush="#30363D" Padding="8,6" FontSize="13" Text="Discovered defect in active view"/>
-        </Grid>
+        <!-- Bug Title & Case Context Fields -->
+        <StackPanel Grid.Row="1" Margin="0,0,0,14">
+            <Grid Margin="0,0,0,8">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="110"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Text="Bug Title:" VerticalAlignment="Center" FontWeight="SemiBold" Foreground="#F0F6FC"/>
+                <TextBox Grid.Column="1" x:Name="BugTitleBox" Background="#161B22" Foreground="#FFFFFF" BorderBrush="#30363D" Padding="10,6" FontSize="13" Text="" Tag="Enter bug title or leave blank to derive from case"/>
+            </Grid>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="110"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Text="Test Case / Notes:" VerticalAlignment="Center" FontWeight="SemiBold" Foreground="#8B949E" FontSize="12"/>
+                <TextBox Grid.Column="1" x:Name="TestCaseBox" Background="#161B22" Foreground="#FFFFFF" BorderBrush="#30363D" Padding="10,6" FontSize="12" Text="" Tag="e.g. Checkout payment button frozen after clicking submit"/>
+            </Grid>
+        </StackPanel>
 
         <!-- Preview & Scrubber Area -->
         <Border Grid.Row="2" Background="#161B22" BorderBrush="#30363D" BorderThickness="1" CornerRadius="8" Padding="12" Margin="0,0,0,16">

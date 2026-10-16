@@ -21,9 +21,10 @@ namespace Rewind.App.Models
         public string OutputResolution { get; set; } = "1920x1080";
         public string StorageDirectory { get; set; } = string.Empty;
         public int MaximumClipDurationSeconds { get; set; } = 60;
-        public string GlobalHotkey { get; set; } = "Ctrl+Shift+R";
-        public string AiProvider { get; set; } = "Local / Rule-based Assistant";
+        public string AiProvider { get; set; } = "Ollama";
         public bool AiEnabled { get; set; } = true;
+        public string OllamaEndpoint { get; set; } = "http://localhost:11434";
+        public string OllamaModel { get; set; } = "qwen3:4b";
         public bool RecordMicrophone { get; set; } = false;
     }
 }

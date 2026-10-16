@@ -38,19 +38,19 @@ namespace Rewind.App.Views
 
                 if (state == "Recording")
                 {
-                    StatusDot.Fill = (System.Windows.Media.Brush)FindResource("DangerBrush");
+                    StatusDot.Background = (System.Windows.Media.Brush)FindResource("DangerBrush");
                     StatusText.Text = "REC";
                     StatusText.Foreground = (System.Windows.Media.Brush)FindResource("DangerBrush");
                 }
                 else if (state == "Paused")
                 {
-                    StatusDot.Fill = (System.Windows.Media.Brush)FindResource("WarningBrush");
+                    StatusDot.Background = (System.Windows.Media.Brush)FindResource("WarningBrush");
                     StatusText.Text = "PAUSE";
                     StatusText.Foreground = (System.Windows.Media.Brush)FindResource("WarningBrush");
                 }
                 else
                 {
-                    StatusDot.Fill = (System.Windows.Media.Brush)FindResource("TextSecondaryBrush");
+                    StatusDot.Background = (System.Windows.Media.Brush)FindResource("TextSecondaryBrush");
                     StatusText.Text = "IDLE";
                     StatusText.Foreground = (System.Windows.Media.Brush)FindResource("TextSecondaryBrush");
                 }
