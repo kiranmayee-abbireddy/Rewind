@@ -44,8 +44,10 @@
                 <!-- Appearance Theme Preference -->
                 <TextBlock Text="Visual Appearance &amp; Color Theme" FontSize="12.5" FontWeight="SemiBold" Foreground="{DynamicResource TextPrimaryBrush}" Margin="0,0,0,4"/>
                 <ComboBox x:Name="ThemeModeCombo" Background="{DynamicResource BgCardBrush}" Foreground="{DynamicResource TextPrimaryBrush}" BorderBrush="{DynamicResource BorderBrush}" Margin="0,0,0,14">
-                    <ComboBoxItem Content="Imperial Emerald Obsidian (Dark Mode)" IsSelected="True"/>
-                    <ComboBoxItem Content="Imperial Emerald &amp; Sage Ivory (Light Mode)"/>
+                    <ComboBoxItem Content="Cinematic Slate Studio (Dark Mode)" IsSelected="True"/>
+                    <ComboBoxItem Content="Nordic Porcelain Studio (Light Mode)"/>
+                    <ComboBoxItem Content="Imperial Emerald Obsidian"/>
+                    <ComboBoxItem Content="Cinematic Velvet Burgundy"/>
                 </ComboBox>
 
                 <!-- Buffer Duration -->

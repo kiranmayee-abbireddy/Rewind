@@ -227,27 +227,32 @@
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
 
-                <!-- Top Header & Active Session Status -->
+                <!-- Cinematic Studio Header & Session Control Hub -->
                 <Grid Grid.Row="0" Margin="0,0,0,20">
-                    <StackPanel>
-                        <TextBox x:Name="ActiveSessionTitleBox" Text="Active Session" FontSize="22" FontWeight="Bold" Background="Transparent" Foreground="{DynamicResource TextPrimaryBrush}" BorderThickness="0" Margin="0,0,0,4"/>
-                        <TextBlock x:Name="ActiveSessionSubtext" Text="Capture: Idle • No active recording" FontSize="13" Foreground="{DynamicResource TextSecondaryBrush}"/>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Grid.Column="0" VerticalAlignment="Center">
+                        <TextBox x:Name="ActiveSessionTitleBox" Text="Active Session" FontSize="20" FontWeight="Bold" Background="Transparent" Foreground="{DynamicResource TextPrimaryBrush}" BorderThickness="0" Margin="0,0,0,3"/>
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                            <Border Width="6" Height="6" CornerRadius="3" Background="{DynamicResource AccentBrush}" Margin="0,0,6,0"/>
+                            <TextBlock x:Name="ActiveSessionSubtext" Text="Capture: Idle • No active recording" FontSize="11.5" Foreground="{DynamicResource TextSecondaryBrush}"/>
+                        </StackPanel>
                     </StackPanel>
 
-                    <!-- Recording Controls -->
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
-                        <Button x:Name="StartStopCaptureBtn" Content="▶ Start Capture" Click="StartStopCapture_Click" Style="{StaticResource PrimaryButton}" Margin="0,0,8,0"/>
-                        <Button x:Name="PauseResumeBtn" Content="⏸ Pause" Click="PauseResume_Click" Style="{StaticResource SecondaryButton}" Margin="0,0,8,0" IsEnabled="False"/>
-                        <Button x:Name="PreserveBugBtn" Content="⚡ Preserve Bug" Click="PreserveBug_Click" Style="{StaticResource PrimaryButton}" Background="{DynamicResource GoldBrush}" BorderBrush="{DynamicResource GoldBrush}" Margin="0,0,8,0" IsEnabled="False"/>
-                        <Button x:Name="GenerateReportBtn" Content="📑 Generate Report" Click="GenerateReport_Click" Style="{StaticResource SecondaryButton}"/>
+                    <!-- Studio Action Ribbon -->
+                    <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
+                        <Button x:Name="StartStopCaptureBtn" Content="▶ Start Capture" Click="StartStopCapture_Click" Style="{StaticResource PrimaryButton}" Margin="0,0,6,0"/>
+                        <Button x:Name="PauseResumeBtn" Content="⏸ Pause" Click="PauseResume_Click" Style="{StaticResource SecondaryButton}" Margin="0,0,6,0" IsEnabled="False"/>
+                        <Button x:Name="PreserveBugBtn" Content="⚡ Preserve Evidence" Click="PreserveBug_Click" Style="{StaticResource PrimaryButton}" Background="{DynamicResource GoldBrush}" BorderBrush="{DynamicResource GoldBrush}" Margin="0,0,6,0" IsEnabled="False"/>
+                        <Button x:Name="GenerateReportBtn" Content="📑 Report" Click="GenerateReport_Click" Style="{StaticResource SecondaryButton}"/>
                     </StackPanel>
                 </Grid>
 
-                <!-- Buffer Status & AI Processing Banner -->
-                <Border Grid.Row="1" Background="{DynamicResource BgCardBrush}" BorderBrush="{DynamicResource BorderBrush}" BorderThickness="1" CornerRadius="10" Padding="16" Margin="0,0,0,20">
-                    <Border.Effect>
-                        <DropShadowEffect BlurRadius="16" ShadowDepth="4" Direction="270" Color="#000000" Opacity="0.3"/>
-                    </Border.Effect>
+                <!-- Cinematic Recording Monitor Card -->
+                <Border Grid.Row="1" Background="{DynamicResource BgCardBrush}" BorderBrush="{DynamicResource BorderBrush}" BorderThickness="1" CornerRadius="6" Padding="14,12" Margin="0,0,0,18">
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto"/>
@@ -255,18 +260,22 @@
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
 
-                        <StackPanel Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center" Margin="0,0,16,0">
-                            <Border x:Name="MainStatusDot" Width="12" Height="12" CornerRadius="6" Background="{DynamicResource TextSecondaryBrush}" Margin="0,0,8,0"/>
-                            <TextBlock x:Name="MainStatusLabel" Text="IDLE" FontWeight="Bold" FontSize="13" Foreground="{DynamicResource TextSecondaryBrush}" VerticalAlignment="Center"/>
-                        </StackPanel>
+                        <!-- Live Status Pill & Timecode Meter -->
+                        <Border Grid.Column="0" Background="{DynamicResource BgSecondaryBrush}" BorderBrush="{DynamicResource BorderBrush}" BorderThickness="1" CornerRadius="4" Padding="10,6" Margin="0,0,16,0" VerticalAlignment="Center">
+                            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                <Border x:Name="MainStatusDot" Width="8" Height="8" CornerRadius="4" Background="{DynamicResource TextSecondaryBrush}" Margin="0,0,8,0"/>
+                                <TextBlock x:Name="MainStatusLabel" Text="IDLE" FontWeight="Bold" FontSize="11" Foreground="{DynamicResource TextSecondaryBrush}" VerticalAlignment="Center" Margin="0,0,8,0"/>
+                                <TextBlock Text="00:00" FontFamily="Consolas, monospace" FontWeight="Bold" FontSize="12" Foreground="{DynamicResource TextPrimaryBrush}" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Border>
 
                         <StackPanel Grid.Column="1" VerticalAlignment="Center">
-                            <TextBlock x:Name="BufferStatsText" Text="Continuous rolling buffer is stopped. Click 'Start Capture' to begin." FontSize="12.5" Foreground="{DynamicResource TextPrimaryBrush}" FontWeight="Medium"/>
-                            <TextBlock x:Name="ProcessingStatusText" Text="When you discover a bug, click 'Preserve Bug' or use the Floating HUD to save recent history." FontSize="11" Foreground="{DynamicResource TextSecondaryBrush}" Margin="0,3,0,0"/>
-                            <ProgressBar x:Name="PreservationProgressBar" Height="4" Minimum="0" Maximum="100" IsIndeterminate="False" Visibility="Collapsed" Margin="0,6,0,0" Foreground="{DynamicResource AccentBrush}" Background="{DynamicResource BgSecondaryBrush}" BorderThickness="0"/>
+                            <TextBlock x:Name="BufferStatsText" Text="Continuous rolling buffer is stopped. Click 'Start Capture' to begin monitoring." FontSize="12" Foreground="{DynamicResource TextPrimaryBrush}" FontWeight="SemiBold"/>
+                            <TextBlock x:Name="ProcessingStatusText" Text="Rolling buffer runs silently in memory. Press Hotkey or HUD button when an issue occurs." FontSize="11" Foreground="{DynamicResource TextSecondaryBrush}" Margin="0,2,0,0"/>
+                            <ProgressBar x:Name="PreservationProgressBar" Height="3" Minimum="0" Maximum="100" IsIndeterminate="False" Visibility="Collapsed" Margin="0,6,0,0" Foreground="{DynamicResource AccentBrush}" Background="{DynamicResource BgSecondaryBrush}" BorderThickness="0"/>
                         </StackPanel>
 
-                        <Button Grid.Column="2" Content="Show HUD" Click="ShowHud_Click" Style="{StaticResource SecondaryButton}" VerticalAlignment="Center" Padding="12,7"/>
+                        <Button Grid.Column="2" Content="Floating HUD" Click="ShowHud_Click" Style="{StaticResource SecondaryButton}" VerticalAlignment="Center" Padding="10,5" FontSize="11"/>
                     </Grid>
                 </Border>
 

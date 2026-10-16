@@ -25,7 +25,13 @@ namespace Rewind.App.Views
             AudioEnabledCheck.IsChecked = current.RecordMicrophone;
             OllamaHostBox.Text = string.IsNullOrWhiteSpace(current.OllamaEndpoint) ? "http://localhost:11434" : current.OllamaEndpoint;
 
-            ThemeModeCombo.SelectedIndex = string.Equals(current.ThemeMode, "Light", System.StringComparison.OrdinalIgnoreCase) ? 1 : 0;
+            ThemeModeCombo.SelectedIndex = current.ThemeMode?.ToLowerInvariant() switch
+            {
+                "light" => 1,
+                "emerald" => 2,
+                "burgundy" => 3,
+                _ => 0
+            };
 
             var baseDir = System.IO.Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.LocalApplicationData), "Rewind");
             StorageDirBox.Text = baseDir;
@@ -190,7 +196,13 @@ namespace Rewind.App.Views
             Settings.CaptureSource = SourceCombo.SelectedIndex == 1 ? "Active Foreground Window" : "Primary Display (Entire Screen)";
             Settings.AiEnabled = AiEnabledCheck.IsChecked ?? true;
             Settings.RecordMicrophone = AudioEnabledCheck.IsChecked ?? false;
-            Settings.ThemeMode = ThemeModeCombo.SelectedIndex == 1 ? "Light" : "Dark";
+            Settings.ThemeMode = ThemeModeCombo.SelectedIndex switch
+            {
+                1 => "Light",
+                2 => "Emerald",
+                3 => "Burgundy",
+                _ => "Dark"
+            };
             Settings.OllamaEndpoint = string.IsNullOrWhiteSpace(OllamaHostBox.Text) ? "http://localhost:11434" : OllamaHostBox.Text.Trim();
             Settings.OllamaModel = OllamaModelCombo.SelectedItem?.ToString() ?? (string.IsNullOrWhiteSpace(OllamaModelCombo.Text) ? "llama3:latest" : OllamaModelCombo.Text);
 
