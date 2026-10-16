@@ -24,7 +24,7 @@ namespace Rewind.App.Models
         public string AiProvider { get; set; } = "Ollama";
         public bool AiEnabled { get; set; } = true;
         public string OllamaEndpoint { get; set; } = "http://localhost:11434";
-        public string OllamaModel { get; set; } = "qwen3:4b";
+        public string OllamaModel { get; set; } = "gemma3:1b";
         public bool RecordMicrophone { get; set; } = false;
     }
 }

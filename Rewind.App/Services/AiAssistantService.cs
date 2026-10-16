@@ -24,7 +24,7 @@ namespace Rewind.App.Services
         public bool IsEnabled { get; set; } = true;
         public string ProviderName => $"Ollama ({_modelName})";
 
-        public OllamaAiAssistant(string endpoint = "http://localhost:11434", string modelName = "qwen3:4b")
+        public OllamaAiAssistant(string endpoint = "http://localhost:11434", string modelName = "gemma3:1b")
         {
             _endpoint = endpoint.TrimEnd('/');
             _modelName = modelName;
@@ -40,7 +40,7 @@ A tester captured a {durationSeconds:0.0}s bug evidence video clip.
 User's notes / test case: ""{userCaseOrContext}""
 
 Generate a clear, professional defect report in concise format:
-TITLE: [Concise, high-impact bug title describing the core failure, incorporating the user's case]
+TITLE: [Concise 3-7 word bug title describing the core failure, using professional QA phrasing without brackets or quotes]
 OBSERVED: [Clear description of what went wrong]
 REPRO: [Numbered 1-4 step reproduction sequence]
 SUGGESTIONS: [Technical severity rating & suggestions]
@@ -54,8 +54,9 @@ Do not include conversational preamble. Respond directly with TITLE:, OBSERVED:,
                     stream = false
                 };
 
+                using var cts = new System.Threading.CancellationTokenSource(TimeSpan.FromSeconds(25));
                 var content = new StringContent(JsonSerializer.Serialize(requestObj), Encoding.UTF8, "application/json");
-                var response = await _httpClient.PostAsync($"{_endpoint}/api/generate", content);
+                var response = await _httpClient.PostAsync($"{_endpoint}/api/generate", content, cts.Token);
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -92,7 +93,7 @@ Do not include conversational preamble. Respond directly with TITLE:, OBSERVED:,
                 var line = rawLine.Trim();
                 if (line.StartsWith("TITLE:", StringComparison.OrdinalIgnoreCase))
                 {
-                    title = line.Substring("TITLE:".Length).Trim();
+                    title = CleanTitle(line.Substring("TITLE:".Length).Trim());
                     currentSection = "TITLE";
                 }
                 else if (line.StartsWith("OBSERVED:", StringComparison.OrdinalIgnoreCase) || line.StartsWith("OBSERVED BEHAVIOR:", StringComparison.OrdinalIgnoreCase))
@@ -115,13 +116,13 @@ Do not include conversational preamble. Respond directly with TITLE:, OBSERVED:,
                     if (currentSection == "OBSERVED") sbObserved.AppendLine(line);
                     else if (currentSection == "REPRO") sbRepro.AppendLine(line);
                     else if (currentSection == "SUGGESTIONS") sbSuggestions.AppendLine(line);
-                    else if (string.IsNullOrEmpty(title)) title = line;
+                    else if (string.IsNullOrEmpty(title) && !line.StartsWith("#")) title = CleanTitle(line);
                 }
             }
 
             if (string.IsNullOrWhiteSpace(title))
             {
-                title = !string.IsNullOrWhiteSpace(userContext) ? $"Defect in {userContext}" : $"Defect captured in {duration:0.0}s clip";
+                title = CleanTitle(!string.IsNullOrWhiteSpace(userContext) ? userContext : $"Defect captured in {duration:0.0}s clip");
             }
 
             if (sbObserved.Length == 0) sbObserved.AppendLine($"Anomalous behavior observed during testing of '{userContext}'.");
@@ -129,6 +130,15 @@ Do not include conversational preamble. Respond directly with TITLE:, OBSERVED:,
             if (sbSuggestions.Length == 0) sbSuggestions.AppendLine("Severity: Medium. Review associated logs and network payload.");
 
             return (title.Trim(), sbObserved.ToString().Trim(), sbRepro.ToString().Trim(), sbSuggestions.ToString().Trim());
+        }
+
+        public static string CleanTitle(string raw)
+        {
+            if (string.IsNullOrWhiteSpace(raw)) return "Defect Discovery";
+            var cleaned = raw.Trim().Trim('[', ']', '"', '\'', '*', '#', ' ');
+            if (cleaned.StartsWith("Bug:", StringComparison.OrdinalIgnoreCase)) cleaned = cleaned.Substring(4).Trim();
+            if (cleaned.StartsWith("Defect:", StringComparison.OrdinalIgnoreCase)) cleaned = cleaned.Substring(7).Trim();
+            return cleaned.Length > 0 ? cleaned : "Defect Discovery";
         }
 
         public async Task<string> SummarizeSessionReportAsync(string sessionTitle, int bugCount, string bugTitlesSummary)
@@ -180,10 +190,9 @@ Write a professional executive summary covering key risks, defect clusters, and 
         {
             await Task.Delay(100);
 
-            var timestamp = DateTime.Now.ToString("HH:mm:ss");
             var title = !string.IsNullOrWhiteSpace(userCaseOrContext)
-                ? $"Defect in [{userCaseOrContext.Trim()}] @ {timestamp}"
-                : $"Unexpected UI state transition detected @ {timestamp}";
+                ? OllamaAiAssistant.CleanTitle(userCaseOrContext)
+                : $"Defect captured in {durationSeconds:0.0}s clip";
 
             var observed = $"Anomalous interaction recorded during '{(!string.IsNullOrWhiteSpace(userCaseOrContext) ? userCaseOrContext : "workflow")}'. Screen visual activity captured ({durationSeconds:0.0}s).";
             var repro = $"1. Launch application under test.\n2. Navigate to screen active during discovery.\n3. Execute scenario: {(!string.IsNullOrWhiteSpace(userCaseOrContext) ? userCaseOrContext : "reproduction sequence")}.\n4. Observe discrepancy with expected state.";

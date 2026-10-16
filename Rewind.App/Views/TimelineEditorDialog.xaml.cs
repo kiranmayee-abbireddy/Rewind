@@ -11,6 +11,7 @@ namespace Rewind.App.Views
         private readonly Func<double, string?>? _frameLookup;
         public string BugTitle { get; private set; } = string.Empty;
         public string TestCaseContext { get; private set; } = string.Empty;
+        public bool UserProvidedExplicitTitle { get; private set; }
         public double ClipStartSeconds { get; private set; }
         public double ClipEndSeconds { get; private set; }
         public bool EnableAiDraft { get; private set; }
@@ -173,14 +174,17 @@ namespace Rewind.App.Views
             if (!string.IsNullOrWhiteSpace(userTitle))
             {
                 BugTitle = userTitle;
+                UserProvidedExplicitTitle = true;
             }
             else if (!string.IsNullOrWhiteSpace(TestCaseContext))
             {
                 BugTitle = TestCaseContext;
+                UserProvidedExplicitTitle = false;
             }
             else
             {
                 BugTitle = "Bug @" + DateTime.Now.ToString("HH:mm:ss");
+                UserProvidedExplicitTitle = false;
             }
 
             ClipStartSeconds = StartSlider.Value;

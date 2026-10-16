@@ -125,6 +125,10 @@ namespace Rewind.App
         private void SelectSession(Session session)
         {
             _activeSession = session;
+            if (SessionsList.SelectedItem != session)
+            {
+                SessionsList.SelectedItem = session;
+            }
             ActiveSessionTitleBox.Text = session.Title;
             LoadBugsForActiveSession();
         }
@@ -289,8 +293,8 @@ namespace Rewind.App
                         var analysis = await _aiAssistant.AnalyzeClipAsync(clipFile, bug.DurationSeconds, userContext);
                         bug.AiAssisted = true;
 
-                        // Rewrite bug title with AI professional synthesis if user requested AI
-                        if (!string.IsNullOrWhiteSpace(analysis.Title))
+                        // Only rewrite bug title with AI if user did not explicitly supply a custom bug title
+                        if (!dialog.UserProvidedExplicitTitle && !string.IsNullOrWhiteSpace(analysis.Title))
                         {
                             bug.Title = analysis.Title;
                         }
@@ -304,6 +308,9 @@ namespace Rewind.App
                     Bugs.Add(bug);
                     BugCountLabel.Text = $"{Bugs.Count} bugs saved";
                     ProcessingStatusText.Text = $"✔ Bug '{bug.Title}' successfully preserved with immutable video evidence!";
+
+                    // Ensure SessionsList selection is visually synchronized with the active session
+                    SessionsList.SelectedItem = _activeSession;
 
                     // Open Bug Detail Editor right after preservation
                     var detail = new BugDetailWindow(bug);
@@ -339,6 +346,31 @@ namespace Rewind.App
         {
             if (_activeSession == null) return;
             var bugsList = _dbService.GetBugsForSession(_activeSession.Id);
+
+            // If active session has 0 bugs, check if other sessions have preserved bugs
+            if (bugsList.Count == 0)
+            {
+                var sessionsWithBugs = Sessions.Where(s => _dbService.GetBugsForSession(s.Id).Count > 0).ToList();
+                if (sessionsWithBugs.Count > 0)
+                {
+                    var targetSession = sessionsWithBugs[0];
+                    var result = MessageBox.Show(
+                        $"The currently selected session '{_activeSession.Title}' has 0 bugs saved.\n\nWould you like to generate the report for '{targetSession.Title}', which contains {_dbService.GetBugsForSession(targetSession.Id).Count} preserved bug(s)?",
+                        "Generate Report — Select Session",
+                        MessageBoxButton.YesNo,
+                        MessageBoxImage.Question);
+
+                    if (result == MessageBoxResult.Yes)
+                    {
+                        SelectSession(targetSession);
+                        bugsList = _dbService.GetBugsForSession(targetSession.Id);
+                    }
+                    else
+                    {
+                        // Proceed with empty report or return
+                    }
+                }
+            }
 
             string? aiSummary = null;
             if (_aiAssistant.IsEnabled && bugsList.Count > 0)
