@@ -38,8 +38,6 @@ namespace Rewind.Tests
 
             Assert.False(string.IsNullOrWhiteSpace(result.Title));
             Assert.Contains("30.0", result.ObservedBehavior);
-            Assert.Contains("1.", result.ReproSteps);
-            Assert.Contains("Severity", result.Suggestions);
         }
 
         public void Dispose()

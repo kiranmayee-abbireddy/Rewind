@@ -23,17 +23,6 @@ namespace Rewind.App.Views
             ClipPathLabel.Text = $"File: {bug.ClipPath}";
             ObservedBox.Text = bug.ObservedBehavior;
             ExpectedBox.Text = bug.ExpectedBehavior;
-            ReproBox.Text = bug.ReproductionSteps;
-            TagsBox.Text = bug.Tags;
-
-            foreach (ComboBoxItem item in StatusCombo.Items)
-            {
-                if (item.Content.ToString() == bug.Status)
-                {
-                    item.IsSelected = true;
-                    break;
-                }
-            }
 
             if (bug.AiAssisted && !string.IsNullOrWhiteSpace(bug.AiSuggestions))
             {
@@ -213,9 +202,6 @@ namespace Rewind.App.Views
             _bug.Title = string.IsNullOrWhiteSpace(TitleBox.Text) ? _bug.Title : TitleBox.Text.Trim();
             _bug.ObservedBehavior = ObservedBox.Text.Trim();
             _bug.ExpectedBehavior = ExpectedBox.Text.Trim();
-            _bug.ReproductionSteps = ReproBox.Text.Trim();
-            _bug.Tags = TagsBox.Text.Trim();
-            _bug.Status = ((ComboBoxItem)StatusCombo.SelectedItem)?.Content?.ToString() ?? "Open";
 
             DialogResult = true;
             Close();

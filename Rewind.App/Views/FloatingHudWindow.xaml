@@ -1,65 +1,73 @@
 <Window x:Class="Rewind.App.Views.FloatingHudWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="REWIND HUD" SizeToContent="WidthAndHeight"
+        Title="REWIND Companion" SizeToContent="WidthAndHeight"
         WindowStyle="None" AllowsTransparency="True" Background="Transparent"
         Topmost="True" ShowInTaskbar="False" ResizeMode="NoResize"
         WindowStartupLocation="Manual">
+
+
     <Grid Margin="12">
         <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-            <!-- Full Expanded HUD Capsule -->
-            <Border x:Name="HudCapsule" CornerRadius="16" Background="#111620" BorderBrush="#253043" BorderThickness="1.5" Padding="8,6,8,6"
-                    MouseLeftButtonDown="HudCapsule_MouseDown" Cursor="Hand" ToolTip="REWIND HUD • Drag to reposition • Double-click to open dashboard">
+            <!-- Full Expanded Companion Capsule -->
+            <Border x:Name="HudCapsule" CornerRadius="18" Background="{DynamicResource BgCardBrush}" BorderBrush="{DynamicResource BorderBrush}" BorderThickness="1.5" Padding="8,5,10,5"
+                    MouseLeftButtonDown="HudCapsule_MouseDown" Cursor="Hand" ToolTip="REWIND QA Companion • Drag to reposition • Double-click to open dashboard">
                 <Border.Effect>
-                    <DropShadowEffect BlurRadius="20" ShadowDepth="3" Direction="270" Color="#000000" Opacity="0.8"/>
+                    <DropShadowEffect BlurRadius="22" ShadowDepth="4" Direction="270" Color="#000000" Opacity="0.85"/>
                 </Border.Effect>
-                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                    <!-- Tech Status Chip -->
-                    <Border Background="#171F2C" CornerRadius="8" Padding="7,4" Margin="0,0,10,0" BorderBrush="#1F2937" BorderThickness="1">
-                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                <StackPanel x:Name="ExpandedPanel" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
+                    <!-- Avocado Mascot Avatar -->
+                    <ContentControl x:Name="ExpandedMascotAvatar" Template="{StaticResource AvocadoMascot}" VerticalAlignment="Center" Margin="0,0,8,0"/>
+
+                    <!-- REC & Timer Pill -->
+                    <Border x:Name="StatusPillBorder" Background="{DynamicResource BgSecondaryBrush}" CornerRadius="10" Padding="8,4" Margin="0,0,8,0" BorderBrush="{DynamicResource BorderBrush}" BorderThickness="1">
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
                             <Border x:Name="StatusDot" Width="7" Height="7" CornerRadius="3.5" Background="#EF4444" Margin="0,0,6,0" VerticalAlignment="Center"/>
                             <TextBlock x:Name="StatusText" Text="REC" FontWeight="Bold" FontSize="11" Foreground="#EF4444" Margin="0,0,6,0" VerticalAlignment="Center"/>
-                            <TextBlock x:Name="BufferTimeText" Text="00:00" FontWeight="Bold" FontSize="12" Foreground="#F3F6FC" VerticalAlignment="Center"/>
+                            <TextBlock x:Name="BufferTimeText" Text="00:00" FontWeight="Bold" FontSize="12" Foreground="{DynamicResource TextPrimaryBrush}" VerticalAlignment="Center"/>
                         </StackPanel>
                     </Border>
 
-                    <!-- Preserve Button -->
-                    <Button Click="PreserveButton_Click" Style="{StaticResource PrimaryButton}" Padding="10,5" Margin="0,0,6,0" ToolTip="Capture recent buffer as a bug">
-                        <StackPanel Orientation="Horizontal">
-                            <Path Data="{StaticResource LightningBoltGeometry}" Fill="#FFFFFF" Stretch="Uniform" Width="10" Height="10" Margin="0,0,5,0" VerticalAlignment="Center"/>
-                            <TextBlock Text="Preserve" FontWeight="Bold" FontSize="11"/>
-                        </StackPanel>
+                    <!-- Quick Preserve Bug Button (High Visibility Gold Action) -->
+                    <Button x:Name="PreserveBtn" Click="PreserveButton_Click" Style="{StaticResource PrimaryButton}" 
+                            Background="{DynamicResource GoldBrush}" BorderBrush="{DynamicResource GoldBrush}"
+                            Width="32" Height="28" Padding="0" Margin="0,0,6,0" ToolTip="Preserve Bug • Capture recent buffer evidence">
+                        <Path Data="{StaticResource LightningBoltGeometry}" Fill="#FFFFFF" Stretch="Uniform" Width="12" Height="12" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                     </Button>
 
                     <!-- Open Full Dashboard Button -->
-                    <Button Click="OpenMain_Click" Style="{StaticResource SecondaryButton}" Padding="8,5" Margin="0,0,6,0" ToolTip="Open Full Dashboard">
-                        <TextBlock Text="⤢" FontSize="11" Foreground="#94A3B8"/>
+                    <Button x:Name="OpenMainBtn" Click="OpenMain_Click" Style="{StaticResource SecondaryButton}" Width="28" Height="28" Padding="0" Margin="0,0,5,0" ToolTip="Open Full Dashboard">
+                        <Path Data="{StaticResource WinExpandGeometry}" Stroke="{DynamicResource TextSecondaryBrush}" StrokeThickness="1.5" Stretch="Uniform" Width="10" Height="10" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                     </Button>
 
-                    <!-- Minimize Button -->
-                    <Button Click="ToggleMinimize_Click" Style="{StaticResource SecondaryButton}" Padding="8,5" ToolTip="Minimize HUD">
-                        <TextBlock Text="—" FontSize="11" FontWeight="Bold" Foreground="#94A3B8"/>
+                    <!-- Minimize to Floating Mascot Only Button -->
+                    <Button x:Name="MinimizeBtn" Click="ToggleMinimize_Click" Style="{StaticResource SecondaryButton}" Width="28" Height="28" Padding="0" Margin="0,0,5,0" ToolTip="Minimize to Avocado Mascot Only">
+                        <Path Data="{StaticResource WinMinimizeGeometry}" Fill="{DynamicResource TextSecondaryBrush}" Stretch="Uniform" Width="9" Height="2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Button>
+
+                    <!-- Hide HUD Completely Button -->
+                    <Button x:Name="HideHudBtn" Click="HideHud_Click" Style="{StaticResource SecondaryButton}" Width="28" Height="28" Padding="0" ToolTip="Hide Companion (Press HUD toggle in dashboard to restore)">
+                        <Path Data="{StaticResource WinCloseGeometry}" Fill="{DynamicResource TextSecondaryBrush}" Stretch="Uniform" Width="8" Height="8" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                     </Button>
                 </StackPanel>
             </Border>
 
-            <!-- Minimized Floating Widget Pill (Shown when user clicks minimize) -->
-            <Border x:Name="MinimizedCapsule" Visibility="Collapsed" CornerRadius="14" Background="#111620" BorderBrush="#388BFD" BorderThickness="1.5" Padding="8,5"
-                    MouseLeftButtonDown="MinimizedCapsule_MouseDown" Cursor="Hand" ToolTip="REWIND Floating Indicator • Click to expand controls • Drag to move">
-                <Border.Effect>
-                    <DropShadowEffect BlurRadius="16" ShadowDepth="2" Direction="270" Color="#000000" Opacity="0.8"/>
-                </Border.Effect>
-                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                    <Border x:Name="MiniStatusDot" Width="7" Height="7" CornerRadius="3.5" Background="#EF4444" Margin="0,0,6,0" VerticalAlignment="Center"/>
-                    <TextBlock x:Name="MiniBufferTimeText" Text="00:00" FontWeight="Bold" FontSize="11.5" Foreground="#F3F6FC" Margin="0,0,8,0" VerticalAlignment="Center"/>
-                    <!-- Direct Quick-Preserve lightning icon in minimized state -->
-                    <Border Background="#388BFD" Width="18" Height="18" CornerRadius="9" Margin="0,0,6,0" MouseLeftButtonDown="MiniPreserve_MouseDown" ToolTip="Quick Preserve Bug" Cursor="Hand">
-                        <Path Data="{StaticResource LightningBoltGeometry}" Fill="#FFFFFF" Stretch="Uniform" Width="8" Height="8" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                    </Border>
-                    <!-- Expand chevron -->
-                    <TextBlock Text="+" FontWeight="Bold" FontSize="13" Foreground="#94A3B8" VerticalAlignment="Center"/>
-                </StackPanel>
-            </Border>
+            <!-- Minimized Avocado Mascot Only (Seamless Borderless Mascot) -->
+            <Grid x:Name="MinimizedCapsule" Visibility="Collapsed" Width="44" Height="48"
+                  PreviewMouseLeftButtonDown="MinimizedCapsule_PreviewMouseLeftButtonDown"
+                  PreviewMouseLeftButtonUp="MinimizedCapsule_PreviewMouseLeftButtonUp"
+                  MouseRightButtonUp="MinimizedCapsule_MouseRightButtonUp"
+                  Cursor="Hand" ToolTip="REWIND Avocado Companion • Click to expand • Right-click to hide">
+                <!-- Avocado Mascot Face Center (Completely Borderless) -->
+                <ContentControl Template="{StaticResource AvocadoMascot}" HorizontalAlignment="Center" VerticalAlignment="Center" IsHitTestVisible="False"/>
+                
+                <!-- Mini status dot indicating REC/IDLE on mascot sprout -->
+                <Border x:Name="MiniStatusDot" Width="8" Height="8" CornerRadius="4" Background="#EF4444" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,0,2,0">
+                    <Border.Effect>
+                        <DropShadowEffect Color="#EF4444" BlurRadius="6" ShadowDepth="0" Opacity="0.95"/>
+                    </Border.Effect>
+                </Border>
+            </Grid>
         </StackPanel>
     </Grid>
 </Window>

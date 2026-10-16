@@ -122,15 +122,9 @@ namespace Rewind.App.Services
                 if (string.IsNullOrWhiteSpace(videoName)) videoName = $"bug_{bug.Id}.mp4";
 
                 sb.AppendLine($"[{i + 1}] {bug.Title.ToUpper()}");
-                sb.AppendLine($"    • Status:      {bug.Status}");
                 sb.AppendLine($"    • Video Clip:  {videoName}");
                 sb.AppendLine($"    • Duration:    {bug.DurationSeconds:0.0}s");
                 sb.AppendLine($"    • Description: {(!string.IsNullOrWhiteSpace(bug.ObservedBehavior) ? bug.ObservedBehavior : "No description specified.")}");
-                
-                if (!string.IsNullOrWhiteSpace(bug.ReproductionSteps))
-                {
-                    sb.AppendLine($"    • Repro Steps: {bug.ReproductionSteps.Replace("\r", "").Replace("\n", " -> ")}");
-                }
                 sb.AppendLine();
             }
 

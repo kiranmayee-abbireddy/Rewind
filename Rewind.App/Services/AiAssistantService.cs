@@ -32,19 +32,18 @@ namespace Rewind.App.Services
 
         public async Task<(string Title, string ObservedBehavior, string ReproSteps, string Suggestions)> AnalyzeClipAsync(string clipPath, double durationSeconds, string userCaseOrContext = "")
         {
-            var fallback = new RuleBasedLocalAiAssistant();
             var prompt = $@"You are an expert QA Software Test Engineer.
-A software tester provided this defect note / test observation:
-""{userCaseOrContext}""
-(Evidence duration: {durationSeconds:0.0}s).
+A software tester reported a bug with these inputs:
+User Context / Notes: ""{userCaseOrContext}""
+Evidence duration: {durationSeconds:0.0}s.
 
-Rewrite and elevate this into a clean, professional QA defect report:
-TITLE: [Concise 3-8 word bug title summarizing the defect clearly and accurately based on the tester's note, without quotes or brackets]
-OBSERVED: [Rewrite the tester's note into 1-2 polished, clear sentences describing the exact defect observed]
-REPRO: [1-3 concise reproduction steps derived directly from the user's test scenario]
-SUGGESTIONS: [Severity rating and recommended technical check]
+Analyze the user's notes and rewrite them into a high quality QA defect summary:
+TITLE: [Concise 3-7 word bug title accurately describing the defect from user input, capitalized, no quotes]
+DESCRIPTION: [A clear, polished 1-2 sentence description explaining the exact observed behavior and what went wrong based directly on the tester's notes]
 
-Do not include conversational preamble. Output only TITLE:, OBSERVED:, REPRO:, and SUGGESTIONS:.";
+Output ONLY:
+TITLE: <rewritten title>
+DESCRIPTION: <rewritten description>";
 
             // Try configured model first (e.g. llama3:latest)
             var result = await TryGenerateWithModelAsync(_modelName, prompt, userCaseOrContext, durationSeconds);
@@ -61,6 +60,8 @@ Do not include conversational preamble. Output only TITLE:, OBSERVED:, REPRO:, a
             var gemmaResult = await TryGenerateWithModelAsync("gemma3:1b", prompt, userCaseOrContext, durationSeconds);
             if (gemmaResult != null) return gemmaResult.Value;
 
+            // Fallback to offline rule-based assistant
+            var fallback = new RuleBasedLocalAiAssistant();
             return await fallback.AnalyzeClipAsync(clipPath, durationSeconds, userCaseOrContext);
         }
 
@@ -105,16 +106,10 @@ Do not include conversational preamble. Output only TITLE:, OBSERVED:, REPRO:, a
         private static (string Title, string ObservedBehavior, string ReproSteps, string Suggestions) ParseLlmResponse(string text, string userContext, double duration)
         {
             string title = string.Empty;
-            string observed = string.Empty;
-            string repro = string.Empty;
-            string suggestions = string.Empty;
 
             var lines = text.Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries);
             string currentSection = "TITLE";
-
             var sbObserved = new StringBuilder();
-            var sbRepro = new StringBuilder();
-            var sbSuggestions = new StringBuilder();
 
             foreach (var rawLine in lines)
             {
@@ -124,27 +119,26 @@ Do not include conversational preamble. Output only TITLE:, OBSERVED:, REPRO:, a
                     title = CleanTitle(line.Substring("TITLE:".Length).Trim());
                     currentSection = "TITLE";
                 }
-                else if (line.StartsWith("OBSERVED:", StringComparison.OrdinalIgnoreCase) || line.StartsWith("OBSERVED BEHAVIOR:", StringComparison.OrdinalIgnoreCase))
+                else if (line.StartsWith("DESCRIPTION:", StringComparison.OrdinalIgnoreCase) ||
+                         line.StartsWith("OBSERVED:", StringComparison.OrdinalIgnoreCase) ||
+                         line.StartsWith("OBSERVED BEHAVIOR:", StringComparison.OrdinalIgnoreCase))
                 {
                     sbObserved.AppendLine(line.Substring(line.IndexOf(':') + 1).Trim());
                     currentSection = "OBSERVED";
                 }
-                else if (line.StartsWith("REPRO:", StringComparison.OrdinalIgnoreCase) || line.StartsWith("REPRODUCTION STEPS:", StringComparison.OrdinalIgnoreCase))
-                {
-                    sbRepro.AppendLine(line.Substring(line.IndexOf(':') + 1).Trim());
-                    currentSection = "REPRO";
-                }
-                else if (line.StartsWith("SUGGESTIONS:", StringComparison.OrdinalIgnoreCase))
-                {
-                    sbSuggestions.AppendLine(line.Substring("SUGGESTIONS:".Length).Trim());
-                    currentSection = "SUGGESTIONS";
-                }
                 else
                 {
-                    if (currentSection == "OBSERVED") sbObserved.AppendLine(line);
-                    else if (currentSection == "REPRO") sbRepro.AppendLine(line);
-                    else if (currentSection == "SUGGESTIONS") sbSuggestions.AppendLine(line);
-                    else if (string.IsNullOrEmpty(title) && !line.StartsWith("#")) title = CleanTitle(line);
+                    if (currentSection == "OBSERVED")
+                    {
+                        if (!line.StartsWith("REPRO", StringComparison.OrdinalIgnoreCase) && !line.StartsWith("SUGGEST", StringComparison.OrdinalIgnoreCase))
+                        {
+                            sbObserved.AppendLine(line);
+                        }
+                    }
+                    else if (string.IsNullOrEmpty(title) && !line.StartsWith("#") && !line.StartsWith("Here", StringComparison.OrdinalIgnoreCase))
+                    {
+                        title = CleanTitle(line);
+                    }
                 }
             }
 
@@ -153,11 +147,13 @@ Do not include conversational preamble. Output only TITLE:, OBSERVED:, REPRO:, a
                 title = CleanTitle(!string.IsNullOrWhiteSpace(userContext) ? userContext : $"Defect captured in {duration:0.0}s clip");
             }
 
-            if (sbObserved.Length == 0) sbObserved.AppendLine($"Anomalous behavior observed during testing of '{userContext}'.");
-            if (sbRepro.Length == 0) sbRepro.AppendLine($"1. Navigate to target view.\n2. Execute workflow: {userContext}.\n3. Observe defect.");
-            if (sbSuggestions.Length == 0) sbSuggestions.AppendLine("Severity: Medium. Review associated logs and network payload.");
+            var obsText = sbObserved.ToString().Trim();
+            if (string.IsNullOrWhiteSpace(obsText))
+            {
+                obsText = RuleBasedLocalAiAssistant.SynthesizePolishedDescription(userContext, duration);
+            }
 
-            return (title.Trim(), sbObserved.ToString().Trim(), sbRepro.ToString().Trim(), sbSuggestions.ToString().Trim());
+            return (title.Trim(), obsText, string.Empty, string.Empty);
         }
 
         public static string CleanTitle(string raw)
@@ -216,14 +212,33 @@ Write a professional executive summary covering key risks, defect clusters, and 
 
         public async Task<(string Title, string ObservedBehavior, string ReproSteps, string Suggestions)> AnalyzeClipAsync(string clipPath, double durationSeconds, string userCaseOrContext = "")
         {
-            await Task.Delay(100);
+            await Task.Delay(50);
 
             var title = SynthesizeRuleBasedTitle(userCaseOrContext, durationSeconds);
-            var observed = $"Anomalous interaction recorded during '{(!string.IsNullOrWhiteSpace(userCaseOrContext) ? userCaseOrContext : "workflow")}'. Screen visual activity captured ({durationSeconds:0.0}s).";
-            var repro = $"1. Launch application under test.\n2. Navigate to screen active during discovery.\n3. Execute scenario: {(!string.IsNullOrWhiteSpace(userCaseOrContext) ? userCaseOrContext : "reproduction sequence")}.\n4. Observe discrepancy with expected state.";
-            var suggestions = "Candidate Severity: Moderate (Visual / Behavioral discrepancy).\n• Verify if related console errors, network drops, or rendering glitches occurred.\n• Check if responsive breakpoint or layout boundary condition triggered this anomaly.";
+            var observed = SynthesizePolishedDescription(userCaseOrContext, durationSeconds);
 
-            return (title, observed, repro, suggestions);
+            return (title, observed, string.Empty, string.Empty);
+        }
+
+        public static string SynthesizePolishedDescription(string userContext, double duration)
+        {
+            if (string.IsNullOrWhiteSpace(userContext))
+            {
+                return $"Visual defect recorded and preserved in {duration:0.0}s screen capture.";
+            }
+
+            var text = userContext.Trim();
+            if (char.IsLower(text[0]))
+            {
+                text = char.ToUpper(text[0]) + text.Substring(1);
+            }
+
+            if (!text.EndsWith('.') && !text.EndsWith('!') && !text.EndsWith('?'))
+            {
+                text += ".";
+            }
+
+            return text;
         }
 
         private static string SynthesizeRuleBasedTitle(string userContext, double duration)

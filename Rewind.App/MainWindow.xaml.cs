@@ -24,6 +24,7 @@ namespace Rewind.App
         private Session? _activeSession;
         public ObservableCollection<Session> Sessions { get; } = new();
         public ObservableCollection<Bug> Bugs { get; } = new();
+        private bool _isModalDialogOpen;
 
         public MainWindow()
         {
@@ -31,6 +32,9 @@ namespace Rewind.App
 
             _dbService = new DatabaseService();
             _appSettings = _dbService.LoadAppSettings();
+            ThemeManager.ApplyTheme(_appSettings.ThemeMode);
+            UpdateThemeIcon(_appSettings.ThemeMode);
+
             _aiAssistant = new OllamaAiAssistant(_appSettings.OllamaEndpoint, _appSettings.OllamaModel)
             {
                 IsEnabled = _appSettings.AiEnabled
@@ -58,6 +62,29 @@ namespace Rewind.App
                 Show();
                 WindowState = WindowState.Normal;
                 Activate();
+            };
+            _hudWindow.OnVisibilityChanged += (isVisible) =>
+            {
+                UpdateHudToggleButton(isVisible);
+            };
+
+            // Pause rolling buffer capture when dashboard window is active so background work doesn't pollute the buffer
+            Activated += (s, e) =>
+            {
+                if (_captureEngine.IsRunning && !_captureEngine.IsPaused)
+                {
+                    _captureEngine.Pause();
+                }
+            };
+
+            // Resume rolling buffer when user focuses other applications on desktop
+            Deactivated += (s, e) =>
+            {
+                // Only resume if no modal dialog is open and capture was in running state
+                if (_captureEngine.IsRunning && _captureEngine.IsPaused && !_isModalDialogOpen)
+                {
+                    _captureEngine.Resume();
+                }
             };
 
             Loaded += (s, e) =>
@@ -265,116 +292,136 @@ namespace Rewind.App
 
         private async void OpenPreserveBugFlow()
         {
-            var elapsed = _captureEngine.CurrentElapsedSeconds;
-            var thumb = _captureEngine.GetLatestThumbnail();
-
-            var dialog = new TimelineEditorDialog(elapsed, thumb, _captureEngine.GetFrameAtTime);
-            if (dialog.ShowDialog() == true)
+            var wasRunning = _captureEngine.IsRunning && !_captureEngine.IsPaused;
+            if (wasRunning)
             {
-                if (_activeSession == null) CreateNewSession();
+                _captureEngine.Pause();
+            }
 
-                var bug = new Bug
+            try
+            {
+                var elapsed = _captureEngine.CurrentElapsedSeconds;
+                var thumb = _captureEngine.GetLatestThumbnail();
+
+                var dialog = new TimelineEditorDialog(elapsed, thumb, _captureEngine.GetFrameAtTime);
+                if (dialog.ShowDialog() == true)
                 {
-                    SessionId = _activeSession!.Id,
-                    Title = dialog.BugTitle,
-                    ClipStartSeconds = dialog.ClipStartSeconds,
-                    ClipEndSeconds = dialog.ClipEndSeconds,
-                    CreatedAt = DateTime.UtcNow,
-                    Status = "Open"
-                };
+                    if (_activeSession == null) CreateNewSession();
 
-                if (_activeSession == null) CreateNewSession();
-
-                // Preserving clip directly with the sanitized bug title
-                var clipsDir = Path.Combine(_dbService.BaseDirectory, "sessions", _activeSession!.Id, "clips");
-                Directory.CreateDirectory(clipsDir);
-
-                var initialTitle = SanitizeFileName(bug.Title);
-                if (string.IsNullOrWhiteSpace(initialTitle)) initialTitle = "bug";
-                var clipFile = Path.Combine(clipsDir, $"{initialTitle}_{bug.Id.Substring(0, 8)}.mp4");
-
-                // Update UI state to show processing and ask user to wait
-                ProcessingStatusText.Text = "⏳ Encoding MP4 video clip & applying redactions... please wait.";
-                PreservationProgressBar.Visibility = Visibility.Visible;
-                PreservationProgressBar.IsIndeterminate = true;
-                PreserveBugBtn.IsEnabled = false;
-
-                try
-                {
-                    await Task.Run(async () =>
+                    var bug = new Bug
                     {
-                        await _captureEngine.PreserveClipAsync(bug.ClipStartSeconds, bug.ClipEndSeconds, clipFile, dialog.NormalizedRedactions);
-                    });
+                        SessionId = _activeSession!.Id,
+                        Title = dialog.BugTitle,
+                        ClipStartSeconds = dialog.ClipStartSeconds,
+                        ClipEndSeconds = dialog.ClipEndSeconds,
+                        CreatedAt = DateTime.UtcNow,
+                        Status = "Open"
+                    };
 
-                    bug.ClipPath = clipFile;
-                    bug.ThumbnailPath = Path.ChangeExtension(clipFile, ".jpg");
+                    if (_activeSession == null) CreateNewSession();
 
-                    if (dialog.EnableAiDraft && _aiAssistant.IsEnabled)
+                    // Preserving clip directly with the sanitized bug title
+                    var clipsDir = Path.Combine(_dbService.BaseDirectory, "sessions", _activeSession!.Id, "clips");
+                    Directory.CreateDirectory(clipsDir);
+
+                    var initialTitle = SanitizeFileName(bug.Title);
+                    if (string.IsNullOrWhiteSpace(initialTitle)) initialTitle = "bug";
+                    var clipFile = Path.Combine(clipsDir, $"{initialTitle}_{bug.Id.Substring(0, 8)}.mp4");
+
+                    // Update UI state to show processing and ask user to wait
+                    ProcessingStatusText.Text = "⏳ Encoding MP4 video clip & applying redactions... please wait.";
+                    PreservationProgressBar.Visibility = Visibility.Visible;
+                    PreservationProgressBar.IsIndeterminate = true;
+                    PreserveBugBtn.IsEnabled = false;
+
+                    try
                     {
-                        ProcessingStatusText.Text = $"🤖 Querying {_aiAssistant.ProviderName} to refine bug title... please wait.";
-                        var userContext = !string.IsNullOrWhiteSpace(dialog.TestCaseContext) ? dialog.TestCaseContext : dialog.BugTitle;
-                        var analysis = await _aiAssistant.AnalyzeClipAsync(clipFile, bug.DurationSeconds, userContext);
-                        bug.AiAssisted = true;
-
-                        // AI synthesizes and rewrites the bug title into a professional defect title
-                        if (!string.IsNullOrWhiteSpace(analysis.Title))
+                        await Task.Run(async () =>
                         {
-                            var oldTitle = bug.Title;
-                            bug.Title = analysis.Title;
+                            await _captureEngine.PreserveClipAsync(bug.ClipStartSeconds, bug.ClipEndSeconds, clipFile, dialog.NormalizedRedactions);
+                        });
 
-                            // If AI generated a refined title, rename the MP4 file to match it
-                            try
+                        bug.ClipPath = clipFile;
+                        bug.ThumbnailPath = Path.ChangeExtension(clipFile, ".jpg");
+
+                        if (dialog.EnableAiDraft && _aiAssistant.IsEnabled)
+                        {
+                            ProcessingStatusText.Text = $"🤖 Querying {_aiAssistant.ProviderName} to refine bug title... please wait.";
+                            // Pass user notes or title
+                            var userContext = !string.IsNullOrWhiteSpace(dialog.TestCaseContext)
+                                ? (!string.IsNullOrWhiteSpace(dialog.BugTitle) ? $"{dialog.BugTitle} - {dialog.TestCaseContext}" : dialog.TestCaseContext)
+                                : dialog.BugTitle;
+
+                            var analysis = await _aiAssistant.AnalyzeClipAsync(clipFile, bug.DurationSeconds, userContext);
+                            bug.AiAssisted = true;
+
+                            // AI synthesizes and rewrites the bug title into a professional defect title
+                            if (!string.IsNullOrWhiteSpace(analysis.Title))
                             {
-                                var aiTitle = SanitizeFileName(bug.Title);
-                                if (!string.IsNullOrWhiteSpace(aiTitle) && !aiTitle.Equals(initialTitle, StringComparison.OrdinalIgnoreCase))
+                                var oldTitle = bug.Title;
+                                bug.Title = analysis.Title;
+
+                                // If AI generated a refined title, rename the MP4 file to match it
+                                try
                                 {
-                                    var newClipFile = Path.Combine(clipsDir, $"{aiTitle}_{bug.Id.Substring(0, 8)}.mp4");
-                                    var newThumbFile = Path.ChangeExtension(newClipFile, ".jpg");
-                                    var oldThumbFile = Path.ChangeExtension(clipFile, ".jpg");
-
-                                    if (File.Exists(clipFile))
+                                    var aiTitle = SanitizeFileName(bug.Title);
+                                    if (!string.IsNullOrWhiteSpace(aiTitle) && !aiTitle.Equals(initialTitle, StringComparison.OrdinalIgnoreCase))
                                     {
-                                        if (File.Exists(newClipFile)) File.Delete(newClipFile);
-                                        File.Move(clipFile, newClipFile);
-                                        bug.ClipPath = newClipFile;
-                                        clipFile = newClipFile;
-                                    }
+                                        var newClipFile = Path.Combine(clipsDir, $"{aiTitle}_{bug.Id.Substring(0, 8)}.mp4");
+                                        var newThumbFile = Path.ChangeExtension(newClipFile, ".jpg");
+                                        var oldThumbFile = Path.ChangeExtension(clipFile, ".jpg");
 
-                                    if (File.Exists(oldThumbFile))
-                                    {
-                                        if (File.Exists(newThumbFile)) File.Delete(newThumbFile);
-                                        File.Move(oldThumbFile, newThumbFile);
-                                        bug.ThumbnailPath = newThumbFile;
+                                        if (File.Exists(clipFile))
+                                        {
+                                            if (File.Exists(newClipFile)) File.Delete(newClipFile);
+                                            File.Move(clipFile, newClipFile);
+                                            bug.ClipPath = newClipFile;
+                                            clipFile = newClipFile;
+                                        }
+
+                                        if (File.Exists(oldThumbFile))
+                                        {
+                                            if (File.Exists(newThumbFile)) File.Delete(newThumbFile);
+                                            File.Move(oldThumbFile, newThumbFile);
+                                            bug.ThumbnailPath = newThumbFile;
+                                        }
                                     }
                                 }
+                                catch { }
                             }
-                            catch { }
+
+                            bug.ObservedBehavior = analysis.ObservedBehavior;
+                            bug.ReproductionSteps = analysis.ReproSteps;
+                            bug.AiSuggestions = analysis.Suggestions;
                         }
 
-                        bug.ObservedBehavior = analysis.ObservedBehavior;
-                        bug.ReproductionSteps = analysis.ReproSteps;
-                        bug.AiSuggestions = analysis.Suggestions;
+                        _dbService.SaveBug(bug);
+                        Bugs.Add(bug);
+                        BugCountLabel.Text = $"{Bugs.Count} bugs saved";
+                        ProcessingStatusText.Text = $"✔ Saved: '{bug.Title}'! Continue testing or click Stop/Review when done.";
+
+                        // Ensure SessionsList selection is visually synchronized with the active session
+                        SessionsList.SelectedItem = _activeSession;
+                        LoadBugsForActiveSession();
                     }
-
-                    _dbService.SaveBug(bug);
-                    Bugs.Add(bug);
-                    BugCountLabel.Text = $"{Bugs.Count} bugs saved";
-                    ProcessingStatusText.Text = $"✔ Saved: '{bug.Title}'! Continue testing or click Stop/Review when done.";
-
-                    // Ensure SessionsList selection is visually synchronized with the active session
-                    SessionsList.SelectedItem = _activeSession;
-                    LoadBugsForActiveSession();
+                    catch (Exception ex)
+                    {
+                        ProcessingStatusText.Text = $"❌ Preservation failed: {ex.Message}";
+                        MessageBox.Show($"Could not preserve bug footage: {ex.Message}", "Clip Preservation Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    }
+                    finally
+                    {
+                        PreservationProgressBar.Visibility = Visibility.Collapsed;
+                        PreservationProgressBar.IsIndeterminate = false;
+                        PreserveBugBtn.IsEnabled = _captureEngine.IsRunning;
+                    }
                 }
-                catch (Exception ex)
+            }
+            finally
+            {
+                if (wasRunning && _captureEngine.IsRunning && _captureEngine.IsPaused)
                 {
-                    ProcessingStatusText.Text = $"❌ Preservation failed: {ex.Message}";
-                    MessageBox.Show($"Could not preserve bug footage: {ex.Message}", "Clip Preservation Error", MessageBoxButton.OK, MessageBoxImage.Warning);
-                }
-                finally
-                {
-                    PreservationProgressBar.Visibility = Visibility.Collapsed;
-                    PreservationProgressBar.IsIndeterminate = false;
-                    PreserveBugBtn.IsEnabled = _captureEngine.IsRunning;
+                    _captureEngine.Resume();
                 }
             }
         }
@@ -426,13 +473,38 @@ namespace Rewind.App
             var json = ReportGenerator.GenerateJsonReport(_activeSession, bugsList, aiExecutiveSummary: aiSummary);
 
             var reportWin = new ReportPreviewWindow(cleanList, md, jira, json);
-            reportWin.ShowDialog();
+            _isModalDialogOpen = true;
+            var wasRunning = _captureEngine.IsRunning && !_captureEngine.IsPaused;
+            if (wasRunning) _captureEngine.Pause();
+            try
+            {
+                reportWin.ShowDialog();
+            }
+            finally
+            {
+                _isModalDialogOpen = false;
+                if (wasRunning && _captureEngine.IsRunning && _captureEngine.IsPaused) _captureEngine.Resume();
+            }
         }
 
         private void ShowHud_Click(object sender, RoutedEventArgs e)
         {
-            _hudWindow.Show();
-            _hudWindow.Activate();
+            if (_hudWindow.IsVisible)
+            {
+                _hudWindow.Hide();
+            }
+            else
+            {
+                _hudWindow.ShowAndExpand();
+            }
+        }
+
+        private void UpdateHudToggleButton(bool isVisible)
+        {
+            if (HudToggleHeaderLabel != null)
+            {
+                HudToggleHeaderLabel.Text = isVisible ? "Hide HUD" : "Show HUD";
+            }
         }
 
         private void NewSession_Click(object sender, RoutedEventArgs e)
@@ -475,34 +547,109 @@ namespace Rewind.App
         private void OpenBugDetail(Bug bug)
         {
             var detail = new BugDetailWindow(bug);
-            if (detail.ShowDialog() == true)
+            _isModalDialogOpen = true;
+            var wasRunning = _captureEngine.IsRunning && !_captureEngine.IsPaused;
+            if (wasRunning) _captureEngine.Pause();
+            try
             {
-                if (detail.IsDeleted)
+                if (detail.ShowDialog() == true)
                 {
-                    _dbService.DeleteBug(bug.Id);
-                    Bugs.Remove(bug);
+                    if (detail.IsDeleted)
+                    {
+                        _dbService.DeleteBug(bug.Id);
+                        Bugs.Remove(bug);
+                    }
+                    else
+                    {
+                        _dbService.SaveBug(bug);
+                    }
+                    LoadBugsForActiveSession();
                 }
-                else
-                {
-                    _dbService.SaveBug(bug);
-                }
-                LoadBugsForActiveSession();
+            }
+            finally
+            {
+                _isModalDialogOpen = false;
+                if (wasRunning && _captureEngine.IsRunning && _captureEngine.IsPaused) _captureEngine.Resume();
             }
         }
 
         private void OpenSettings_Click(object sender, RoutedEventArgs e)
         {
             var dlg = new SettingsDialog(_appSettings);
-            if (dlg.ShowDialog() == true)
+            _isModalDialogOpen = true;
+            var wasRunning = _captureEngine.IsRunning && !_captureEngine.IsPaused;
+            if (wasRunning) _captureEngine.Pause();
+            try
             {
-                _appSettings = dlg.Settings;
-                _dbService.SaveAppSettings(_appSettings);
-                _aiAssistant = new OllamaAiAssistant(_appSettings.OllamaEndpoint, _appSettings.OllamaModel)
+                if (dlg.ShowDialog() == true)
                 {
-                    IsEnabled = _appSettings.AiEnabled
-                };
-                _captureEngine.CaptureSourceMode = _appSettings.CaptureSource;
-                SettingsSummaryText.Text = $"Buffer: {_appSettings.BufferDurationSeconds}s @ {_appSettings.FrameRate}fps • {_appSettings.OllamaModel}";
+                    _appSettings = dlg.Settings;
+                    _dbService.SaveAppSettings(_appSettings);
+                    _aiAssistant = new OllamaAiAssistant(_appSettings.OllamaEndpoint, _appSettings.OllamaModel)
+                    {
+                        IsEnabled = _appSettings.AiEnabled
+                    };
+                    ThemeManager.ApplyTheme(_appSettings.ThemeMode);
+                    UpdateThemeIcon(_appSettings.ThemeMode);
+                    SettingsSummaryText.Text = $"Buffer: {_appSettings.BufferDurationSeconds}s @ {_appSettings.FrameRate}fps • {_appSettings.OllamaModel}";
+                }
+            }
+            finally
+            {
+                _isModalDialogOpen = false;
+                if (wasRunning && _captureEngine.IsRunning && _captureEngine.IsPaused) _captureEngine.Resume();
+            }
+        }
+
+        private void MinimizeWindow_Click(object sender, RoutedEventArgs e)
+        {
+            WindowState = WindowState.Minimized;
+        }
+
+        private void MaximizeWindow_Click(object sender, RoutedEventArgs e)
+        {
+            if (WindowState == WindowState.Maximized)
+            {
+                WindowState = WindowState.Normal;
+                if (MaximizeIconPath != null)
+                {
+                    MaximizeIconPath.Data = (System.Windows.Media.Geometry)FindResource("WinMaximizeGeometry");
+                }
+            }
+            else
+            {
+                WindowState = WindowState.Maximized;
+                if (MaximizeIconPath != null)
+                {
+                    MaximizeIconPath.Data = (System.Windows.Media.Geometry)FindResource("WinRestoreGeometry");
+                }
+            }
+        }
+
+        private void CloseWindow_Click(object sender, RoutedEventArgs e)
+        {
+            Close();
+        }
+
+        private void ThemeToggle_Click(object sender, RoutedEventArgs e)
+        {
+            var newTheme = string.Equals(_appSettings.ThemeMode, "Light", StringComparison.OrdinalIgnoreCase) ? "Dark" : "Light";
+            _appSettings.ThemeMode = newTheme;
+            ThemeManager.ApplyTheme(newTheme);
+            UpdateThemeIcon(newTheme);
+            _dbService.SaveAppSettings(_appSettings);
+        }
+
+        private void UpdateThemeIcon(string themeMode)
+        {
+            if (ThemeIconPath == null) return;
+            if (string.Equals(themeMode, "Light", StringComparison.OrdinalIgnoreCase))
+            {
+                ThemeIconPath.Data = (System.Windows.Media.Geometry)FindResource("MoonGeometry");
+            }
+            else
+            {
+                ThemeIconPath.Data = (System.Windows.Media.Geometry)FindResource("SunGeometry");
             }
         }
 

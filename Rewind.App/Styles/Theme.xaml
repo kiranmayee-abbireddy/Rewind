@@ -1,17 +1,16 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
-    <!-- Modern Premium Dark Theme Palette -->
-    <Color x:Key="BgPrimaryColor">#0B0E14</Color>
-    <Color x:Key="BgSecondaryColor">#111620</Color>
-    <Color x:Key="BgCardColor">#171F2C</Color>
-    <Color x:Key="BorderColor">#253043</Color>
-    <Color x:Key="BorderFocusColor">#388BFD</Color>
-    <Color x:Key="TextPrimaryColor">#F3F6FC</Color>
-    <Color x:Key="TextSecondaryColor">#94A3B8</Color>
-    <Color x:Key="AccentColor">#388BFD</Color>
-    <Color x:Key="AccentGradientStart">#3B82F6</Color>
-    <Color x:Key="AccentGradientEnd">#1D4ED8</Color>
+    <!-- Luxury Emerald & Warm Gold Obsidian Palette -->
+    <Color x:Key="BgPrimaryColor">#080E0B</Color>
+    <Color x:Key="BgSecondaryColor">#0E1813</Color>
+    <Color x:Key="BgCardColor">#14231C</Color>
+    <Color x:Key="BorderColor">#1F352B</Color>
+    <Color x:Key="BorderFocusColor">#10B981</Color>
+    <Color x:Key="TextPrimaryColor">#F2F9F5</Color>
+    <Color x:Key="TextSecondaryColor">#7E9F8E</Color>
+    <Color x:Key="AccentColor">#10B981</Color>
+    <Color x:Key="GoldColor">#F59E0B</Color>
     <Color x:Key="DangerColor">#EF4444</Color>
     <Color x:Key="SuccessColor">#10B981</Color>
     <Color x:Key="WarningColor">#F59E0B</Color>
@@ -23,28 +22,126 @@
     <SolidColorBrush x:Key="TextPrimaryBrush" Color="{StaticResource TextPrimaryColor}" />
     <SolidColorBrush x:Key="TextSecondaryBrush" Color="{StaticResource TextSecondaryColor}" />
     <SolidColorBrush x:Key="AccentBrush" Color="{StaticResource AccentColor}" />
+    <SolidColorBrush x:Key="GoldBrush" Color="{StaticResource GoldColor}" />
     <SolidColorBrush x:Key="DangerBrush" Color="{StaticResource DangerColor}" />
     <SolidColorBrush x:Key="SuccessBrush" Color="{StaticResource SuccessColor}" />
     <SolidColorBrush x:Key="WarningBrush" Color="{StaticResource WarningColor}" />
 
-    <!-- Sleek Gradient Accent Brush -->
+    <!-- Imperial Emerald Gradient Brushes -->
     <LinearGradientBrush x:Key="PrimaryAccentGradient" StartPoint="0,0" EndPoint="1,1">
-        <GradientStop Color="#3B82F6" Offset="0"/>
-        <GradientStop Color="#1D4ED8" Offset="1"/>
+        <GradientStop Color="#059669" Offset="0"/>
+        <GradientStop Color="#047857" Offset="1"/>
     </LinearGradientBrush>
 
-    <!-- Professional Brand Logomark Gradient -->
     <LinearGradientBrush x:Key="LogoOrbGradient" StartPoint="0,0" EndPoint="1,1">
-        <GradientStop Color="#60A5FA" Offset="0"/>
-        <GradientStop Color="#3B82F6" Offset="0.45"/>
-        <GradientStop Color="#1E40AF" Offset="1"/>
+        <GradientStop Color="#34D399" Offset="0"/>
+        <GradientStop Color="#10B981" Offset="0.45"/>
+        <GradientStop Color="#064E3B" Offset="1"/>
     </LinearGradientBrush>
 
-    <!-- Modern Vector Rewind Brand Mark Geometry -->
+    <LinearGradientBrush x:Key="GoldOrbGradient" StartPoint="0,0" EndPoint="1,1">
+        <GradientStop Color="#FBBF24" Offset="0"/>
+        <GradientStop Color="#F59E0B" Offset="0.5"/>
+        <GradientStop Color="#B45309" Offset="1"/>
+    </LinearGradientBrush>
+
+    <!-- Vector Icons Geometries -->
     <Geometry x:Key="RewindArrowsGeometry">M13,6 L4,12 L13,18 L13,13 L21,18 L21,6 L13,11 Z</Geometry>
     <Geometry x:Key="LightningBoltGeometry">M13,2 L4,14 L11,14 L9,22 L20,10 L13,10 Z</Geometry>
     <Geometry x:Key="VideoCameraGeometry">M4,6 C2.89,6 2,6.89 2,8 L2,16 C2,17.11 2.89,18 4,18 L14,18 C15.11,18 16,17.11 16,16 L16,13.5 L20,17.5 C20.55,18.05 21.5,17.66 21.5,16.88 L21.5,7.12 C21.5,6.34 20.55,5.95 20,6.5 L16,10.5 L16,8 C16,6.89 15.11,6 4,6 Z</Geometry>
     <Geometry x:Key="ShieldCheckGeometry">M12,1 L3,5 L3,11 C3,16.55 6.84,21.74 12,23 C17.16,21.74 21,16.55 21,11 L21,5 L12,1 Z M10,17 L5.5,12.5 L6.91,11.09 L10,14.17 L17.09,7.09 L18.5,8.5 L10,17 Z</Geometry>
+    <Geometry x:Key="GearGeometry">M12,15.5 A3.5,3.5 0 0 1 8.5,12 A3.5,3.5 0 0 1 12,8.5 A3.5,3.5 0 0 1 15.5,12 A3.5,3.5 0 0 1 12,15.5 M19.43,12.97 C19.47,12.65 19.5,12.33 19.5,12 C19.5,11.67 19.47,11.34 19.43,11 L21.54,9.37 C21.73,9.22 21.78,8.95 21.66,8.73 L19.66,5.27 C19.54,5.05 19.27,4.97 19.05,5.05 L16.56,6.05 C16.04,5.65 15.48,5.32 14.87,5.07 L14.49,2.42 C14.46,2.18 14.25,2 14,2 L10,2 C9.75,2 9.54,2.18 9.51,2.42 L9.13,5.07 C8.52,5.32 7.96,5.66 7.44,6.05 L4.95,5.05 C4.73,4.96 4.46,5.05 4.34,5.27 L2.34,8.73 C2.21,8.95 2.27,9.22 2.46,9.37 L4.57,11 C4.53,11.34 4.5,11.67 4.5,12 C4.5,12.33 4.53,12.65 4.57,12.97 L2.46,14.63 C2.27,14.78 2.21,15.05 2.34,15.27 L4.34,18.73 C4.46,18.95 4.73,19.03 4.95,18.95 L7.44,17.95 C7.96,18.34 8.52,18.68 9.13,18.93 L9.51,21.58 C9.54,21.82 9.75,22 10,22 L14,22 C14.25,22 14.46,21.82 14.49,21.58 L14.87,18.93 C15.48,18.68 16.04,18.34 16.56,17.95 L19.05,18.95 C19.27,19.04 19.54,18.95 19.66,18.73 L21.66,15.27 C21.78,15.05 21.73,14.78 21.54,14.63 L19.43,12.97 Z</Geometry>
+    <Geometry x:Key="PlusGeometry">M19,13 H13 V19 H11 V13 H5 V11 H11 V5 H13 V11 H19 V13 Z</Geometry>
+    <!-- Sleek Modern Theme Toggle Geometries -->
+    <Geometry x:Key="SunGeometry">M12,4 A1,1 0 0,1 12,2 A1,1 0 0,1 12,4 M12,22 A1,1 0 0,1 12,20 A1,1 0 0,1 12,22 M4,12 A1,1 0 0,1 2,12 A1,1 0 0,1 4,12 M22,12 A1,1 0 0,1 20,12 A1,1 0 0,1 22,12 M6.34,6.34 A1,1 0 0,1 4.93,4.93 A1,1 0 0,1 6.34,6.34 M19.07,19.07 A1,1 0 0,1 17.66,17.66 A1,1 0 0,1 19.07,19.07 M6.34,17.66 A1,1 0 0,1 4.93,19.07 A1,1 0 0,1 6.34,17.66 M19.07,4.93 A1,1 0 0,1 17.66,6.34 A1,1 0 0,1 19.07,4.93 M12,7 A5,5 0 1,0 12,17 A5,5 0 1,0 12,7 Z</Geometry>
+    <Geometry x:Key="MoonGeometry">M12.3,2 C12.2,2 12,2 11.9,2 C8.4,2.3 5.6,5.1 5.3,8.6 C4.9,12.7 7.9,16.2 12,16.5 C14.3,16.7 16.5,15.7 17.9,14.1 C18.3,13.7 18,13 17.4,13.1 C16.9,13.2 16.4,13.2 15.9,13.2 C11.5,13.2 8,9.7 8,5.3 C8,4.3 8.2,3.3 8.6,2.4 C8.8,1.9 8.3,1.4 7.8,1.6 C5.2,2.5 3.2,4.8 2.4,7.6 C1.1,12.1 3.4,16.9 7.7,18.7 C12,20.5 17.1,18.8 19.4,14.9 C20.7,12.7 20.8,10 19.8,7.8 C19.5,7.3 18.8,7.4 18.7,7.9 C18.5,8.8 18.1,9.6 17.6,10.3 C16.5,8 14.7,6.1 12.4,5 C12.3,4 12.3,3 12.3,2 Z</Geometry>
+
+    <!-- Crisp Professional Title Bar Window Control Geometries -->
+    <Geometry x:Key="WinMinimizeGeometry">M0,5 L10,5 L10,6.2 L0,6.2 Z</Geometry>
+    <Geometry x:Key="WinMaximizeGeometry">M1,1 L9,1 L9,9 L1,9 Z M0,0 L10,0 L10,10 L0,10 Z</Geometry>
+    <Geometry x:Key="WinRestoreGeometry">M2,0 L10,0 L10,8 L8,8 L8,10 L0,10 L0,2 L2,2 Z M3,1 L3,2 L8,2 L8,7 L9,7 L9,1 Z M1,3 L1,9 L7,9 L7,3 Z</Geometry>
+    <Geometry x:Key="WinCloseGeometry">M0.7,0 L5,4.3 L9.3,0 L10,0.7 L5.7,5 L10,9.3 L9.3,10 L5,5.7 L0.7,10 L0,9.3 L4.3,5 L0,0.7 Z</Geometry>
+    <Geometry x:Key="WinHudPipetteGeometry">M12,2 C6.5,2 2,6.5 2,12 C2,17.5 6.5,22 12,22 C17.5,22 22,17.5 22,12 C22,6.5 17.5,2 12,2 Z M12,5 C14.5,5 17.5,8 17.5,12 C17.5,16 15,19 12,19 C9,19 6.5,16 6.5,12 C6.5,8 9.5,5 12,5 Z M12,9 A3,3 0 1,0 12,15 A3,3 0 1,0 12,9 Z</Geometry>
+    <Geometry x:Key="WinExpandGeometry">M5,3 L9,3 L9,7 M9,3 L4,8 M11,13 L7,13 L7,9 M7,13 L12,8</Geometry>
+
+    <!-- Adorable Borderless Avocado QA Mascot ("Guac" with QA headset) -->
+    <ControlTemplate x:Key="AvocadoMascot">
+        <Grid Width="38" Height="42" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <!-- Organic Pear-shaped Body (Rich Emerald with Subtle Drop Glow) -->
+            <Path Data="M 19,3 C 27,3 32,10 32,21 C 32,32 27,40 19,40 C 11,40 6,32 6,21 C 6,10 11,3 19,3 Z">
+                <Path.Fill>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                        <GradientStop Color="#0D5F47" Offset="0"/>
+                        <GradientStop Color="#064E3B" Offset="1"/>
+                    </LinearGradientBrush>
+                </Path.Fill>
+                <Path.Effect>
+                    <DropShadowEffect Color="#043226" BlurRadius="6" ShadowDepth="1" Opacity="0.5"/>
+                </Path.Effect>
+            </Path>
+
+            <!-- Avocado Inner Flesh (Soft Creamy Honeydew/Lime Jade) -->
+            <Path Data="M 19,6 C 25,6 29.5,12 29.5,21 C 29.5,30 25.5,37 19,37 C 12.5,37 8.5,30 8.5,21 C 8.5,12 13,6 19,6 Z">
+                <Path.Fill>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                        <GradientStop Color="#D1FAE5" Offset="0"/>
+                        <GradientStop Color="#A7F3D0" Offset="0.5"/>
+                        <GradientStop Color="#6EE7B7" Offset="1"/>
+                    </LinearGradientBrush>
+                </Path.Fill>
+            </Path>
+
+            <!-- Cute QA Headset Arc -->
+            <Path Data="M 7,20 C 7,8 31,8 31,20" Stroke="#10B981" StrokeThickness="2" StrokeStartLineCap="Round" StrokeEndLineCap="Round" Opacity="0.85"/>
+            <!-- Left Earpiece -->
+            <Border Width="4" Height="7" CornerRadius="2" Background="#064E3B" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5,0,0,1"/>
+            <!-- Right Earpiece -->
+            <Border Width="4" Height="7" CornerRadius="2" Background="#064E3B" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,5,1"/>
+
+            <!-- Avocado Seed Pit Belly / Face (Warm Amber Gold) -->
+            <Border Width="18" Height="19" CornerRadius="9.5" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,5">
+                <Border.Background>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                        <GradientStop Color="#B45309" Offset="0"/>
+                        <GradientStop Color="#78350F" Offset="1"/>
+                    </LinearGradientBrush>
+                </Border.Background>
+                <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <!-- Glistening Eyes -->
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,-3,0,0">
+                        <!-- Left Eye -->
+                        <Grid Margin="0,0,4,0">
+                            <Ellipse Width="4" Height="5" Fill="#1E1308"/>
+                            <Ellipse Width="1.5" Height="1.5" Fill="#FFFFFF" Margin="0,0,1,2"/>
+                        </Grid>
+                        <!-- Right Eye -->
+                        <Grid>
+                            <Ellipse Width="4" Height="5" Fill="#1E1308"/>
+                            <Ellipse Width="1.5" Height="1.5" Fill="#FFFFFF" Margin="0,0,1,2"/>
+                        </Grid>
+                    </StackPanel>
+                    <!-- Pink Blush Cheeks -->
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,4,0,0">
+                        <Border Width="3" Height="2" CornerRadius="1" Background="#FB7185" Opacity="0.8" Margin="0,0,8,0"/>
+                        <Border Width="3" Height="2" CornerRadius="1" Background="#FB7185" Opacity="0.8"/>
+                    </StackPanel>
+                    <!-- Happy Smile Curve -->
+                    <Path Data="M 1,0 Q 2.5,2 4,0" Stroke="#FEF3C7" StrokeThickness="1" StrokeStartLineCap="Round" StrokeEndLineCap="Round" 
+                          HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,3"/>
+                </Grid>
+            </Border>
+
+            <!-- Sprout Leaf on Top of Head -->
+            <Path Data="M 19,3 C 17,-2 23,-3 24,-1 C 24,2 21,3 19,3 Z" Fill="#34D399"/>
+        </Grid>
+    </ControlTemplate>
+
+    <!-- Consistent Compact Avocado Mascot for Headers & Title Bars (24x26 ViewBox) -->
+    <ControlTemplate x:Key="AvocadoMascotCompact">
+        <Viewbox Width="22" Height="24" Stretch="Uniform" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <ContentControl Template="{StaticResource AvocadoMascot}"/>
+        </Viewbox>
+    </ControlTemplate>
 
     <!-- Global Base Window & Font Styling -->
     <Style TargetType="Window">
@@ -87,41 +184,28 @@
         </Setter>
     </Style>
 
-    <!-- Button Style Primary (Gradient with Smooth Elevation) -->
+    <!-- Button Style Primary (Refined Imperial Emerald Action) -->
     <Style x:Key="PrimaryButton" TargetType="Button">
-        <Setter Property="Background" Value="{StaticResource PrimaryAccentGradient}"/>
+        <Setter Property="Background" Value="{DynamicResource PrimaryAccentGradient}"/>
         <Setter Property="Foreground" Value="#FFFFFF"/>
         <Setter Property="FontWeight" Value="SemiBold"/>
         <Setter Property="FontSize" Value="12.5"/>
         <Setter Property="Padding" Value="16,8"/>
-        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource BorderFocusColor}"/>
         <Setter Property="Cursor" Value="Hand"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
-                    <Border x:Name="btnBorder" Background="{TemplateBinding Background}" CornerRadius="7" Padding="{TemplateBinding Padding}">
+                    <Border x:Name="btnBorder" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="6" Padding="{TemplateBinding Padding}">
                         <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="btnBorder" Property="Background">
-                                <Setter.Value>
-                                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
-                                        <GradientStop Color="#60A5FA" Offset="0"/>
-                                        <GradientStop Color="#2563EB" Offset="1"/>
-                                    </LinearGradientBrush>
-                                </Setter.Value>
-                            </Setter>
+                            <Setter TargetName="btnBorder" Property="Opacity" Value="0.9"/>
                         </Trigger>
                         <Trigger Property="IsPressed" Value="True">
-                            <Setter TargetName="btnBorder" Property="Background">
-                                <Setter.Value>
-                                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
-                                        <GradientStop Color="#1D4ED8" Offset="0"/>
-                                        <GradientStop Color="#1E40AF" Offset="1"/>
-                                    </LinearGradientBrush>
-                                </Setter.Value>
-                            </Setter>
+                            <Setter TargetName="btnBorder" Property="Opacity" Value="0.75"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -131,9 +215,9 @@
 
     <!-- Button Style Secondary -->
     <Style x:Key="SecondaryButton" TargetType="Button">
-        <Setter Property="Background" Value="#171F2C"/>
-        <Setter Property="Foreground" Value="#E2E8F0"/>
-        <Setter Property="BorderBrush" Value="#253043"/>
+        <Setter Property="Background" Value="{DynamicResource BgCardBrush}"/>
+        <Setter Property="Foreground" Value="{DynamicResource TextPrimaryBrush}"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource BorderBrush}"/>
         <Setter Property="BorderThickness" Value="1"/>
         <Setter Property="FontWeight" Value="Medium"/>
         <Setter Property="FontSize" Value="12"/>
@@ -142,13 +226,68 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
-                    <Border x:Name="secBorder" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="7" Padding="{TemplateBinding Padding}">
+                    <Border x:Name="secBorder" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="6" Padding="{TemplateBinding Padding}">
                         <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="secBorder" Property="Background" Value="#212C3E"/>
-                            <Setter TargetName="secBorder" Property="BorderBrush" Value="#388BFD"/>
+                            <Setter TargetName="secBorder" Property="BorderBrush" Value="{DynamicResource AccentBrush}"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- Window Chrome Control Button (Minimize, Maximize, Close) -->
+    <Style x:Key="WindowControlButton" TargetType="Button">
+        <Setter Property="Width" Value="42"/>
+        <Setter Property="Height" Value="40"/>
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="Foreground" Value="{DynamicResource TextSecondaryBrush}"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border x:Name="bd" Background="{TemplateBinding Background}">
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="bd" Property="Background" Value="#1A10B981"/>
+                            <Setter Property="Foreground" Value="{DynamicResource TextPrimaryBrush}"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="bd" Property="Background" Value="#3310B981"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- Window Close Button -->
+    <Style x:Key="WindowCloseButton" TargetType="Button">
+        <Setter Property="Width" Value="42"/>
+        <Setter Property="Height" Value="40"/>
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="Foreground" Value="{DynamicResource TextSecondaryBrush}"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border x:Name="bd" Background="{TemplateBinding Background}">
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="bd" Property="Background" Value="#E11D48"/>
+                            <Setter Property="Foreground" Value="#FFFFFF"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="bd" Property="Background" Value="#BE123C"/>
                             <Setter Property="Foreground" Value="#FFFFFF"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
@@ -157,7 +296,26 @@
         </Setter>
     </Style>
 
-    <!-- Global ComboBox Styling -->
+    <!-- ToggleButton Template for ComboBox -->
+    <ControlTemplate x:Key="ComboBoxToggleButton" TargetType="ToggleButton">
+        <Border x:Name="templateRoot" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="7" SnapsToDevicePixels="true">
+            <Grid HorizontalAlignment="Right" Width="26">
+                <Path x:Name="arrow" Data="M 0 0 L 4 4 L 8 0 Z" Fill="#94A3B8" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            </Grid>
+        </Border>
+        <ControlTemplate.Triggers>
+            <Trigger Property="IsMouseOver" Value="true">
+                <Setter TargetName="templateRoot" Property="BorderBrush" Value="#388BFD"/>
+                <Setter TargetName="arrow" Property="Fill" Value="#388BFD"/>
+            </Trigger>
+            <Trigger Property="IsChecked" Value="true">
+                <Setter TargetName="templateRoot" Property="BorderBrush" Value="#388BFD"/>
+                <Setter TargetName="arrow" Property="Fill" Value="#388BFD"/>
+            </Trigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+
+    <!-- Global ComboBox Styling with Dark Glass Popup -->
     <Style TargetType="ComboBox">
         <Setter Property="Background" Value="#111620"/>
         <Setter Property="Foreground" Value="#F3F6FC"/>
@@ -166,12 +324,69 @@
         <Setter Property="Padding" Value="10,6"/>
         <Setter Property="FontFamily" Value="Segoe UI, sans-serif"/>
         <Setter Property="FontSize" Value="12"/>
+        <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="SnapsToDevicePixels" Value="true"/>
+        <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto"/>
+        <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ComboBox">
+                    <Grid x:Name="templateRoot" SnapsToDevicePixels="true">
+                        <ToggleButton x:Name="toggleButton" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" ClickMode="Press" Focusable="false" IsChecked="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}" Template="{StaticResource ComboBoxToggleButton}"/>
+                        <ContentPresenter x:Name="contentPresenter" ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}" Content="{TemplateBinding SelectionBoxItem}" ContentStringFormat="{TemplateBinding SelectionBoxItemStringFormat}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" IsHitTestVisible="false" Margin="{TemplateBinding Padding}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                        <Popup x:Name="PART_Popup" AllowsTransparency="true" Focusable="false" IsOpen="{Binding IsDropDownOpen, RelativeSource={RelativeSource TemplatedParent}}" Placement="Bottom" PopupAnimation="Slide">
+                            <Border x:Name="dropDownBorder" Background="#111620" BorderBrush="#253043" BorderThickness="1" CornerRadius="8" MaxHeight="{TemplateBinding MaxDropDownHeight}" MinWidth="{Binding ActualWidth, ElementName=templateRoot}" Margin="0,4,0,0">
+                                <Border.Effect>
+                                    <DropShadowEffect BlurRadius="16" ShadowDepth="4" Direction="270" Color="#000000" Opacity="0.85"/>
+                                </Border.Effect>
+                                <ScrollViewer x:Name="DropDownScrollViewer">
+                                    <Grid x:Name="grid" RenderOptions.ClearTypeHint="Enabled">
+                                        <Canvas x:Name="canvas" HorizontalAlignment="Left" Height="0" VerticalAlignment="Top" Width="0">
+                                            <Rectangle x:Name="opaqueRect" Fill="{Binding Background, ElementName=dropDownBorder}" Height="{Binding ActualHeight, ElementName=dropDownBorder}" Width="{Binding ActualWidth, ElementName=dropDownBorder}"/>
+                                        </Canvas>
+                                        <ItemsPresenter x:Name="ItemsPresenter" KeyboardNavigation.DirectionalNavigation="Contained" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                                    </Grid>
+                                </ScrollViewer>
+                            </Border>
+                        </Popup>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="true">
+                            <Setter TargetName="toggleButton" Property="BorderBrush" Value="#388BFD"/>
+                        </Trigger>
+                        <Trigger Property="IsFocused" Value="true">
+                            <Setter TargetName="toggleButton" Property="BorderBrush" Value="#388BFD"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
     </Style>
 
     <Style TargetType="ComboBoxItem">
-        <Setter Property="Background" Value="#111620"/>
+        <Setter Property="Background" Value="Transparent"/>
         <Setter Property="Foreground" Value="#F3F6FC"/>
-        <Setter Property="Padding" Value="10,6"/>
+        <Setter Property="Padding" Value="12,8"/>
+        <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ComboBoxItem">
+                    <Border x:Name="bd" Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}" CornerRadius="4" Margin="2,1">
+                        <ContentPresenter HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsHighlighted" Value="True">
+                            <Setter TargetName="bd" Property="Background" Value="#1E293B"/>
+                            <Setter Property="Foreground" Value="#388BFD"/>
+                        </Trigger>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter TargetName="bd" Property="Background" Value="#1D4ED8"/>
+                            <Setter Property="Foreground" Value="#FFFFFF"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
     </Style>
 
     <!-- Global CheckBox Styling -->

@@ -8,11 +8,23 @@ namespace Rewind.App.Views
     {
         public event Action? OnPreserveRequested;
         public event Action? OnOpenMainRequested;
+        public event Action<bool>? OnVisibilityChanged;
+
+        private const double SnapDistance = 35.0;
+        private const double EdgeMargin = 8.0;
 
         public FloatingHudWindow()
         {
             InitializeComponent();
-            PositionWindow();
+            Loaded += (s, e) => PositionWindow();
+            IsVisibleChanged += (s, e) => OnVisibilityChanged?.Invoke(IsVisible);
+        }
+
+        public void ShowAndExpand()
+        {
+            Show();
+            Activate();
+            ExpandCapsule();
         }
 
         private void HudCapsule_MouseDown(object sender, MouseButtonEventArgs e)
@@ -25,7 +37,12 @@ namespace Rewind.App.Views
                 }
                 else
                 {
-                    try { DragMove(); } catch { }
+                    try
+                    {
+                        DragMove();
+                        SnapToNearestEdge();
+                    }
+                    catch { }
                 }
             }
         }
@@ -33,8 +50,73 @@ namespace Rewind.App.Views
         private void PositionWindow()
         {
             var workingArea = SystemParameters.WorkArea;
-            Left = workingArea.Right - Width - 24;
-            Top = workingArea.Top + 24;
+            Left = workingArea.Right - ActualWidth - SnapDistance;
+            Top = workingArea.Top + 40;
+            SnapToNearestEdge();
+        }
+
+        private void SnapToNearestEdge()
+        {
+            var workingArea = SystemParameters.WorkArea;
+            var w = ActualWidth > 0 ? ActualWidth : Width;
+            var h = ActualHeight > 0 ? ActualHeight : Height;
+            if (double.IsNaN(w) || w <= 0) w = 240;
+            if (double.IsNaN(h) || h <= 0) h = 60;
+
+            // Clamping Top within workspace bounds
+            if (Top < workingArea.Top + EdgeMargin) Top = workingArea.Top + EdgeMargin;
+            if (Top + h > workingArea.Bottom - EdgeMargin) Top = workingArea.Bottom - h - EdgeMargin;
+
+            // Magnetic snap to Left, Right, Top, or Bottom
+            var distLeft = Math.Abs(Left - workingArea.Left);
+            var distRight = Math.Abs((workingArea.Right - w) - Left);
+            var distTop = Math.Abs(Top - workingArea.Top);
+            var distBottom = Math.Abs((workingArea.Bottom - h) - Top);
+
+            // Horizontal Snap (Left/Right dock -> Vertical bar orientation)
+            bool isVerticalEdge = false;
+            if (distLeft < SnapDistance)
+            {
+                Left = workingArea.Left + EdgeMargin;
+                isVerticalEdge = true;
+            }
+            else if (distRight < SnapDistance)
+            {
+                Left = workingArea.Right - w - EdgeMargin;
+                isVerticalEdge = true;
+            }
+
+            // Vertical Snap (Top/Bottom dock -> Horizontal bar orientation)
+            if (distTop < SnapDistance)
+            {
+                Top = workingArea.Top + EdgeMargin;
+                isVerticalEdge = false;
+            }
+            else if (distBottom < SnapDistance)
+            {
+                Top = workingArea.Bottom - h - EdgeMargin;
+                isVerticalEdge = false;
+            }
+
+            // Ensure window never escapes the screen boundary
+            if (Left < workingArea.Left) Left = workingArea.Left + EdgeMargin;
+            if (Left + w > workingArea.Right) Left = workingArea.Right - w - EdgeMargin;
+
+            ApplyEdgeOrientation(isVerticalEdge);
+        }
+
+        private void ApplyEdgeOrientation(bool isVertical)
+        {
+            if (ExpandedPanel == null) return;
+
+            var targetOrientation = isVertical ? System.Windows.Controls.Orientation.Vertical : System.Windows.Controls.Orientation.Horizontal;
+
+            // Expanded capsule adaptation
+            ExpandedPanel.Orientation = targetOrientation;
+            ExpandedMascotAvatar.Margin = isVertical ? new Thickness(0, 0, 0, 8) : new Thickness(0, 0, 8, 0);
+            StatusPillBorder.Margin = isVertical ? new Thickness(0, 0, 0, 8) : new Thickness(0, 0, 8, 0);
+            PreserveBtn.Margin = isVertical ? new Thickness(0, 0, 0, 6) : new Thickness(0, 0, 6, 0);
+            OpenMainBtn.Margin = isVertical ? new Thickness(0, 0, 0, 6) : new Thickness(0, 0, 6, 0);
         }
 
         public void UpdateStatus(string state, double elapsedSeconds)
@@ -44,7 +126,6 @@ namespace Rewind.App.Views
                 var span = TimeSpan.FromSeconds(elapsedSeconds);
                 var timeStr = $"{span.Minutes:00}:{span.Seconds:00}";
                 BufferTimeText.Text = timeStr;
-                MiniBufferTimeText.Text = timeStr;
 
                 System.Windows.Media.Brush statusBrush;
                 string statusLabel;
@@ -83,37 +164,78 @@ namespace Rewind.App.Views
             OnOpenMainRequested?.Invoke();
         }
 
+        private void HideHud_Click(object sender, RoutedEventArgs e)
+        {
+            Hide();
+        }
+
         private void ToggleMinimize_Click(object sender, RoutedEventArgs e)
         {
             HudCapsule.Visibility = Visibility.Collapsed;
             MinimizedCapsule.Visibility = Visibility.Visible;
+            Dispatcher.InvokeAsync(SnapToNearestEdge, System.Windows.Threading.DispatcherPriority.Loaded);
         }
 
-        private void MinimizedCapsule_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            if (e.ChangedButton == MouseButton.Left)
-            {
-                if (e.ClickCount == 2)
-                {
-                    OnOpenMainRequested?.Invoke();
-                }
-                else
-                {
-                    // Single click restores the full HUD capsule
-                    MinimizedCapsule.Visibility = Visibility.Collapsed;
-                    HudCapsule.Visibility = Visibility.Visible;
-                    e.Handled = true;
-                }
-            }
-        }
+        private Point _miniMouseDownScreenPos;
+        private bool _isMiniDragging;
 
-        private void MiniPreserve_MouseDown(object sender, MouseButtonEventArgs e)
+        private void MinimizedCapsule_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            if (e.ChangedButton == MouseButton.Left)
+            _miniMouseDownScreenPos = PointToScreen(e.GetPosition(this));
+            _isMiniDragging = false;
+
+            if (e.ClickCount == 2)
             {
+                OnOpenMainRequested?.Invoke();
                 e.Handled = true;
-                OnPreserveRequested?.Invoke();
+                return;
             }
+
+            try
+            {
+                DragMove();
+                SnapToNearestEdge();
+
+                var currentScreenPos = PointToScreen(e.GetPosition(this));
+                var dx = Math.Abs(currentScreenPos.X - _miniMouseDownScreenPos.X);
+                var dy = Math.Abs(currentScreenPos.Y - _miniMouseDownScreenPos.Y);
+
+                if (dx > 6 || dy > 6)
+                {
+                    _isMiniDragging = true;
+                }
+            }
+            catch { }
+
+            // If user just tapped without dragging across threshold, expand immediately
+            if (!_isMiniDragging)
+            {
+                ExpandCapsule();
+            }
+
+            e.Handled = true;
+        }
+
+        private void MinimizedCapsule_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            if (!_isMiniDragging)
+            {
+                ExpandCapsule();
+                e.Handled = true;
+            }
+        }
+
+        private void MinimizedCapsule_MouseRightButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            Hide();
+            e.Handled = true;
+        }
+
+        private void ExpandCapsule()
+        {
+            MinimizedCapsule.Visibility = Visibility.Collapsed;
+            HudCapsule.Visibility = Visibility.Visible;
+            Dispatcher.InvokeAsync(SnapToNearestEdge, System.Windows.Threading.DispatcherPriority.Loaded);
         }
     }
 }

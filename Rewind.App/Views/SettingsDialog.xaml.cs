@@ -25,13 +25,84 @@ namespace Rewind.App.Views
             AudioEnabledCheck.IsChecked = current.RecordMicrophone;
             OllamaHostBox.Text = string.IsNullOrWhiteSpace(current.OllamaEndpoint) ? "http://localhost:11434" : current.OllamaEndpoint;
 
-            if (current.OllamaModel == "gemma3:1b") OllamaModelCombo.SelectedIndex = 1;
-            else if (current.OllamaModel == "qwen3:4b") OllamaModelCombo.SelectedIndex = 2;
-            else OllamaModelCombo.SelectedIndex = 0;
+            ThemeModeCombo.SelectedIndex = string.Equals(current.ThemeMode, "Light", System.StringComparison.OrdinalIgnoreCase) ? 1 : 0;
 
             var baseDir = System.IO.Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.LocalApplicationData), "Rewind");
             StorageDirBox.Text = baseDir;
             CalculateStorageUsage(baseDir);
+
+            Loaded += async (s, e) => await DetectAvailableModelsAsync();
+        }
+
+        private async void RefreshModels_Click(object sender, RoutedEventArgs e)
+        {
+            await DetectAvailableModelsAsync();
+        }
+
+        private async System.Threading.Tasks.Task DetectAvailableModelsAsync()
+        {
+            ModelStatusText.Text = "Detecting available local models via Ollama...";
+            ModelStatusText.Foreground = (System.Windows.Media.Brush)FindResource("TextSecondaryBrush");
+
+            var endpoint = string.IsNullOrWhiteSpace(OllamaHostBox.Text) ? "http://localhost:11434" : OllamaHostBox.Text.Trim().TrimEnd('/');
+            var selectedModel = Settings.OllamaModel;
+
+            try
+            {
+                using var client = new System.Net.Http.HttpClient { Timeout = System.TimeSpan.FromSeconds(3) };
+                var response = await client.GetAsync($"{endpoint}/api/tags");
+                if (response.IsSuccessStatusCode)
+                {
+                    var jsonStr = await response.Content.ReadAsStringAsync();
+                    using var doc = System.Text.Json.JsonDocument.Parse(jsonStr);
+                    if (doc.RootElement.TryGetProperty("models", out var modelsProp) && modelsProp.ValueKind == System.Text.Json.JsonValueKind.Array)
+                    {
+                        var modelList = new System.Collections.Generic.List<string>();
+                        foreach (var m in modelsProp.EnumerateArray())
+                        {
+                            if (m.TryGetProperty("name", out var nameProp))
+                            {
+                                var mName = nameProp.GetString();
+                                if (!string.IsNullOrWhiteSpace(mName)) modelList.Add(mName);
+                            }
+                        }
+
+                        if (modelList.Count > 0)
+                        {
+                            OllamaModelCombo.Items.Clear();
+                            int selectIdx = 0;
+                            for (int i = 0; i < modelList.Count; i++)
+                            {
+                                var m = modelList[i];
+                                OllamaModelCombo.Items.Add(m);
+                                if (m.Equals(selectedModel, System.StringComparison.OrdinalIgnoreCase)) selectIdx = i;
+                            }
+                            OllamaModelCombo.SelectedIndex = selectIdx;
+                            ModelStatusText.Text = $"✔ Found {modelList.Count} model(s) installed on this PC.";
+                            ModelStatusText.Foreground = (System.Windows.Media.Brush)FindResource("SuccessBrush");
+                            return;
+                        }
+                    }
+                }
+            }
+            catch { }
+
+            // Fallback list if Ollama is not yet started or offline
+            if (OllamaModelCombo.Items.Count == 0)
+            {
+                OllamaModelCombo.Items.Add("llama3:latest");
+                OllamaModelCombo.Items.Add("gemma3:1b");
+                OllamaModelCombo.Items.Add("qwen3:4b");
+
+                int idx = 0;
+                for (int i = 0; i < OllamaModelCombo.Items.Count; i++)
+                {
+                    if (OllamaModelCombo.Items[i].ToString()!.Equals(selectedModel, System.StringComparison.OrdinalIgnoreCase)) idx = i;
+                }
+                OllamaModelCombo.SelectedIndex = idx;
+            }
+            ModelStatusText.Text = "Ollama service offline or unreachable. Using default model options.";
+            ModelStatusText.Foreground = (System.Windows.Media.Brush)FindResource("WarningBrush");
         }
 
         private void CalculateStorageUsage(string dir)
@@ -119,15 +190,17 @@ namespace Rewind.App.Views
             Settings.CaptureSource = SourceCombo.SelectedIndex == 1 ? "Active Foreground Window" : "Primary Display (Entire Screen)";
             Settings.AiEnabled = AiEnabledCheck.IsChecked ?? true;
             Settings.RecordMicrophone = AudioEnabledCheck.IsChecked ?? false;
+            Settings.ThemeMode = ThemeModeCombo.SelectedIndex == 1 ? "Light" : "Dark";
             Settings.OllamaEndpoint = string.IsNullOrWhiteSpace(OllamaHostBox.Text) ? "http://localhost:11434" : OllamaHostBox.Text.Trim();
-            Settings.OllamaModel = OllamaModelCombo.SelectedIndex switch
-            {
-                1 => "gemma3:1b",
-                2 => "qwen3:4b",
-                _ => "llama3:latest"
-            };
+            Settings.OllamaModel = OllamaModelCombo.SelectedItem?.ToString() ?? (string.IsNullOrWhiteSpace(OllamaModelCombo.Text) ? "llama3:latest" : OllamaModelCombo.Text);
 
             DialogResult = true;
+            Close();
+        }
+
+        private void Cancel_Click(object sender, RoutedEventArgs e)
+        {
+            DialogResult = false;
             Close();
         }
     }

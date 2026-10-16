@@ -65,5 +65,10 @@ namespace Rewind.App.Views
                 CopyStatusText.Text = "✔ Saved successfully!";
             }
         }
+
+        private void Close_Click(object sender, RoutedEventArgs e)
+        {
+            Close();
+        }
     }
 }
