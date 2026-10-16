@@ -172,7 +172,7 @@ namespace Rewind.App.Services
             }
         }
 
-        public async Task<string> PreserveClipAsync(double startSec, double endSec, string destinationFile)
+        public async Task<string> PreserveClipAsync(double startSec, double endSec, string destinationFile, System.Collections.Generic.List<System.Windows.Rect>? redactions = null)
         {
             var outputDir = Path.GetDirectoryName(destinationFile)!;
             Directory.CreateDirectory(outputDir);
@@ -211,8 +211,21 @@ namespace Rewind.App.Services
 
             await File.WriteAllLinesAsync(concatListFile, lines);
 
-            // Run ffmpeg to encode into standard MP4
-            var ffmpegArgs = $"-y -f concat -safe 0 -i \"{concatListFile}\" -c:v libx264 -pix_fmt yuv420p -r {_fps} \"{destinationFile}\"";
+            // Build optional redaction filter chain
+            var filterChain = string.Empty;
+            if (redactions != null && redactions.Count > 0)
+            {
+                var filters = new System.Collections.Generic.List<string>();
+                foreach (var r in redactions)
+                {
+                    // drawbox=x=X:y=Y:w=W:h=H:color=black@1.0:t=fill
+                    filters.Add($"drawbox=x=iw*{r.X:0.000}:y=ih*{r.Y:0.000}:w=iw*{r.Width:0.000}:h=ih*{r.Height:0.000}:color=black@1.0:t=fill");
+                }
+                filterChain = $"-vf \"{string.Join(",", filters)}\" ";
+            }
+
+            // Run ffmpeg to encode into standard MP4 with redactions
+            var ffmpegArgs = $"-y -f concat -safe 0 -i \"{concatListFile}\" {filterChain}-c:v libx264 -pix_fmt yuv420p -r {_fps} \"{destinationFile}\"";
 
             var psi = new ProcessStartInfo
             {

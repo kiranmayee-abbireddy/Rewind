@@ -265,7 +265,7 @@ namespace Rewind.App
 
                 try
                 {
-                    await _captureEngine.PreserveClipAsync(bug.ClipStartSeconds, bug.ClipEndSeconds, clipFile);
+                    await _captureEngine.PreserveClipAsync(bug.ClipStartSeconds, bug.ClipEndSeconds, clipFile, dialog.NormalizedRedactions);
                     bug.ClipPath = clipFile;
                     bug.ThumbnailPath = Path.ChangeExtension(clipFile, ".jpg");
 

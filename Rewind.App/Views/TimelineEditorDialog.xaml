@@ -36,10 +36,16 @@
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
 
-                <!-- Thumbnail Preview -->
-                <Border Grid.Row="0" Background="#090D13" CornerRadius="6" Margin="0,0,0,12">
-                    <Image x:Name="PreviewImage" Stretch="Uniform"/>
+                <!-- Thumbnail Preview with Redaction Canvas -->
+                <Border Grid.Row="0" Background="#090D13" CornerRadius="6" Margin="0,0,0,12" ClipToBounds="True">
+                    <Grid x:Name="PreviewContainer">
+                        <Image x:Name="PreviewImage" Stretch="Uniform"/>
+                        <Canvas x:Name="RedactionCanvas" Background="Transparent" MouseDown="RedactionCanvas_MouseDown" MouseMove="RedactionCanvas_MouseMove" MouseUp="RedactionCanvas_MouseUp" Cursor="Cross"/>
+                    </Grid>
                 </Border>
+                <Grid Grid.Row="0" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="8">
+                    <Button Content="Clear Redactions" Click="ClearRedactions_Click" Style="{StaticResource SecondaryButton}" Padding="6,2" FontSize="10" Opacity="0.85"/>
+                </Grid>
 
                 <!-- Timeline Sliders -->
                 <StackPanel Grid.Row="1">
