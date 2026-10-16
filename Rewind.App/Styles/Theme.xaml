@@ -144,6 +144,36 @@
         </Setter>
     </Style>
 
+    <!-- Global ComboBox Styling -->
+    <Style TargetType="ComboBox">
+        <Setter Property="Background" Value="#111620"/>
+        <Setter Property="Foreground" Value="#F3F6FC"/>
+        <Setter Property="BorderBrush" Value="#253043"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="Padding" Value="10,6"/>
+        <Setter Property="FontFamily" Value="Segoe UI, sans-serif"/>
+        <Setter Property="FontSize" Value="12"/>
+    </Style>
+
+    <Style TargetType="ComboBoxItem">
+        <Setter Property="Background" Value="#111620"/>
+        <Setter Property="Foreground" Value="#F3F6FC"/>
+        <Setter Property="Padding" Value="10,6"/>
+    </Style>
+
+    <!-- Global CheckBox Styling -->
+    <Style TargetType="CheckBox">
+        <Setter Property="Foreground" Value="#F3F6FC"/>
+        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="Cursor" Value="Hand"/>
+    </Style>
+
+    <!-- Global Slider Styling -->
+    <Style TargetType="Slider">
+        <Setter Property="Foreground" Value="#388BFD"/>
+        <Setter Property="Background" Value="#253043"/>
+    </Style>
+
     <!-- Danger Button -->
     <Style x:Key="DangerButton" TargetType="Button">
         <Setter Property="Background" Value="#DC2626"/>

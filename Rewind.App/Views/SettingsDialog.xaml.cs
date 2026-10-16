@@ -85,6 +85,28 @@ namespace Rewind.App.Views
             }
         }
 
+        private void PurgeBuffer_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                var bufferDir = System.IO.Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.LocalApplicationData), "Rewind", "buffer");
+                if (System.IO.Directory.Exists(bufferDir))
+                {
+                    var files = System.IO.Directory.GetFiles(bufferDir);
+                    foreach (var f in files)
+                    {
+                        try { System.IO.File.Delete(f); } catch { }
+                    }
+                }
+                MessageBox.Show("Rolling buffer temporary files purged successfully.", "Buffer Cleaned", MessageBoxButton.OK, MessageBoxImage.Information);
+                CalculateStorageUsage(System.IO.Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.LocalApplicationData), "Rewind"));
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Failed to purge buffer: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+        }
+
         private void Save_Click(object sender, RoutedEventArgs e)
         {
             Settings.BufferDurationSeconds = (int)BufferDurationSlider.Value;
