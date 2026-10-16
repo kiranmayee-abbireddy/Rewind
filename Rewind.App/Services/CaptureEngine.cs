@@ -81,6 +81,23 @@ namespace Rewind.App.Services
             StateChanged?.Invoke("Stopped");
         }
 
+        [System.Runtime.InteropServices.DllImport("user32.dll")]
+        private static extern IntPtr GetForegroundWindow();
+
+        [System.Runtime.InteropServices.DllImport("user32.dll")]
+        private static extern bool GetWindowRect(IntPtr hWnd, out RECT lpRect);
+
+        [System.Runtime.InteropServices.StructLayout(System.Runtime.InteropServices.LayoutKind.Sequential)]
+        private struct RECT
+        {
+            public int Left;
+            public int Top;
+            public int Right;
+            public int Bottom;
+        }
+
+        public string CaptureSourceMode { get; set; } = "Primary Display";
+
         private async Task CaptureLoop(CancellationToken token)
         {
             var frameIntervalMs = 1000 / _fps;
@@ -94,15 +111,32 @@ namespace Rewind.App.Services
                     try
                     {
                         var timestamp = _sessionStopwatch.Elapsed.TotalSeconds;
-                        var screenW = (int)System.Windows.SystemParameters.PrimaryScreenWidth;
-                        var screenH = (int)System.Windows.SystemParameters.PrimaryScreenHeight;
-                        if (screenW <= 0) screenW = 1920;
-                        if (screenH <= 0) screenH = 1080;
 
-                        using var bmp = new Bitmap(screenW, screenH, PixelFormat.Format32bppRgb);
+                        int srcX = 0, srcY = 0, width = 1920, height = 1080;
+
+                        if (CaptureSourceMode.Contains("Window") || CaptureSourceMode.Contains("Foreground"))
+                        {
+                            var fgHandle = GetForegroundWindow();
+                            if (fgHandle != IntPtr.Zero && GetWindowRect(fgHandle, out var rect))
+                            {
+                                srcX = Math.Max(0, rect.Left);
+                                srcY = Math.Max(0, rect.Top);
+                                width = Math.Max(100, rect.Right - rect.Left);
+                                height = Math.Max(100, rect.Bottom - rect.Top);
+                            }
+                        }
+                        else
+                        {
+                            width = (int)System.Windows.SystemParameters.PrimaryScreenWidth;
+                            height = (int)System.Windows.SystemParameters.PrimaryScreenHeight;
+                            if (width <= 0) width = 1920;
+                            if (height <= 0) height = 1080;
+                        }
+
+                        using var bmp = new Bitmap(width, height, PixelFormat.Format32bppRgb);
                         using (var g = Graphics.FromImage(bmp))
                         {
-                            g.CopyFromScreen(0, 0, 0, 0, new System.Drawing.Size(screenW, screenH), CopyPixelOperation.SourceCopy);
+                            g.CopyFromScreen(srcX, srcY, 0, 0, new System.Drawing.Size(width, height), CopyPixelOperation.SourceCopy);
                         }
 
                         var fileName = $"frame_{timestamp:000000.00}.jpg";
