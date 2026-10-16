@@ -60,6 +60,9 @@ namespace Rewind.App
             {
                 var handle = new System.Windows.Interop.WindowInteropHelper(this).Handle;
                 _hotkeyManager.Register(handle, System.Windows.Input.ModifierKeys.Control | System.Windows.Input.ModifierKeys.Shift, System.Windows.Input.Key.R);
+
+                // Show the Floating HUD automatically so it floats on the desktop immediately
+                _hudWindow.Show();
             };
 
             // Setup timer to update status UI
