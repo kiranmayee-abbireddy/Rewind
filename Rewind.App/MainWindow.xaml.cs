@@ -285,9 +285,13 @@ namespace Rewind.App
 
                 if (_activeSession == null) CreateNewSession();
 
-                // Preserving clip
+                // Preserving clip directly with the sanitized bug title
                 var clipsDir = Path.Combine(_dbService.BaseDirectory, "sessions", _activeSession!.Id, "clips");
-                var clipFile = Path.Combine(clipsDir, $"bug_{bug.Id}_{DateTime.Now:HHmmss}.mp4");
+                Directory.CreateDirectory(clipsDir);
+
+                var initialTitle = SanitizeFileName(bug.Title);
+                if (string.IsNullOrWhiteSpace(initialTitle)) initialTitle = "bug";
+                var clipFile = Path.Combine(clipsDir, $"{initialTitle}_{bug.Id.Substring(0, 8)}.mp4");
 
                 // Update UI state to show processing and ask user to wait
                 ProcessingStatusText.Text = "⏳ Encoding MP4 video clip & applying redactions... please wait.";
@@ -307,7 +311,7 @@ namespace Rewind.App
 
                     if (dialog.EnableAiDraft && _aiAssistant.IsEnabled)
                     {
-                        ProcessingStatusText.Text = $"🤖 Querying {_aiAssistant.ProviderName} to analyze footage and rewrite title... please wait.";
+                        ProcessingStatusText.Text = $"🤖 Querying {_aiAssistant.ProviderName} to refine bug title... please wait.";
                         var userContext = !string.IsNullOrWhiteSpace(dialog.TestCaseContext) ? dialog.TestCaseContext : dialog.BugTitle;
                         var analysis = await _aiAssistant.AnalyzeClipAsync(clipFile, bug.DurationSeconds, userContext);
                         bug.AiAssisted = true;
@@ -315,38 +319,42 @@ namespace Rewind.App
                         // AI synthesizes and rewrites the bug title into a professional defect title
                         if (!string.IsNullOrWhiteSpace(analysis.Title))
                         {
+                            var oldTitle = bug.Title;
                             bug.Title = analysis.Title;
+
+                            // If AI generated a refined title, rename the MP4 file to match it
+                            try
+                            {
+                                var aiTitle = SanitizeFileName(bug.Title);
+                                if (!string.IsNullOrWhiteSpace(aiTitle) && !aiTitle.Equals(initialTitle, StringComparison.OrdinalIgnoreCase))
+                                {
+                                    var newClipFile = Path.Combine(clipsDir, $"{aiTitle}_{bug.Id.Substring(0, 8)}.mp4");
+                                    var newThumbFile = Path.ChangeExtension(newClipFile, ".jpg");
+                                    var oldThumbFile = Path.ChangeExtension(clipFile, ".jpg");
+
+                                    if (File.Exists(clipFile))
+                                    {
+                                        if (File.Exists(newClipFile)) File.Delete(newClipFile);
+                                        File.Move(clipFile, newClipFile);
+                                        bug.ClipPath = newClipFile;
+                                        clipFile = newClipFile;
+                                    }
+
+                                    if (File.Exists(oldThumbFile))
+                                    {
+                                        if (File.Exists(newThumbFile)) File.Delete(newThumbFile);
+                                        File.Move(oldThumbFile, newThumbFile);
+                                        bug.ThumbnailPath = newThumbFile;
+                                    }
+                                }
+                            }
+                            catch { }
                         }
 
                         bug.ObservedBehavior = analysis.ObservedBehavior;
                         bug.ReproductionSteps = analysis.ReproSteps;
                         bug.AiSuggestions = analysis.Suggestions;
                     }
-
-                    // Rename clip and thumbnail so the video file on disk matches the bug title
-                    try
-                    {
-                        var sanitizedTitle = SanitizeFileName(bug.Title);
-                        if (string.IsNullOrWhiteSpace(sanitizedTitle)) sanitizedTitle = $"bug_{bug.Id}";
-                        var namedClipFile = Path.Combine(clipsDir, $"{sanitizedTitle}_{bug.Id.Substring(0, 8)}.mp4");
-                        var namedThumbFile = Path.ChangeExtension(namedClipFile, ".jpg");
-
-                        if (!clipFile.Equals(namedClipFile, StringComparison.OrdinalIgnoreCase) && File.Exists(clipFile))
-                        {
-                            if (File.Exists(namedClipFile)) File.Delete(namedClipFile);
-                            File.Move(clipFile, namedClipFile);
-                            bug.ClipPath = namedClipFile;
-
-                            var oldThumb = Path.ChangeExtension(clipFile, ".jpg");
-                            if (File.Exists(oldThumb))
-                            {
-                                if (File.Exists(namedThumbFile)) File.Delete(namedThumbFile);
-                                File.Move(oldThumb, namedThumbFile);
-                                bug.ThumbnailPath = namedThumbFile;
-                            }
-                        }
-                    }
-                    catch { }
 
                     _dbService.SaveBug(bug);
                     Bugs.Add(bug);
