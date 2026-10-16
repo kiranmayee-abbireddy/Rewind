@@ -24,5 +24,6 @@ namespace Rewind.App.Models
         public string GlobalHotkey { get; set; } = "Ctrl+Shift+R";
         public string AiProvider { get; set; } = "Local / Rule-based Assistant";
         public bool AiEnabled { get; set; } = true;
+        public bool RecordMicrophone { get; set; } = false;
     }
 }

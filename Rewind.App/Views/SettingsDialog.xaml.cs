@@ -20,6 +20,7 @@ namespace Rewind.App.Views
             else FpsCombo.SelectedIndex = 0;
 
             AiEnabledCheck.IsChecked = current.AiEnabled;
+            AudioEnabledCheck.IsChecked = current.RecordMicrophone;
 
             var baseDir = System.IO.Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.LocalApplicationData), "Rewind");
             StorageDirBox.Text = baseDir;
@@ -87,6 +88,7 @@ namespace Rewind.App.Views
                 _ => 15
             };
             Settings.AiEnabled = AiEnabledCheck.IsChecked ?? true;
+            Settings.RecordMicrophone = AudioEnabledCheck.IsChecked ?? false;
 
             DialogResult = true;
             Close();

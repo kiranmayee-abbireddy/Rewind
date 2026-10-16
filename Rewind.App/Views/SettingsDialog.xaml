@@ -60,10 +60,18 @@
             <TextBlock x:Name="StorageUsageLabel" Text="Calculating storage consumption..." FontSize="10" Foreground="#8B949E" Margin="0,0,0,14"/>
 
             <!-- AI Assistant Toggle -->
-            <CheckBox x:Name="AiEnabledCheck" IsChecked="True" Margin="0,4,0,0">
+            <CheckBox x:Name="AiEnabledCheck" IsChecked="True" Margin="0,4,0,8">
                 <StackPanel>
                     <TextBlock Text="Enable AI Bug Report Assistant" FontWeight="SemiBold" Foreground="#F0F6FC"/>
                     <TextBlock Text="Automatically drafts reproduction steps and titles from preserved footage." FontSize="11" Foreground="#8B949E"/>
+                </StackPanel>
+            </CheckBox>
+
+            <!-- Optional Audio Capture Toggle (PRD Open Decision #4) -->
+            <CheckBox x:Name="AudioEnabledCheck" IsChecked="False" Margin="0,4,0,0">
+                <StackPanel>
+                    <TextBlock Text="Capture Voice Commentary (Microphone)" FontWeight="SemiBold" Foreground="#F0F6FC"/>
+                    <TextBlock Text="Records tester voice notes during reproduction alongside screen history." FontSize="11" Foreground="#8B949E"/>
                 </StackPanel>
             </CheckBox>
         </StackPanel>
