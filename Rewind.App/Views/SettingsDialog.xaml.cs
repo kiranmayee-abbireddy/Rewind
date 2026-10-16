@@ -1,5 +1,6 @@
 using System.Windows;
 using Rewind.App.Models;
+using Rewind.App.Services;
 
 namespace Rewind.App.Views
 {
@@ -25,13 +26,16 @@ namespace Rewind.App.Views
             AudioEnabledCheck.IsChecked = current.RecordMicrophone;
             OllamaHostBox.Text = string.IsNullOrWhiteSpace(current.OllamaEndpoint) ? "http://localhost:11434" : current.OllamaEndpoint;
 
-            ThemeModeCombo.SelectedIndex = current.ThemeMode?.ToLowerInvariant() switch
+            var palette = string.IsNullOrWhiteSpace(current.ColorPalette) ? "Slate" : current.ColorPalette;
+            ColorPaletteCombo.SelectedIndex = palette.ToLowerInvariant() switch
             {
-                "light" => 1,
-                "emerald" => 2,
-                "burgundy" => 3,
+                "emerald" => 1,
+                "burgundy" => 2,
+                "amber" => 3,
+                "sapphire" => 4,
                 _ => 0
             };
+            DisplayModeCombo.SelectedIndex = current.IsDarkMode ? 0 : 1;
 
             var baseDir = System.IO.Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.LocalApplicationData), "Rewind");
             StorageDirBox.Text = baseDir;
@@ -184,6 +188,21 @@ namespace Rewind.App.Views
             }
         }
 
+        private void ThemeSelection_Changed(object sender, RoutedEventArgs e)
+        {
+            if (ColorPaletteCombo == null || DisplayModeCombo == null) return;
+            var selectedPalette = ColorPaletteCombo.SelectedIndex switch
+            {
+                1 => "Emerald",
+                2 => "Burgundy",
+                3 => "Amber",
+                4 => "Sapphire",
+                _ => "Slate"
+            };
+            var isDark = DisplayModeCombo.SelectedIndex == 0;
+            ThemeManager.ApplyTheme(selectedPalette, isDark);
+        }
+
         private void Save_Click(object sender, RoutedEventArgs e)
         {
             Settings.BufferDurationSeconds = (int)BufferDurationSlider.Value;
@@ -196,13 +215,21 @@ namespace Rewind.App.Views
             Settings.CaptureSource = SourceCombo.SelectedIndex == 1 ? "Active Foreground Window" : "Primary Display (Entire Screen)";
             Settings.AiEnabled = AiEnabledCheck.IsChecked ?? true;
             Settings.RecordMicrophone = AudioEnabledCheck.IsChecked ?? false;
-            Settings.ThemeMode = ThemeModeCombo.SelectedIndex switch
+            
+            var selectedPalette = ColorPaletteCombo.SelectedIndex switch
             {
-                1 => "Light",
-                2 => "Emerald",
-                3 => "Burgundy",
-                _ => "Dark"
+                1 => "Emerald",
+                2 => "Burgundy",
+                3 => "Amber",
+                4 => "Sapphire",
+                _ => "Slate"
             };
+            var isDark = DisplayModeCombo.SelectedIndex == 0;
+
+            Settings.ColorPalette = selectedPalette;
+            Settings.IsDarkMode = isDark;
+            Settings.ThemeMode = $"{selectedPalette}_{(isDark ? "Dark" : "Light")}";
+
             Settings.OllamaEndpoint = string.IsNullOrWhiteSpace(OllamaHostBox.Text) ? "http://localhost:11434" : OllamaHostBox.Text.Trim();
             Settings.OllamaModel = OllamaModelCombo.SelectedItem?.ToString() ?? (string.IsNullOrWhiteSpace(OllamaModelCombo.Text) ? "llama3:latest" : OllamaModelCombo.Text);
 

@@ -32,8 +32,9 @@ namespace Rewind.App
 
             _dbService = new DatabaseService();
             _appSettings = _dbService.LoadAppSettings();
-            ThemeManager.ApplyTheme(_appSettings.ThemeMode);
-            UpdateThemeIcon(_appSettings.ThemeMode);
+            var initPalette = string.IsNullOrWhiteSpace(_appSettings.ColorPalette) ? "Slate" : _appSettings.ColorPalette;
+            ThemeManager.ApplyTheme(initPalette, _appSettings.IsDarkMode);
+            UpdateThemeIcon(_appSettings.IsDarkMode);
 
             _aiAssistant = new OllamaAiAssistant(_appSettings.OllamaEndpoint, _appSettings.OllamaModel)
             {
@@ -616,8 +617,9 @@ namespace Rewind.App
                     {
                         IsEnabled = _appSettings.AiEnabled
                     };
-                    ThemeManager.ApplyTheme(_appSettings.ThemeMode);
-                    UpdateThemeIcon(_appSettings.ThemeMode);
+                    var activePalette = string.IsNullOrWhiteSpace(_appSettings.ColorPalette) ? "Slate" : _appSettings.ColorPalette;
+                    ThemeManager.ApplyTheme(activePalette, _appSettings.IsDarkMode);
+                    UpdateThemeIcon(_appSettings.IsDarkMode);
                     SettingsSummaryText.Text = $"Buffer: {_appSettings.BufferDurationSeconds}s @ {_appSettings.FrameRate}fps • {_appSettings.OllamaModel}";
                 }
             }
@@ -660,23 +662,25 @@ namespace Rewind.App
 
         private void ThemeToggle_Click(object sender, RoutedEventArgs e)
         {
-            var newTheme = string.Equals(_appSettings.ThemeMode, "Light", StringComparison.OrdinalIgnoreCase) ? "Dark" : "Light";
-            _appSettings.ThemeMode = newTheme;
-            ThemeManager.ApplyTheme(newTheme);
-            UpdateThemeIcon(newTheme);
+            _appSettings.IsDarkMode = !_appSettings.IsDarkMode;
+            var palette = string.IsNullOrWhiteSpace(_appSettings.ColorPalette) ? "Slate" : _appSettings.ColorPalette;
+            _appSettings.ThemeMode = $"{palette}_{(_appSettings.IsDarkMode ? "Dark" : "Light")}";
+
+            ThemeManager.ApplyTheme(palette, _appSettings.IsDarkMode);
+            UpdateThemeIcon(_appSettings.IsDarkMode);
             _dbService.SaveAppSettings(_appSettings);
         }
 
-        private void UpdateThemeIcon(string themeMode)
+        private void UpdateThemeIcon(bool isDarkMode)
         {
             if (ThemeIconPath == null) return;
-            if (string.Equals(themeMode, "Light", StringComparison.OrdinalIgnoreCase))
+            if (isDarkMode)
             {
-                ThemeIconPath.Data = (System.Windows.Media.Geometry)FindResource("MoonGeometry");
+                ThemeIconPath.Data = (System.Windows.Media.Geometry)FindResource("SunGeometry");
             }
             else
             {
-                ThemeIconPath.Data = (System.Windows.Media.Geometry)FindResource("SunGeometry");
+                ThemeIconPath.Data = (System.Windows.Media.Geometry)FindResource("MoonGeometry");
             }
         }
 

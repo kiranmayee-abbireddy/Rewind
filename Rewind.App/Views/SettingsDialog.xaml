@@ -41,14 +41,32 @@
         <!-- Scrollable Settings Body (Prevents Any Screen Overflow, Hidden Visual Scrollbar) -->
         <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Disabled" Padding="20,16">
             <StackPanel>
-                <!-- Appearance Theme Preference -->
-                <TextBlock Text="Visual Appearance &amp; Color Theme" FontSize="12.5" FontWeight="SemiBold" Foreground="{DynamicResource TextPrimaryBrush}" Margin="0,0,0,4"/>
-                <ComboBox x:Name="ThemeModeCombo" Background="{DynamicResource BgCardBrush}" Foreground="{DynamicResource TextPrimaryBrush}" BorderBrush="{DynamicResource BorderBrush}" Margin="0,0,0,14">
-                    <ComboBoxItem Content="Cinematic Slate Studio (Dark Mode)" IsSelected="True"/>
-                    <ComboBoxItem Content="Nordic Porcelain Studio (Light Mode)"/>
-                    <ComboBoxItem Content="Imperial Emerald Obsidian"/>
-                    <ComboBoxItem Content="Cinematic Velvet Burgundy"/>
-                </ComboBox>
+                <!-- Appearance Theme Preference: Color Palette & Dark/Light Mode -->
+                <Grid Margin="0,0,0,14">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1.4*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    
+                    <StackPanel Grid.Column="0" Margin="0,0,8,0">
+                        <TextBlock Text="Cinematic Studio Color Theme" FontSize="12.5" FontWeight="SemiBold" Foreground="{DynamicResource TextPrimaryBrush}" Margin="0,0,0,4"/>
+                        <ComboBox x:Name="ColorPaletteCombo" SelectionChanged="ThemeSelection_Changed" Background="{DynamicResource BgCardBrush}" Foreground="{DynamicResource TextPrimaryBrush}" BorderBrush="{DynamicResource BorderBrush}">
+                            <ComboBoxItem Content="🎬 Studio Slate (DaVinci Neutral)" IsSelected="True"/>
+                            <ComboBoxItem Content="🌲 Imperial Emerald (Cyber / Matrix)"/>
+                            <ComboBoxItem Content="🍷 Velvet Burgundy (Screening Noir)"/>
+                            <ComboBoxItem Content="🍯 Amber Obsidian (Film Director Warm)"/>
+                            <ComboBoxItem Content="💎 Midnight Sapphire (CleanShot Blue)"/>
+                        </ComboBox>
+                    </StackPanel>
+
+                    <StackPanel Grid.Column="1" Margin="8,0,0,0">
+                        <TextBlock Text="Display Mode" FontSize="12.5" FontWeight="SemiBold" Foreground="{DynamicResource TextPrimaryBrush}" Margin="0,0,0,4"/>
+                        <ComboBox x:Name="DisplayModeCombo" SelectionChanged="ThemeSelection_Changed" Background="{DynamicResource BgCardBrush}" Foreground="{DynamicResource TextPrimaryBrush}" BorderBrush="{DynamicResource BorderBrush}">
+                            <ComboBoxItem Content="🌙 Dark Mode" IsSelected="True"/>
+                            <ComboBoxItem Content="☀️ Light Mode"/>
+                        </ComboBox>
+                    </StackPanel>
+                </Grid>
 
                 <!-- Buffer Duration -->
                 <TextBlock Text="Rolling Buffer Retention (Seconds)" FontSize="12.5" FontWeight="SemiBold" Foreground="{DynamicResource TextPrimaryBrush}" Margin="0,0,0,4"/>

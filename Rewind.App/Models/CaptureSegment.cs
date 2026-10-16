@@ -26,6 +26,8 @@ namespace Rewind.App.Models
         public string OllamaEndpoint { get; set; } = "http://localhost:11434";
         public string OllamaModel { get; set; } = "llama3:latest";
         public bool RecordMicrophone { get; set; } = false;
-        public string ThemeMode { get; set; } = "Dark"; // "Dark" or "Light"
+        public string ThemeMode { get; set; } = "Slate_Dark"; // Backwards-compat legacy field
+        public string ColorPalette { get; set; } = "Slate"; // "Slate", "Emerald", "Burgundy", "Amber", "Sapphire"
+        public bool IsDarkMode { get; set; } = true;
     }
 }
