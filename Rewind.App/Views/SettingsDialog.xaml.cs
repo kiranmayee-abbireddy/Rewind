@@ -8,8 +8,11 @@ namespace Rewind.App.Views
     {
         public AppSettings Settings { get; private set; }
 
+        private bool _isInitializing = true;
+
         public SettingsDialog(AppSettings current)
         {
+            _isInitializing = true;
             InitializeComponent();
             Settings = current;
 
@@ -40,11 +43,15 @@ namespace Rewind.App.Views
             var baseDir = System.IO.Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.LocalApplicationData), "Rewind");
             StorageDirBox.Text = baseDir;
 
-            Loaded += async (s, e) =>
+            Loaded += (s, e) =>
             {
-                // Run disk I/O in background so dialog opens instantaneously
-                await CalculateStorageUsageAsync(baseDir);
-                await DetectAvailableModelsAsync();
+                _isInitializing = false;
+                // Dispatch disk and network discovery at background priority so the dialog appears instantly
+                Dispatcher.InvokeAsync(async () =>
+                {
+                    await CalculateStorageUsageAsync(baseDir);
+                    await DetectAvailableModelsAsync();
+                }, System.Windows.Threading.DispatcherPriority.Background);
             };
         }
 
@@ -199,7 +206,7 @@ namespace Rewind.App.Views
 
         private void ThemeSelection_Changed(object sender, RoutedEventArgs e)
         {
-            if (ColorPaletteCombo == null || DisplayModeCombo == null) return;
+            if (_isInitializing || ColorPaletteCombo == null || DisplayModeCombo == null) return;
             var selectedPalette = ColorPaletteCombo.SelectedIndex switch
             {
                 1 => "Emerald",
