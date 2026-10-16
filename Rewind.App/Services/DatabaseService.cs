@@ -221,5 +221,42 @@ namespace Rewind.App.Services
             cmd.Parameters.AddWithValue("$id", sessionId);
             cmd.ExecuteNonQuery();
         }
+
+        public void SaveAppSettings(AppSettings settings)
+        {
+            try
+            {
+                var json = System.Text.Json.JsonSerializer.Serialize(settings);
+                using var conn = new SqliteConnection(_connectionString);
+                conn.Open();
+                var cmd = conn.CreateCommand();
+                cmd.CommandText = @"
+                    INSERT INTO Settings (Key, Value) VALUES ('AppSettings', $val)
+                    ON CONFLICT(Key) DO UPDATE SET Value = $val;
+                ";
+                cmd.Parameters.AddWithValue("$val", json);
+                cmd.ExecuteNonQuery();
+            }
+            catch { }
+        }
+
+        public AppSettings LoadAppSettings()
+        {
+            try
+            {
+                using var conn = new SqliteConnection(_connectionString);
+                conn.Open();
+                var cmd = conn.CreateCommand();
+                cmd.CommandText = "SELECT Value FROM Settings WHERE Key = 'AppSettings' LIMIT 1;";
+                var val = cmd.ExecuteScalar()?.ToString();
+                if (!string.IsNullOrWhiteSpace(val))
+                {
+                    var settings = System.Text.Json.JsonSerializer.Deserialize<AppSettings>(val);
+                    if (settings != null) return settings;
+                }
+            }
+            catch { }
+            return new AppSettings();
+        }
     }
 }

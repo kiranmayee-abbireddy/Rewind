@@ -33,9 +33,7 @@ namespace Rewind.App.Services
         public async Task<(string Title, string ObservedBehavior, string ReproSteps, string Suggestions)> AnalyzeClipAsync(string clipPath, double durationSeconds, string userCaseOrContext = "")
         {
             var fallback = new RuleBasedLocalAiAssistant();
-            try
-            {
-                var prompt = $@"You are an expert QA Software Test Engineer.
+            var prompt = $@"You are an expert QA Software Test Engineer.
 A tester captured a {durationSeconds:0.0}s bug evidence video clip.
 User's notes / test case: ""{userCaseOrContext}""
 
@@ -47,14 +45,32 @@ SUGGESTIONS: [Technical severity rating & suggestions]
 
 Do not include conversational preamble. Respond directly with TITLE:, OBSERVED:, REPRO:, and SUGGESTIONS:.";
 
+            // Try configured model first
+            var result = await TryGenerateWithModelAsync(_modelName, prompt, userCaseOrContext, durationSeconds);
+            if (result != null) return result.Value;
+
+            // If configured model timed out or failed and wasn't gemma3:1b, try fast local gemma3:1b
+            if (!_modelName.Equals("gemma3:1b", StringComparison.OrdinalIgnoreCase))
+            {
+                var fastResult = await TryGenerateWithModelAsync("gemma3:1b", prompt, userCaseOrContext, durationSeconds);
+                if (fastResult != null) return fastResult.Value;
+            }
+
+            return await fallback.AnalyzeClipAsync(clipPath, durationSeconds, userCaseOrContext);
+        }
+
+        private async Task<(string Title, string ObservedBehavior, string ReproSteps, string Suggestions)?> TryGenerateWithModelAsync(string model, string prompt, string userCaseOrContext, double durationSeconds)
+        {
+            try
+            {
                 var requestObj = new
                 {
-                    model = _modelName,
+                    model = model,
                     prompt = prompt,
                     stream = false
                 };
 
-                using var cts = new System.Threading.CancellationTokenSource(TimeSpan.FromSeconds(25));
+                using var cts = new System.Threading.CancellationTokenSource(TimeSpan.FromSeconds(20));
                 var content = new StringContent(JsonSerializer.Serialize(requestObj), Encoding.UTF8, "application/json");
                 var response = await _httpClient.PostAsync($"{_endpoint}/api/generate", content, cts.Token);
 
@@ -65,13 +81,15 @@ Do not include conversational preamble. Respond directly with TITLE:, OBSERVED:,
                     if (doc.RootElement.TryGetProperty("response", out var respProp))
                     {
                         var text = respProp.GetString() ?? string.Empty;
-                        return ParseLlmResponse(text, userCaseOrContext, durationSeconds);
+                        if (!string.IsNullOrWhiteSpace(text))
+                        {
+                            return ParseLlmResponse(text, userCaseOrContext, durationSeconds);
+                        }
                     }
                 }
             }
             catch { }
-
-            return await fallback.AnalyzeClipAsync(clipPath, durationSeconds, userCaseOrContext);
+            return null;
         }
 
         private static (string Title, string ObservedBehavior, string ReproSteps, string Suggestions) ParseLlmResponse(string text, string userContext, double duration)
@@ -190,15 +208,40 @@ Write a professional executive summary covering key risks, defect clusters, and 
         {
             await Task.Delay(100);
 
-            var title = !string.IsNullOrWhiteSpace(userCaseOrContext)
-                ? OllamaAiAssistant.CleanTitle(userCaseOrContext)
-                : $"Defect captured in {durationSeconds:0.0}s clip";
-
+            var title = SynthesizeRuleBasedTitle(userCaseOrContext, durationSeconds);
             var observed = $"Anomalous interaction recorded during '{(!string.IsNullOrWhiteSpace(userCaseOrContext) ? userCaseOrContext : "workflow")}'. Screen visual activity captured ({durationSeconds:0.0}s).";
             var repro = $"1. Launch application under test.\n2. Navigate to screen active during discovery.\n3. Execute scenario: {(!string.IsNullOrWhiteSpace(userCaseOrContext) ? userCaseOrContext : "reproduction sequence")}.\n4. Observe discrepancy with expected state.";
             var suggestions = "Candidate Severity: Moderate (Visual / Behavioral discrepancy).\n• Verify if related console errors, network drops, or rendering glitches occurred.\n• Check if responsive breakpoint or layout boundary condition triggered this anomaly.";
 
             return (title, observed, repro, suggestions);
+        }
+
+        private static string SynthesizeRuleBasedTitle(string userContext, double duration)
+        {
+            if (string.IsNullOrWhiteSpace(userContext))
+            {
+                return $"Defect captured in {duration:0.0}s clip";
+            }
+
+            var text = userContext.Trim();
+            // Remove common conversational starters
+            var prefixes = new[] { "when opened the ", "when opened ", "when clicking ", "when clicked ", "when ", "after clicking ", "after " };
+            foreach (var p in prefixes)
+            {
+                if (text.StartsWith(p, StringComparison.OrdinalIgnoreCase))
+                {
+                    text = text.Substring(p.Length).Trim();
+                    break;
+                }
+            }
+
+            // Capitalize first character
+            if (text.Length > 0)
+            {
+                text = char.ToUpper(text[0]) + text.Substring(1);
+            }
+
+            return OllamaAiAssistant.CleanTitle(text);
         }
 
         public async Task<string> SummarizeSessionReportAsync(string sessionTitle, int bugCount, string bugTitlesSummary)

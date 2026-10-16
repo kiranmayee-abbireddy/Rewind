@@ -30,7 +30,11 @@ namespace Rewind.App
             InitializeComponent();
 
             _dbService = new DatabaseService();
-            _aiAssistant = new OllamaAiAssistant(_appSettings.OllamaEndpoint, _appSettings.OllamaModel);
+            _appSettings = _dbService.LoadAppSettings();
+            _aiAssistant = new OllamaAiAssistant(_appSettings.OllamaEndpoint, _appSettings.OllamaModel)
+            {
+                IsEnabled = _appSettings.AiEnabled
+            };
             _hotkeyManager = new GlobalHotkeyManager();
             _hotkeyManager.HotkeyPressed += () =>
             {
@@ -293,8 +297,8 @@ namespace Rewind.App
                         var analysis = await _aiAssistant.AnalyzeClipAsync(clipFile, bug.DurationSeconds, userContext);
                         bug.AiAssisted = true;
 
-                        // Only rewrite bug title with AI if user did not explicitly supply a custom bug title
-                        if (!dialog.UserProvidedExplicitTitle && !string.IsNullOrWhiteSpace(analysis.Title))
+                        // AI synthesizes and rewrites the bug title into a professional defect title
+                        if (!string.IsNullOrWhiteSpace(analysis.Title))
                         {
                             bug.Title = analysis.Title;
                         }
@@ -303,6 +307,31 @@ namespace Rewind.App
                         bug.ReproductionSteps = analysis.ReproSteps;
                         bug.AiSuggestions = analysis.Suggestions;
                     }
+
+                    // Rename clip and thumbnail so the video file on disk matches the bug title
+                    try
+                    {
+                        var sanitizedTitle = SanitizeFileName(bug.Title);
+                        if (string.IsNullOrWhiteSpace(sanitizedTitle)) sanitizedTitle = $"bug_{bug.Id}";
+                        var namedClipFile = Path.Combine(clipsDir, $"{sanitizedTitle}_{bug.Id.Substring(0, 8)}.mp4");
+                        var namedThumbFile = Path.ChangeExtension(namedClipFile, ".jpg");
+
+                        if (!clipFile.Equals(namedClipFile, StringComparison.OrdinalIgnoreCase) && File.Exists(clipFile))
+                        {
+                            if (File.Exists(namedClipFile)) File.Delete(namedClipFile);
+                            File.Move(clipFile, namedClipFile);
+                            bug.ClipPath = namedClipFile;
+
+                            var oldThumb = Path.ChangeExtension(clipFile, ".jpg");
+                            if (File.Exists(oldThumb))
+                            {
+                                if (File.Exists(namedThumbFile)) File.Delete(namedThumbFile);
+                                File.Move(oldThumb, namedThumbFile);
+                                bug.ThumbnailPath = namedThumbFile;
+                            }
+                        }
+                    }
+                    catch { }
 
                     _dbService.SaveBug(bug);
                     Bugs.Add(bug);
@@ -323,6 +352,32 @@ namespace Rewind.App
                         }
                         else
                         {
+                            // If title was updated in detail window, keep video file name synchronized
+                            try
+                            {
+                                var updatedSanitized = SanitizeFileName(bug.Title);
+                                if (!string.IsNullOrWhiteSpace(updatedSanitized))
+                                {
+                                    var updatedClip = Path.Combine(clipsDir, $"{updatedSanitized}_{bug.Id.Substring(0, 8)}.mp4");
+                                    if (!bug.ClipPath.Equals(updatedClip, StringComparison.OrdinalIgnoreCase) && File.Exists(bug.ClipPath))
+                                    {
+                                        if (File.Exists(updatedClip)) File.Delete(updatedClip);
+                                        File.Move(bug.ClipPath, updatedClip);
+                                        bug.ClipPath = updatedClip;
+
+                                        var oldThumb = Path.ChangeExtension(bug.ClipPath, ".jpg");
+                                        var newThumb = Path.ChangeExtension(updatedClip, ".jpg");
+                                        if (File.Exists(oldThumb))
+                                        {
+                                            if (File.Exists(newThumb)) File.Delete(newThumb);
+                                            File.Move(oldThumb, newThumb);
+                                            bug.ThumbnailPath = newThumb;
+                                        }
+                                    }
+                                }
+                            }
+                            catch { }
+
                             _dbService.SaveBug(bug);
                         }
                         LoadBugsForActiveSession();
@@ -458,6 +513,7 @@ namespace Rewind.App
             if (dlg.ShowDialog() == true)
             {
                 _appSettings = dlg.Settings;
+                _dbService.SaveAppSettings(_appSettings);
                 _aiAssistant = new OllamaAiAssistant(_appSettings.OllamaEndpoint, _appSettings.OllamaModel)
                 {
                     IsEnabled = _appSettings.AiEnabled
@@ -465,6 +521,18 @@ namespace Rewind.App
                 _captureEngine.CaptureSourceMode = _appSettings.CaptureSource;
                 SettingsSummaryText.Text = $"Buffer: {_appSettings.BufferDurationSeconds}s @ {_appSettings.FrameRate}fps • {_appSettings.OllamaModel}";
             }
+        }
+
+        private static string SanitizeFileName(string name)
+        {
+            if (string.IsNullOrWhiteSpace(name)) return "bug";
+            var invalidChars = Path.GetInvalidFileNameChars();
+            var clean = new string(name.Select(ch => invalidChars.Contains(ch) ? '_' : ch).ToArray());
+            clean = clean.Replace(' ', '_').Replace('\t', '_');
+            while (clean.Contains("__")) clean = clean.Replace("__", "_");
+            clean = clean.Trim('_');
+            if (clean.Length > 50) clean = clean.Substring(0, 50).TrimEnd('_');
+            return clean.Length > 0 ? clean : "bug";
         }
     }
 }
