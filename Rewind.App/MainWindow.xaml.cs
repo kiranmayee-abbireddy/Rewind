@@ -663,15 +663,19 @@ namespace Rewind.App
 
         private void OpenSettings_Click(object sender, RoutedEventArgs e)
         {
-            var dlg = new SettingsDialog(_appSettings)
-            {
-                Owner = this
-            };
-            _isModalDialogOpen = true;
+            if (_isModalDialogOpen) return;
+
             var wasRunning = _captureEngine.IsRunning && !_captureEngine.IsPaused;
-            if (wasRunning) _captureEngine.Pause();
             try
             {
+                _isModalDialogOpen = true;
+                if (wasRunning) _captureEngine.Pause();
+
+                var dlg = new SettingsDialog(_appSettings)
+                {
+                    Owner = this
+                };
+
                 if (dlg.ShowDialog() == true)
                 {
                     _appSettings = dlg.Settings;
@@ -685,6 +689,11 @@ namespace Rewind.App
                     UpdateThemeIcon(_appSettings.IsDarkMode);
                     SettingsSummaryText.Text = $"Buffer: {_appSettings.BufferDurationSeconds}s @ {_appSettings.FrameRate}fps • {_appSettings.OllamaModel}";
                 }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Failed to open settings: {ex.Message}");
+                MessageBox.Show($"Could not open Settings dialog: {ex.Message}", "Settings Error", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
             finally
             {
