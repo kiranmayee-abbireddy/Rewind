@@ -438,11 +438,12 @@ namespace Rewind.App
                 aiSummary = await _aiAssistant.SummarizeSessionReportAsync(_activeSession.Title, bugsList.Count, sbTitles.ToString());
             }
 
+            var cleanList = ReportGenerator.GenerateCleanListReport(_activeSession, bugsList);
             var md = ReportGenerator.GenerateMarkdownReport(_activeSession, bugsList, aiExecutiveSummary: aiSummary);
             var jira = ReportGenerator.GenerateJiraFormat(_activeSession, bugsList);
             var json = ReportGenerator.GenerateJsonReport(_activeSession, bugsList, aiExecutiveSummary: aiSummary);
 
-            var reportWin = new ReportPreviewWindow(md, jira, json);
+            var reportWin = new ReportPreviewWindow(cleanList, md, jira, json);
             reportWin.ShowDialog();
         }
 

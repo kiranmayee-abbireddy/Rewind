@@ -7,39 +7,46 @@
         WindowStartupLocation="Manual">
     <Grid Margin="12">
         <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-        <Border x:Name="HudCapsule" CornerRadius="20" Background="#111620" BorderBrush="#253043" BorderThickness="1.5" Padding="5,5,10,5"
+        <Border x:Name="HudCapsule" CornerRadius="20" Background="#111620" BorderBrush="#253043" BorderThickness="1.5" Padding="5,5,8,5"
                 MouseLeftButtonDown="HudCapsule_MouseDown" Cursor="Hand" ToolTip="REWIND Floating HUD • Drag to reposition • Double-click to open dashboard">
             <Border.Effect>
                 <DropShadowEffect BlurRadius="22" ShadowDepth="4" Direction="270" Color="#000000" Opacity="0.75"/>
             </Border.Effect>
             <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                <!-- Brand Icon Pill -->
-                <Border Width="34" Height="34" CornerRadius="17" Background="{StaticResource LogoOrbGradient}" Margin="0,0,10,0">
+                <!-- Brand Icon Pill (Clicking when collapsed expands the HUD) -->
+                <Border x:Name="LogoOrb" Width="34" Height="34" CornerRadius="17" Background="{StaticResource LogoOrbGradient}" Cursor="Hand" ToolTip="REWIND Logo • Click to toggle compact/expanded" MouseLeftButtonDown="LogoOrb_MouseDown">
                     <Path Data="{StaticResource RewindArrowsGeometry}" Fill="#FFFFFF" Stretch="Uniform" Width="15" Height="15" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                 </Border>
 
-                <!-- Status & Timer -->
-                <StackPanel VerticalAlignment="Center" Margin="0,0,14,0">
-                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                        <Border x:Name="StatusDot" Width="7" Height="7" CornerRadius="3.5" Background="#EF4444" Margin="0,0,5,0" VerticalAlignment="Center"/>
-                        <TextBlock x:Name="StatusText" Text="REC" FontWeight="Bold" FontSize="10.5" Foreground="#EF4444" Margin="0,0,6,0"/>
-                        <TextBlock x:Name="BufferTimeText" Text="00:00" FontWeight="Bold" FontSize="12.5" Foreground="#F3F6FC"/>
-                    </StackPanel>
-                    <TextBlock Text="Rolling Buffer Active" FontSize="9.5" Foreground="#94A3B8"/>
-                </StackPanel>
-
-                <!-- Quick Action Buttons -->
-                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                    <Button Click="PreserveButton_Click" Style="{StaticResource PrimaryButton}" Padding="11,5" Margin="0,0,6,0">
-                        <StackPanel Orientation="Horizontal">
-                            <Path Data="{StaticResource LightningBoltGeometry}" Fill="#FFFFFF" Stretch="Uniform" Width="11" Height="11" Margin="0,0,5,0" VerticalAlignment="Center"/>
-                            <TextBlock Text="Preserve" FontWeight="Bold" FontSize="11"/>
+                <!-- Expanded Content (Hides when minimized) -->
+                <StackPanel x:Name="ExpandedContent" Orientation="Horizontal" VerticalAlignment="Center" Margin="10,0,0,0">
+                    <!-- Status & Timer -->
+                    <StackPanel VerticalAlignment="Center" Margin="0,0,14,0">
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                            <Border x:Name="StatusDot" Width="7" Height="7" CornerRadius="3.5" Background="#EF4444" Margin="0,0,5,0" VerticalAlignment="Center"/>
+                            <TextBlock x:Name="StatusText" Text="REC" FontWeight="Bold" FontSize="10.5" Foreground="#EF4444" Margin="0,0,6,0"/>
+                            <TextBlock x:Name="BufferTimeText" Text="00:00" FontWeight="Bold" FontSize="12.5" Foreground="#F3F6FC"/>
                         </StackPanel>
-                    </Button>
+                        <TextBlock Text="Rolling Buffer Active" FontSize="9.5" Foreground="#94A3B8"/>
+                    </StackPanel>
 
-                    <Button Click="OpenMain_Click" Style="{StaticResource SecondaryButton}" Padding="8,5" ToolTip="Open Full Dashboard">
-                        <TextBlock Text="⤢" FontSize="12" Foreground="#94A3B8"/>
-                    </Button>
+                    <!-- Quick Action Buttons -->
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                        <Button Click="PreserveButton_Click" Style="{StaticResource PrimaryButton}" Padding="11,5" Margin="0,0,6,0">
+                            <StackPanel Orientation="Horizontal">
+                                <Path Data="{StaticResource LightningBoltGeometry}" Fill="#FFFFFF" Stretch="Uniform" Width="11" Height="11" Margin="0,0,5,0" VerticalAlignment="Center"/>
+                                <TextBlock Text="Preserve" FontWeight="Bold" FontSize="11"/>
+                            </StackPanel>
+                        </Button>
+
+                        <Button Click="OpenMain_Click" Style="{StaticResource SecondaryButton}" Padding="8,5" Margin="0,0,6,0" ToolTip="Open Full Dashboard">
+                            <TextBlock Text="⤢" FontSize="12" Foreground="#94A3B8"/>
+                        </Button>
+
+                        <Button Click="ToggleMinimize_Click" Style="{StaticResource SecondaryButton}" Padding="8,5" ToolTip="Minimize to Icon">
+                            <TextBlock Text="—" FontSize="11" FontWeight="Bold" Foreground="#94A3B8"/>
+                        </Button>
+                    </StackPanel>
                 </StackPanel>
             </StackPanel>
         </Border>

@@ -25,8 +25,8 @@ namespace Rewind.App.Views
             AudioEnabledCheck.IsChecked = current.RecordMicrophone;
             OllamaHostBox.Text = string.IsNullOrWhiteSpace(current.OllamaEndpoint) ? "http://localhost:11434" : current.OllamaEndpoint;
 
-            if (current.OllamaModel == "qwen3:4b") OllamaModelCombo.SelectedIndex = 1;
-            else if (current.OllamaModel == "llama3:latest") OllamaModelCombo.SelectedIndex = 2;
+            if (current.OllamaModel == "gemma3:1b") OllamaModelCombo.SelectedIndex = 1;
+            else if (current.OllamaModel == "qwen3:4b") OllamaModelCombo.SelectedIndex = 2;
             else OllamaModelCombo.SelectedIndex = 0;
 
             var baseDir = System.IO.Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.LocalApplicationData), "Rewind");
@@ -122,9 +122,9 @@ namespace Rewind.App.Views
             Settings.OllamaEndpoint = string.IsNullOrWhiteSpace(OllamaHostBox.Text) ? "http://localhost:11434" : OllamaHostBox.Text.Trim();
             Settings.OllamaModel = OllamaModelCombo.SelectedIndex switch
             {
-                1 => "qwen3:4b",
-                2 => "llama3:latest",
-                _ => "gemma3:1b"
+                1 => "gemma3:1b",
+                2 => "qwen3:4b",
+                _ => "llama3:latest"
             };
 
             DialogResult = true;

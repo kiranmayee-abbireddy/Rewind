@@ -100,6 +100,43 @@ namespace Rewind.App.Services
             return sb.ToString();
         }
 
+        public static string GenerateCleanListReport(Session session, List<Bug> bugs)
+        {
+            var sb = new StringBuilder();
+            sb.AppendLine($"================================================================================");
+            sb.AppendLine($"QA DEFECT REPORT — {session.Title.ToUpper()}");
+            sb.AppendLine($"Total Preserved Defects: {bugs.Count} | Session Date: {session.CreatedAt:yyyy-MM-dd HH:mm}");
+            sb.AppendLine($"================================================================================");
+            sb.AppendLine();
+
+            if (bugs.Count == 0)
+            {
+                sb.AppendLine("No bugs were preserved in this session.");
+                return sb.ToString();
+            }
+
+            for (int i = 0; i < bugs.Count; i++)
+            {
+                var bug = bugs[i];
+                var videoName = System.IO.Path.GetFileName(bug.ClipPath);
+                if (string.IsNullOrWhiteSpace(videoName)) videoName = $"bug_{bug.Id}.mp4";
+
+                sb.AppendLine($"[{i + 1}] {bug.Title.ToUpper()}");
+                sb.AppendLine($"    • Status:      {bug.Status}");
+                sb.AppendLine($"    • Video Clip:  {videoName}");
+                sb.AppendLine($"    • Duration:    {bug.DurationSeconds:0.0}s");
+                sb.AppendLine($"    • Description: {(!string.IsNullOrWhiteSpace(bug.ObservedBehavior) ? bug.ObservedBehavior : "No description specified.")}");
+                
+                if (!string.IsNullOrWhiteSpace(bug.ReproductionSteps))
+                {
+                    sb.AppendLine($"    • Repro Steps: {bug.ReproductionSteps.Replace("\r", "").Replace("\n", " -> ")}");
+                }
+                sb.AppendLine();
+            }
+
+            return sb.ToString();
+        }
+
         public static string GenerateJsonReport(Session session, List<Bug> bugs, string testerName = "Tester", string? aiExecutiveSummary = null)
         {
             var exportObj = new

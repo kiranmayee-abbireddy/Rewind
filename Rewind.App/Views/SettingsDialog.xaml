@@ -82,9 +82,9 @@
                 <StackPanel Grid.Column="0" Margin="0,0,6,0">
                     <TextBlock Text="Ollama Model" FontSize="11.5" Foreground="#94A3B8" Margin="0,0,0,3"/>
                     <ComboBox x:Name="OllamaModelCombo" Background="#111620" Foreground="#F3F6FC" BorderBrush="#253043">
-                        <ComboBoxItem Content="gemma3:1b (Fast, Recommended)" IsSelected="True"/>
+                        <ComboBoxItem Content="llama3:latest (Fast, Recommended)" IsSelected="True"/>
+                        <ComboBoxItem Content="gemma3:1b"/>
                         <ComboBoxItem Content="qwen3:4b"/>
-                        <ComboBoxItem Content="llama3:latest"/>
                     </ComboBox>
                 </StackPanel>
                 <StackPanel Grid.Column="1" Margin="6,0,0,0">

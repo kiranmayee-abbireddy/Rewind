@@ -24,7 +24,7 @@ namespace Rewind.App.Services
         public bool IsEnabled { get; set; } = true;
         public string ProviderName => $"Ollama ({_modelName})";
 
-        public OllamaAiAssistant(string endpoint = "http://localhost:11434", string modelName = "gemma3:1b")
+        public OllamaAiAssistant(string endpoint = "http://localhost:11434", string modelName = "llama3:latest")
         {
             _endpoint = endpoint.TrimEnd('/');
             _modelName = modelName;
@@ -45,16 +45,20 @@ SUGGESTIONS: [Technical severity rating & suggestions]
 
 Do not include conversational preamble. Respond directly with TITLE:, OBSERVED:, REPRO:, and SUGGESTIONS:.";
 
-            // Try configured model first
+            // Try configured model first (e.g. llama3:latest)
             var result = await TryGenerateWithModelAsync(_modelName, prompt, userCaseOrContext, durationSeconds);
             if (result != null) return result.Value;
 
-            // If configured model timed out or failed and wasn't gemma3:1b, try fast local gemma3:1b
-            if (!_modelName.Equals("gemma3:1b", StringComparison.OrdinalIgnoreCase))
+            // If configured model timed out or failed and wasn't llama3:latest, try fast llama3:latest
+            if (!_modelName.Equals("llama3:latest", StringComparison.OrdinalIgnoreCase))
             {
-                var fastResult = await TryGenerateWithModelAsync("gemma3:1b", prompt, userCaseOrContext, durationSeconds);
-                if (fastResult != null) return fastResult.Value;
+                var llamaResult = await TryGenerateWithModelAsync("llama3:latest", prompt, userCaseOrContext, durationSeconds);
+                if (llamaResult != null) return llamaResult.Value;
             }
+
+            // Fallback to gemma3:1b if available
+            var gemmaResult = await TryGenerateWithModelAsync("gemma3:1b", prompt, userCaseOrContext, durationSeconds);
+            if (gemmaResult != null) return gemmaResult.Value;
 
             return await fallback.AnalyzeClipAsync(clipPath, durationSeconds, userCaseOrContext);
         }
@@ -67,7 +71,12 @@ Do not include conversational preamble. Respond directly with TITLE:, OBSERVED:,
                 {
                     model = model,
                     prompt = prompt,
-                    stream = false
+                    stream = false,
+                    options = new
+                    {
+                        num_predict = 180,
+                        temperature = 0.2
+                    }
                 };
 
                 using var cts = new System.Threading.CancellationTokenSource(TimeSpan.FromSeconds(20));

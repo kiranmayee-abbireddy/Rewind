@@ -74,5 +74,23 @@ namespace Rewind.App.Views
         {
             OnOpenMainRequested?.Invoke();
         }
+
+        private void ToggleMinimize_Click(object sender, RoutedEventArgs e)
+        {
+            ExpandedContent.Visibility = Visibility.Collapsed;
+        }
+
+        private void LogoOrb_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ChangedButton == MouseButton.Left)
+            {
+                // If minimized, clicking the logo orb restores the expanded controls
+                if (ExpandedContent.Visibility == Visibility.Collapsed)
+                {
+                    ExpandedContent.Visibility = Visibility.Visible;
+                    e.Handled = true;
+                }
+            }
+        }
     }
 }

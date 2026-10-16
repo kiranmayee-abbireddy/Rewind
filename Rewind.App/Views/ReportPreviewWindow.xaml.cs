@@ -7,18 +7,20 @@ namespace Rewind.App.Views
 {
     public partial class ReportPreviewWindow : Window
     {
+        private string _cleanListReport;
         private string _markdownReport;
         private string _jiraReport;
         private string _jsonReport;
 
-        public ReportPreviewWindow(string markdownContent, string? jiraContent = null, string? jsonContent = null)
+        public ReportPreviewWindow(string cleanListContent, string? markdownContent = null, string? jiraContent = null, string? jsonContent = null)
         {
             InitializeComponent();
-            _markdownReport = markdownContent;
-            _jiraReport = jiraContent ?? markdownContent;
+            _cleanListReport = cleanListContent;
+            _markdownReport = markdownContent ?? cleanListContent;
+            _jiraReport = jiraContent ?? cleanListContent;
             _jsonReport = jsonContent ?? "{}";
 
-            ReportBox.Text = _markdownReport;
+            ReportBox.Text = _cleanListReport;
         }
 
         private void FormatCombo_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
@@ -27,9 +29,10 @@ namespace Rewind.App.Views
 
             ReportBox.Text = FormatCombo.SelectedIndex switch
             {
-                1 => _jiraReport,
-                2 => _jsonReport,
-                _ => _markdownReport
+                1 => _markdownReport,
+                2 => _jiraReport,
+                3 => _jsonReport,
+                _ => _cleanListReport
             };
             CopyStatusText.Text = "";
         }
@@ -44,8 +47,10 @@ namespace Rewind.App.Views
         {
             var ext = FormatCombo.SelectedIndex switch
             {
-                2 => "json",
-                _ => "md"
+                1 => "md",
+                2 => "txt",
+                3 => "json",
+                _ => "txt"
             };
 
             var sfd = new SaveFileDialog
