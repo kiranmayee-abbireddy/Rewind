@@ -50,6 +50,14 @@
 
                     <TextBlock Text="Clip Start Offset (seconds before now):" FontSize="11" Foreground="#8B949E"/>
                     <Slider x:Name="StartSlider" Minimum="5" Maximum="60" Value="30" TickFrequency="5" IsSnapToTickEnabled="True" ValueChanged="Slider_ValueChanged" Margin="0,2,0,8"/>
+
+                    <!-- Quick Preset Selectors -->
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,0,4">
+                        <TextBlock Text="Quick Presets: " FontSize="11" Foreground="#8B949E" VerticalAlignment="Center" Margin="0,0,6,0"/>
+                        <Button Content="15s" Click="Preset15_Click" Style="{StaticResource SecondaryButton}" Padding="6,2" FontSize="11" Margin="0,0,4,0"/>
+                        <Button Content="30s" Click="Preset30_Click" Style="{StaticResource SecondaryButton}" Padding="6,2" FontSize="11" Margin="0,0,4,0"/>
+                        <Button Content="60s" Click="Preset60_Click" Style="{StaticResource SecondaryButton}" Padding="6,2" FontSize="11"/>
+                    </StackPanel>
                 </StackPanel>
             </Grid>
         </Border>

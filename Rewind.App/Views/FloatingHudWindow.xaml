@@ -17,9 +17,19 @@
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
 
-            <!-- Recording Dot -->
+            <!-- Recording Dot with Pulsing Glow Animation -->
             <StackPanel Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center" Margin="0,0,12,0">
-                <Ellipse x:Name="StatusDot" Width="10" Height="10" Fill="#F85149" Margin="0,0,6,0"/>
+                <Ellipse x:Name="StatusDot" Width="10" Height="10" Fill="#F85149" Margin="0,0,6,0">
+                    <Ellipse.Triggers>
+                        <EventTrigger RoutedEvent="Loaded">
+                            <BeginStoryboard>
+                                <Storyboard RepeatBehavior="Forever">
+                                    <DoubleAnimation Storyboard.TargetProperty="Opacity" From="1.0" To="0.3" Duration="0:0:0.8" AutoReverse="True"/>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                    </Ellipse.Triggers>
+                </Ellipse>
                 <TextBlock x:Name="StatusText" Text="REC" FontWeight="Bold" FontSize="11" Foreground="#F85149" VerticalAlignment="Center"/>
             </StackPanel>
 

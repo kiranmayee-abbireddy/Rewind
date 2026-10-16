@@ -44,6 +44,21 @@ namespace Rewind.App.Views
             UpdateLabels();
         }
 
+        private void Preset15_Click(object sender, RoutedEventArgs e)
+        {
+            StartSlider.Value = Math.Min(15, StartSlider.Maximum);
+        }
+
+        private void Preset30_Click(object sender, RoutedEventArgs e)
+        {
+            StartSlider.Value = Math.Min(30, StartSlider.Maximum);
+        }
+
+        private void Preset60_Click(object sender, RoutedEventArgs e)
+        {
+            StartSlider.Value = Math.Min(60, StartSlider.Maximum);
+        }
+
         private void UpdateLabels()
         {
             if (RangeLabel == null || TimeBoundsLabel == null) return;
