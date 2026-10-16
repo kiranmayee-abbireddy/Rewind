@@ -101,22 +101,6 @@ namespace Rewind.App.Views
             // Ensure window never escapes the screen boundary
             if (Left < workingArea.Left) Left = workingArea.Left + EdgeMargin;
             if (Left + w > workingArea.Right) Left = workingArea.Right - w - EdgeMargin;
-
-            ApplyEdgeOrientation(isVerticalEdge);
-        }
-
-        private void ApplyEdgeOrientation(bool isVertical)
-        {
-            if (ExpandedPanel == null) return;
-
-            var targetOrientation = isVertical ? System.Windows.Controls.Orientation.Vertical : System.Windows.Controls.Orientation.Horizontal;
-
-            // Expanded capsule adaptation
-            ExpandedPanel.Orientation = targetOrientation;
-            ExpandedMascotAvatar.Margin = isVertical ? new Thickness(0, 0, 0, 8) : new Thickness(0, 0, 8, 0);
-            StatusPillBorder.Margin = isVertical ? new Thickness(0, 0, 0, 8) : new Thickness(0, 0, 8, 0);
-            PreserveBtn.Margin = isVertical ? new Thickness(0, 0, 0, 6) : new Thickness(0, 0, 6, 0);
-            OpenMainBtn.Margin = isVertical ? new Thickness(0, 0, 0, 6) : new Thickness(0, 0, 6, 0);
         }
 
         public void UpdateStatus(string state, double elapsedSeconds)
@@ -177,52 +161,54 @@ namespace Rewind.App.Views
         }
 
         private Point _miniMouseDownScreenPos;
+        private bool _isMiniMouseDown;
         private bool _isMiniDragging;
 
         private void MinimizedCapsule_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             _miniMouseDownScreenPos = PointToScreen(e.GetPosition(this));
+            _isMiniMouseDown = true;
             _isMiniDragging = false;
 
             if (e.ClickCount == 2)
             {
                 OnOpenMainRequested?.Invoke();
+                _isMiniMouseDown = false;
                 e.Handled = true;
-                return;
             }
+        }
 
-            try
+        private void MinimizedCapsule_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (_isMiniMouseDown && e.LeftButton == MouseButtonState.Pressed && !_isMiniDragging)
             {
-                DragMove();
-                SnapToNearestEdge();
-
                 var currentScreenPos = PointToScreen(e.GetPosition(this));
                 var dx = Math.Abs(currentScreenPos.X - _miniMouseDownScreenPos.X);
                 var dy = Math.Abs(currentScreenPos.Y - _miniMouseDownScreenPos.Y);
 
-                if (dx > 6 || dy > 6)
+                if (dx > SystemParameters.MinimumHorizontalDragDistance || dy > SystemParameters.MinimumVerticalDragDistance)
                 {
                     _isMiniDragging = true;
+                    try
+                    {
+                        DragMove();
+                        SnapToNearestEdge();
+                    }
+                    catch { }
+                    _isMiniMouseDown = false;
                 }
             }
-            catch { }
-
-            // If user just tapped without dragging across threshold, expand immediately
-            if (!_isMiniDragging)
-            {
-                ExpandCapsule();
-            }
-
-            e.Handled = true;
         }
 
         private void MinimizedCapsule_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            if (!_isMiniDragging)
+            if (_isMiniMouseDown && !_isMiniDragging)
             {
                 ExpandCapsule();
                 e.Handled = true;
             }
+            _isMiniMouseDown = false;
+            _isMiniDragging = false;
         }
 
         private void MinimizedCapsule_MouseRightButtonUp(object sender, MouseButtonEventArgs e)

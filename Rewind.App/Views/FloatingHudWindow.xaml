@@ -8,56 +8,60 @@
 
 
     <Grid Margin="12">
-        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-            <!-- Full Expanded Companion Capsule -->
-            <Border x:Name="HudCapsule" CornerRadius="18" Background="{DynamicResource BgCardBrush}" BorderBrush="{DynamicResource BorderBrush}" BorderThickness="1.5" Padding="8,5,10,5"
-                    MouseLeftButtonDown="HudCapsule_MouseDown" Cursor="Hand" ToolTip="REWIND QA Companion • Drag to reposition • Double-click to open dashboard">
-                <Border.Effect>
-                    <DropShadowEffect BlurRadius="22" ShadowDepth="4" Direction="270" Color="#000000" Opacity="0.85"/>
-                </Border.Effect>
-                <StackPanel x:Name="ExpandedPanel" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
-                    <!-- Avocado Mascot Avatar -->
-                    <ContentControl x:Name="ExpandedMascotAvatar" Template="{StaticResource AvocadoMascot}" VerticalAlignment="Center" Margin="0,0,8,0"/>
+        <!-- Full Expanded Companion Capsule (Horizontal Pill Bar) -->
+        <Border x:Name="HudCapsule" CornerRadius="22" Background="{DynamicResource BgCardBrush}" BorderBrush="{DynamicResource BorderBrush}" BorderThickness="1.5" Padding="6,4,8,4"
+                MouseLeftButtonDown="HudCapsule_MouseDown" Cursor="Hand" ToolTip="REWIND QA Companion • Drag to reposition • Double-click to open dashboard">
+            <Border.Effect>
+                <DropShadowEffect BlurRadius="20" ShadowDepth="4" Direction="270" Color="#000000" Opacity="0.75"/>
+            </Border.Effect>
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                <!-- Avocado Mascot Avatar (Seamless & Borderless) -->
+                <ContentControl Template="{StaticResource AvocadoMascotCompact}" VerticalAlignment="Center" Margin="2,0,8,0" IsHitTestVisible="False"/>
 
-                    <!-- REC & Timer Pill -->
-                    <Border x:Name="StatusPillBorder" Background="{DynamicResource BgSecondaryBrush}" CornerRadius="10" Padding="8,4" Margin="0,0,8,0" BorderBrush="{DynamicResource BorderBrush}" BorderThickness="1">
-                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
-                            <Border x:Name="StatusDot" Width="7" Height="7" CornerRadius="3.5" Background="#EF4444" Margin="0,0,6,0" VerticalAlignment="Center"/>
-                            <TextBlock x:Name="StatusText" Text="REC" FontWeight="Bold" FontSize="11" Foreground="#EF4444" Margin="0,0,6,0" VerticalAlignment="Center"/>
-                            <TextBlock x:Name="BufferTimeText" Text="00:00" FontWeight="Bold" FontSize="12" Foreground="{DynamicResource TextPrimaryBrush}" VerticalAlignment="Center"/>
-                        </StackPanel>
-                    </Border>
+                <!-- REC & Timer Status Pill -->
+                <Border x:Name="StatusPillBorder" Background="{DynamicResource BgSecondaryBrush}" CornerRadius="12" Padding="8,4" Margin="0,0,8,0" BorderBrush="{DynamicResource BorderBrush}" BorderThickness="1">
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                        <Border x:Name="StatusDot" Width="7" Height="7" CornerRadius="3.5" Background="#EF4444" Margin="0,0,6,0" VerticalAlignment="Center"/>
+                        <TextBlock x:Name="StatusText" Text="REC" FontWeight="Bold" FontSize="11" Foreground="#EF4444" Margin="0,0,6,0" VerticalAlignment="Center"/>
+                        <TextBlock x:Name="BufferTimeText" Text="00:00" FontWeight="Bold" FontSize="11" Foreground="{DynamicResource TextPrimaryBrush}" VerticalAlignment="Center"/>
+                    </StackPanel>
+                </Border>
 
-                    <!-- Quick Preserve Bug Button (High Visibility Gold Action) -->
-                    <Button x:Name="PreserveBtn" Click="PreserveButton_Click" Style="{StaticResource PrimaryButton}" 
-                            Background="{DynamicResource GoldBrush}" BorderBrush="{DynamicResource GoldBrush}"
-                            Width="32" Height="28" Padding="0" Margin="0,0,6,0" ToolTip="Preserve Bug • Capture recent buffer evidence">
-                        <Path Data="{StaticResource LightningBoltGeometry}" Fill="#FFFFFF" Stretch="Uniform" Width="12" Height="12" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                    </Button>
+                <!-- Quick Preserve Bug Button (Gold Action Pill) -->
+                <Button x:Name="PreserveBtn" Click="PreserveButton_Click" Style="{StaticResource PrimaryButton}" 
+                        Background="{DynamicResource GoldBrush}" BorderBrush="{DynamicResource GoldBrush}"
+                        Height="28" Padding="10,0" Margin="0,0,6,0" ToolTip="Preserve Bug • Capture recent buffer evidence">
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                        <Path Data="{StaticResource LightningBoltGeometry}" Fill="#FFFFFF" Stretch="Uniform" Width="10" Height="10" Margin="0,0,5,0" VerticalAlignment="Center"/>
+                        <TextBlock Text="Preserve" FontSize="11" FontWeight="Bold" Foreground="#FFFFFF" VerticalAlignment="Center"/>
+                    </StackPanel>
+                </Button>
 
-                    <!-- Open Full Dashboard Button -->
-                    <Button x:Name="OpenMainBtn" Click="OpenMain_Click" Style="{StaticResource SecondaryButton}" Width="28" Height="28" Padding="0" Margin="0,0,5,0" ToolTip="Open Full Dashboard">
-                        <Path Data="{StaticResource WinExpandGeometry}" Stroke="{DynamicResource TextSecondaryBrush}" StrokeThickness="1.5" Stretch="Uniform" Width="10" Height="10" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                    </Button>
+                <!-- Open Dashboard Button -->
+                <Button x:Name="OpenMainBtn" Click="OpenMain_Click" Style="{StaticResource SecondaryButton}" Width="28" Height="28" Padding="0" Margin="0,0,4,0" ToolTip="Open Full Dashboard">
+                    <Path Data="{StaticResource WinExpandGeometry}" Stroke="{DynamicResource TextSecondaryBrush}" StrokeThickness="1.5" Stretch="Uniform" Width="10" Height="10" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                </Button>
 
-                    <!-- Minimize to Floating Mascot Only Button -->
-                    <Button x:Name="MinimizeBtn" Click="ToggleMinimize_Click" Style="{StaticResource SecondaryButton}" Width="28" Height="28" Padding="0" Margin="0,0,5,0" ToolTip="Minimize to Avocado Mascot Only">
-                        <Path Data="{StaticResource WinMinimizeGeometry}" Fill="{DynamicResource TextSecondaryBrush}" Stretch="Uniform" Width="9" Height="2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                    </Button>
+                <!-- Minimize to Avatar Only Button -->
+                <Button x:Name="MinimizeBtn" Click="ToggleMinimize_Click" Style="{StaticResource SecondaryButton}" Width="28" Height="28" Padding="0" Margin="0,0,4,0" ToolTip="Minimize to Mascot">
+                    <Path Data="{StaticResource WinMinimizeGeometry}" Fill="{DynamicResource TextSecondaryBrush}" Stretch="Uniform" Width="9" Height="2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                </Button>
 
-                    <!-- Hide HUD Completely Button -->
-                    <Button x:Name="HideHudBtn" Click="HideHud_Click" Style="{StaticResource SecondaryButton}" Width="28" Height="28" Padding="0" ToolTip="Hide Companion (Press HUD toggle in dashboard to restore)">
-                        <Path Data="{StaticResource WinCloseGeometry}" Fill="{DynamicResource TextSecondaryBrush}" Stretch="Uniform" Width="8" Height="8" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                    </Button>
-                </StackPanel>
-            </Border>
+                <!-- Hide HUD Completely Button -->
+                <Button x:Name="HideHudBtn" Click="HideHud_Click" Style="{StaticResource SecondaryButton}" Width="28" Height="28" Padding="0" ToolTip="Hide Companion (Toggle in dashboard header to restore)">
+                    <Path Data="{StaticResource WinCloseGeometry}" Fill="{DynamicResource TextSecondaryBrush}" Stretch="Uniform" Width="8" Height="8" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                </Button>
+            </StackPanel>
+        </Border>
 
-            <!-- Minimized Avocado Mascot Only (Seamless Borderless Mascot) -->
-            <Grid x:Name="MinimizedCapsule" Visibility="Collapsed" Width="44" Height="48"
-                  PreviewMouseLeftButtonDown="MinimizedCapsule_PreviewMouseLeftButtonDown"
-                  PreviewMouseLeftButtonUp="MinimizedCapsule_PreviewMouseLeftButtonUp"
-                  MouseRightButtonUp="MinimizedCapsule_MouseRightButtonUp"
-                  Cursor="Hand" ToolTip="REWIND Avocado Companion • Click to expand • Right-click to hide">
+        <!-- Minimized Avocado Mascot Only (Borderless, Direct Click Target) -->
+        <Grid x:Name="MinimizedCapsule" Visibility="Collapsed" Width="44" Height="48"
+              PreviewMouseLeftButtonDown="MinimizedCapsule_PreviewMouseLeftButtonDown"
+              MouseMove="MinimizedCapsule_MouseMove"
+              PreviewMouseLeftButtonUp="MinimizedCapsule_PreviewMouseLeftButtonUp"
+              MouseRightButtonUp="MinimizedCapsule_MouseRightButtonUp"
+              Background="Transparent"
+              Cursor="Hand" ToolTip="REWIND Avocado Companion • Click to expand • Right-click to hide • Drag to move">
                 <!-- Avocado Mascot Face Center (Completely Borderless) -->
                 <ContentControl Template="{StaticResource AvocadoMascot}" HorizontalAlignment="Center" VerticalAlignment="Center" IsHitTestVisible="False"/>
                 
@@ -68,6 +72,5 @@
                     </Border.Effect>
                 </Border>
             </Grid>
-        </StackPanel>
     </Grid>
 </Window>
