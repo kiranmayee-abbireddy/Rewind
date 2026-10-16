@@ -1,0 +1,5 @@
+<Project>
+  <Target Name="PublishReleaseApp">
+    <Message Text="Publishing REWIND Self-Contained Desktop Application for Windows x64..." Importance="high" />
+  </Target>
+</Project>
