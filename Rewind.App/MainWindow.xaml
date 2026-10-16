@@ -265,7 +265,7 @@
                             <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                                 <Border x:Name="MainStatusDot" Width="8" Height="8" CornerRadius="4" Background="{DynamicResource TextSecondaryBrush}" Margin="0,0,8,0"/>
                                 <TextBlock x:Name="MainStatusLabel" Text="IDLE" FontWeight="Bold" FontSize="11" Foreground="{DynamicResource TextSecondaryBrush}" VerticalAlignment="Center" Margin="0,0,8,0"/>
-                                <TextBlock Text="00:00" FontFamily="Consolas, monospace" FontWeight="Bold" FontSize="12" Foreground="{DynamicResource TextPrimaryBrush}" VerticalAlignment="Center"/>
+                                <TextBlock x:Name="MainTimecodeText" Text="00:00" FontFamily="Consolas, monospace" FontWeight="Bold" FontSize="12" Foreground="{DynamicResource TextPrimaryBrush}" VerticalAlignment="Center"/>
                             </StackPanel>
                         </Border>
 

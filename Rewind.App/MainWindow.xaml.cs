@@ -245,11 +245,13 @@ namespace Rewind.App
             {
                 var timeSpan = TimeSpan.FromSeconds(elapsed);
                 var bufferRetained = Math.Min(60, elapsed);
+                MainTimecodeText.Text = $"{timeSpan:mm\\:ss}";
                 ActiveSessionSubtext.Text = $"Recording active: {timeSpan:mm\\:ss} • Retaining past {bufferRetained:0.0}s";
                 BufferStatsText.Text = $"Rolling buffer active: {bufferRetained:0.0}s cached in memory & temp storage.";
             }
             else
             {
+                MainTimecodeText.Text = "00:00";
                 ActiveSessionSubtext.Text = "Capture: Idle • No active recording";
                 BufferStatsText.Text = "Continuous rolling buffer is stopped. Click 'Start Capture' to begin.";
             }
