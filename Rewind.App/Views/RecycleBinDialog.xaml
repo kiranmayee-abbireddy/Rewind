@@ -100,8 +100,8 @@
                                     <ColumnDefinition Width="Auto"/>
                                 </Grid.ColumnDefinitions>
 
-                                <StackPanel Grid.Column="0" VerticalAlignment="Center">
-                                    <TextBlock Text="{Binding Title}" FontWeight="SemiBold" FontSize="13" Foreground="{DynamicResource TextPrimaryBrush}"/>
+                                <StackPanel Grid.Column="0" VerticalAlignment="Center" Margin="0,0,16,0">
+                                    <TextBlock Text="{Binding Title}" FontWeight="SemiBold" FontSize="13" Foreground="{DynamicResource TextPrimaryBrush}" TextTrimming="CharacterEllipsis"/>
                                     <StackPanel Orientation="Horizontal" Margin="0,3,0,0">
                                         <TextBlock Text="{Binding DeletedAt, StringFormat='Deleted: {0:yyyy-MM-dd HH:mm}'}" FontSize="11" Foreground="{DynamicResource TextSecondaryBrush}"/>
                                         <TextBlock Text="•" FontSize="10" Foreground="{DynamicResource TextSecondaryBrush}" Margin="8,0" VerticalAlignment="Center"/>
@@ -117,8 +117,8 @@
                                     </StackPanel>
                                 </Button>
 
-                                <!-- Permanently Delete Session Button -->
-                                <Button Grid.Column="2" Click="PermanentlyDeleteSession_Click" Tag="{Binding}" Style="{StaticResource DangerButton}" Padding="8,5" VerticalAlignment="Center" ToolTip="Permanently Delete">
+                                <!-- Permanently Delete Session Button (Clear Contrast Red Outline Button with Visible Trash Icon) -->
+                                <Button Grid.Column="2" Click="PermanentlyDeleteSession_Click" Tag="{Binding}" Style="{StaticResource DangerOutlineButton}" Padding="9,6" VerticalAlignment="Center" ToolTip="Permanently Delete">
                                     <Path Data="{StaticResource TrashGeometry}" Fill="{DynamicResource DangerBrush}" Stretch="Uniform" Width="11" Height="11" VerticalAlignment="Center"/>
                                 </Button>
                             </Grid>
@@ -154,8 +154,8 @@
                                     <ColumnDefinition Width="Auto"/>
                                 </Grid.ColumnDefinitions>
 
-                                <StackPanel Grid.Column="0" VerticalAlignment="Center">
-                                    <TextBlock Text="{Binding Title}" FontWeight="SemiBold" FontSize="13" Foreground="{DynamicResource TextPrimaryBrush}"/>
+                                <StackPanel Grid.Column="0" VerticalAlignment="Center" Margin="0,0,16,0">
+                                    <TextBlock Text="{Binding Title}" FontWeight="SemiBold" FontSize="13" Foreground="{DynamicResource TextPrimaryBrush}" TextTrimming="CharacterEllipsis"/>
                                     <StackPanel Orientation="Horizontal" Margin="0,3,0,0">
                                         <TextBlock Text="{Binding DeletedAt, StringFormat='Deleted: {0:yyyy-MM-dd HH:mm}'}" FontSize="11" Foreground="{DynamicResource TextSecondaryBrush}"/>
                                         <TextBlock Text="•" FontSize="10" Foreground="{DynamicResource TextSecondaryBrush}" Margin="8,0" VerticalAlignment="Center"/>
@@ -171,8 +171,8 @@
                                     </StackPanel>
                                 </Button>
 
-                                <!-- Permanently Delete Bug Button -->
-                                <Button Grid.Column="2" Click="PermanentlyDeleteBug_Click" Tag="{Binding}" Style="{StaticResource DangerButton}" Padding="8,5" VerticalAlignment="Center" ToolTip="Permanently Delete">
+                                <!-- Permanently Delete Bug Button (Clear Contrast Red Outline Button with Visible Trash Icon) -->
+                                <Button Grid.Column="2" Click="PermanentlyDeleteBug_Click" Tag="{Binding}" Style="{StaticResource DangerOutlineButton}" Padding="9,6" VerticalAlignment="Center" ToolTip="Permanently Delete">
                                     <Path Data="{StaticResource TrashGeometry}" Fill="{DynamicResource DangerBrush}" Stretch="Uniform" Width="11" Height="11" VerticalAlignment="Center"/>
                                 </Button>
                             </Grid>

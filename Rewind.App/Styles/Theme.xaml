@@ -48,7 +48,7 @@
         <GradientStop Color="#B45309" Offset="1"/>
     </LinearGradientBrush>
 
-    <!-- Devin-Style Architectural Precision Grid / Geometric Line Pattern Brush -->
+    <!-- Devin-Style Architectural Precision Grid / Geometric Line Pattern Brush (Sidebar Compact: 24x24) -->
     <VisualBrush x:Key="DevinGridPatternBrush" TileMode="Tile" Viewport="0,0,24,24" ViewportUnits="Absolute">
         <VisualBrush.Visual>
             <Canvas Width="24" Height="24" Background="Transparent">
@@ -56,6 +56,18 @@
                 <Line X1="0" Y1="0" X2="0" Y2="24" Stroke="{DynamicResource BorderBrush}" StrokeThickness="0.6" Opacity="0.35"/>
                 <!-- Subtle intersection dot -->
                 <Rectangle Width="1.2" Height="1.2" Canvas.Left="-0.6" Canvas.Top="-0.6" Fill="{DynamicResource AccentBrush}" Opacity="0.25"/>
+            </Canvas>
+        </VisualBrush.Visual>
+    </VisualBrush>
+
+    <!-- Devin-Style Studio Precision Pattern Brush (Main Workspace Spacious: 32x32) -->
+    <VisualBrush x:Key="DevinStudioPatternBrush" TileMode="Tile" Viewport="0,0,32,32" ViewportUnits="Absolute">
+        <VisualBrush.Visual>
+            <Canvas Width="32" Height="32" Background="Transparent">
+                <Line X1="0" Y1="0" X2="32" Y2="0" Stroke="{DynamicResource BorderBrush}" StrokeThickness="0.5" Opacity="0.22"/>
+                <Line X1="0" Y1="0" X2="0" Y2="32" Stroke="{DynamicResource BorderBrush}" StrokeThickness="0.5" Opacity="0.22"/>
+                <!-- Tiny corner coordinate mark -->
+                <Rectangle Width="1" Height="1" Canvas.Left="-0.5" Canvas.Top="-0.5" Fill="{DynamicResource AccentBrush}" Opacity="0.2"/>
             </Canvas>
         </VisualBrush.Visual>
     </VisualBrush>
@@ -728,6 +740,34 @@
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
                             <Setter TargetName="dBorder" Property="Background" Value="#EF4444"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- Danger Outline / Secondary Action Button (Crisp contrast, transparent/subtle bg, red hover) -->
+    <Style x:Key="DangerOutlineButton" TargetType="Button">
+        <Setter Property="Background" Value="{DynamicResource BgSecondaryBrush}"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource BorderBrush}"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="Foreground" Value="{DynamicResource DangerBrush}"/>
+        <Setter Property="Padding" Value="8,5"/>
+        <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border x:Name="bd" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="5" Padding="{TemplateBinding Padding}">
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="bd" Property="Background" Value="#2A1515"/>
+                            <Setter TargetName="bd" Property="BorderBrush" Value="{DynamicResource DangerBrush}"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="bd" Property="Background" Value="#3F1C1C"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>

@@ -135,8 +135,8 @@
                             <!-- New Session Action Button -->
                             <Button Click="NewSession_Click" Style="{StaticResource PrimaryButton}" Height="34" Margin="0,0,0,12" Padding="0">
                                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
-                                    <Path Data="{StaticResource PlusGeometry}" Fill="#FFFFFF" Stretch="Uniform" Width="11" Height="11" Margin="0,0,7,0" VerticalAlignment="Center"/>
-                                    <TextBlock Text="New Session" FontSize="12.5" FontWeight="SemiBold" VerticalAlignment="Center"/>
+                                    <Path Data="{StaticResource PlusGeometry}" Fill="{DynamicResource ButtonForegroundBrush}" Stretch="Uniform" Width="11" Height="11" Margin="0,0,7,0" VerticalAlignment="Center"/>
+                                    <TextBlock Text="New Session" FontSize="12.5" FontWeight="SemiBold" Foreground="{DynamicResource ButtonForegroundBrush}" VerticalAlignment="Center"/>
                                 </StackPanel>
                             </Button>
 
@@ -277,13 +277,17 @@
                 </GridSplitter.Template>
             </GridSplitter>
 
-            <!-- Main Workspace Area -->
-            <Grid x:Name="MainWorkspaceGrid" Grid.Column="2" Margin="24">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="*"/>
-                </Grid.RowDefinitions>
+            <!-- Main Workspace Area with Smart Precision Pattern Background -->
+            <Grid x:Name="MainWorkspaceGrid" Grid.Column="2" ClipToBounds="True">
+                <!-- Devin-style subtle architectural geometric studio lines overlay -->
+                <Rectangle Fill="{DynamicResource DevinStudioPatternBrush}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" IsHitTestVisible="False"/>
+
+                <Grid Margin="24">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
 
                 <!-- Studio Header & Session Control Hub (Perfect Geometric Alignment) -->
                 <Grid Grid.Row="0" Margin="0,0,0,20">
@@ -418,6 +422,7 @@
                     </ListBox>
                     </Grid>
                 </DockPanel>
+                </Grid>
             </Grid>
         </Grid>
     </Grid>
