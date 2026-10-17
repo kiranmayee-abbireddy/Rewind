@@ -109,11 +109,11 @@
                     <TextBlock Text="Expected Behavior (Optional)" FontSize="12.5" FontWeight="SemiBold" Foreground="{DynamicResource TextPrimaryBrush}" Margin="0,0,0,6"/>
                     <TextBox x:Name="ExpectedBox" Background="{DynamicResource BgCardBrush}" Foreground="{DynamicResource TextPrimaryBrush}" BorderBrush="{DynamicResource BorderBrush}" AcceptsReturn="True" TextWrapping="Wrap" Height="75" Margin="0,0,0,16" Padding="10"/>
 
-                    <!-- AI Suggestions Box if present -->
-                    <Border x:Name="AiContainer" Background="{DynamicResource BgCardBrush}" BorderBrush="{DynamicResource AccentBrush}" BorderThickness="1" CornerRadius="6" Padding="10" Margin="0,0,0,12">
+                    <!-- Synthesis / Notes Box if present -->
+                    <Border x:Name="AiContainer" Background="{DynamicResource BgCardBrush}" BorderBrush="{DynamicResource BorderBrush}" BorderThickness="1" CornerRadius="6" Padding="12" Margin="0,0,0,14">
                         <StackPanel>
-                            <TextBlock Text="🤖 AI Assistance Draft" FontWeight="Bold" FontSize="11" Foreground="{DynamicResource AccentBrush}" Margin="0,0,0,4"/>
-                            <TextBlock x:Name="AiNotesBlock" FontSize="11" Foreground="{DynamicResource TextPrimaryBrush}" TextWrapping="Wrap"/>
+                            <TextBlock Text="Analysis &amp; Diagnostics Notes" FontWeight="SemiBold" FontSize="11" Foreground="{DynamicResource TextSecondaryBrush}" Margin="0,0,0,4"/>
+                            <TextBlock x:Name="AiNotesBlock" FontSize="11.5" Foreground="{DynamicResource TextPrimaryBrush}" TextWrapping="Wrap" LineHeight="17"/>
                         </StackPanel>
                     </Border>
                 </StackPanel>

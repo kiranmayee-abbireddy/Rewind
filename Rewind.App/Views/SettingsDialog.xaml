@@ -111,11 +111,11 @@
                 <ProgressBar x:Name="StorageProgressBar" Height="6" Minimum="0" Maximum="100" Value="15" Foreground="{DynamicResource AccentBrush}" Background="{DynamicResource BgSecondaryBrush}" BorderThickness="0" Margin="0,0,0,4"/>
                 <TextBlock x:Name="StorageUsageLabel" Text="Calculating storage consumption..." FontSize="11" Foreground="{DynamicResource TextSecondaryBrush}" Margin="0,0,0,14"/>
 
-                <!-- AI Assistant & Ollama Settings -->
+                <!-- Automated Diagnostics & Ollama Settings -->
                 <CheckBox x:Name="AiEnabledCheck" IsChecked="True" Margin="0,4,0,8">
                     <StackPanel>
-                        <TextBlock Text="Enable AI Bug Report Assistant" FontWeight="SemiBold" Foreground="{DynamicResource TextPrimaryBrush}"/>
-                        <TextBlock Text="Drafts reproduction steps and synthesizes user test cases into professional titles." FontSize="11" Foreground="{DynamicResource TextSecondaryBrush}"/>
+                        <TextBlock Text="Automatic Defect Synthesis &amp; Steps" FontWeight="SemiBold" Foreground="{DynamicResource TextPrimaryBrush}"/>
+                        <TextBlock Text="Drafts reproduction steps and synthesizes user test cases into professional defect reports." FontSize="11" Foreground="{DynamicResource TextSecondaryBrush}"/>
                     </StackPanel>
                 </CheckBox>
 

@@ -142,7 +142,7 @@
         <Grid Grid.Row="3">
             <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                 <CheckBox x:Name="AiAssistCheck" IsChecked="True" VerticalAlignment="Center">
-                    <TextBlock Text="Draft AI suggestions &amp; reproduction steps from clip" Foreground="{DynamicResource TextPrimaryBrush}" FontSize="12.5"/>
+                    <TextBlock Text="Auto-generate reproduction steps &amp; defect notes" Foreground="{DynamicResource TextPrimaryBrush}" FontSize="12.5"/>
                 </CheckBox>
             </StackPanel>
 
