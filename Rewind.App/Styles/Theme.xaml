@@ -70,9 +70,9 @@
 
     <!-- Adorable Borderless Avocado QA Mascot ("Guac" with QA headset) -->
     <ControlTemplate x:Key="AvocadoMascot">
-        <Grid Width="38" Height="42" HorizontalAlignment="Center" VerticalAlignment="Center">
+        <Grid Width="38" Height="44" HorizontalAlignment="Center" VerticalAlignment="Center">
             <!-- Organic Pear-shaped Body (Rich Emerald with Subtle Drop Glow) -->
-            <Path Data="M 19,3 C 27,3 32,10 32,21 C 32,32 27,40 19,40 C 11,40 6,32 6,21 C 6,10 11,3 19,3 Z">
+            <Path Data="M 19,6 C 27,6 32,13 32,24 C 32,35 27,43 19,43 C 11,43 6,35 6,24 C 6,13 11,6 19,6 Z">
                 <Path.Fill>
                     <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
                         <GradientStop Color="#0D5F47" Offset="0"/>
@@ -80,12 +80,12 @@
                     </LinearGradientBrush>
                 </Path.Fill>
                 <Path.Effect>
-                    <DropShadowEffect Color="#043226" BlurRadius="6" ShadowDepth="1" Opacity="0.5"/>
+                    <DropShadowEffect Color="#043226" BlurRadius="4" ShadowDepth="1" Opacity="0.4"/>
                 </Path.Effect>
             </Path>
 
             <!-- Avocado Inner Flesh (Soft Creamy Honeydew/Lime Jade) -->
-            <Path Data="M 19,6 C 25,6 29.5,12 29.5,21 C 29.5,30 25.5,37 19,37 C 12.5,37 8.5,30 8.5,21 C 8.5,12 13,6 19,6 Z">
+            <Path Data="M 19,9 C 25,9 29.5,15 29.5,24 C 29.5,33 25.5,40 19,40 C 12.5,40 8.5,33 8.5,24 C 8.5,15 13,9 19,9 Z">
                 <Path.Fill>
                     <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
                         <GradientStop Color="#D1FAE5" Offset="0"/>
@@ -96,14 +96,14 @@
             </Path>
 
             <!-- Cute QA Headset Arc -->
-            <Path Data="M 7,20 C 7,8 31,8 31,20" Stroke="#10B981" StrokeThickness="2" StrokeStartLineCap="Round" StrokeEndLineCap="Round" Opacity="0.85"/>
+            <Path Data="M 7,23 C 7,11 31,11 31,23" Stroke="#10B981" StrokeThickness="2" StrokeStartLineCap="Round" StrokeEndLineCap="Round" Opacity="0.85"/>
             <!-- Left Earpiece -->
-            <Border Width="4" Height="7" CornerRadius="2" Background="#064E3B" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5,0,0,1"/>
+            <Border Width="4" Height="7" CornerRadius="2" Background="#064E3B" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5,4,0,0"/>
             <!-- Right Earpiece -->
-            <Border Width="4" Height="7" CornerRadius="2" Background="#064E3B" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,5,1"/>
+            <Border Width="4" Height="7" CornerRadius="2" Background="#064E3B" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,4,5,0"/>
 
             <!-- Avocado Seed Pit Belly / Face (Warm Amber Gold) -->
-            <Border Width="18" Height="19" CornerRadius="9.5" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,5">
+            <Border Width="18" Height="19" CornerRadius="9.5" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,4">
                 <Border.Background>
                     <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
                         <GradientStop Color="#B45309" Offset="0"/>
@@ -135,14 +135,14 @@
                 </Grid>
             </Border>
 
-            <!-- Sprout Leaf on Top of Head -->
-            <Path Data="M 19,3 C 17,-2 23,-3 24,-1 C 24,2 21,3 19,3 Z" Fill="#34D399"/>
+            <!-- Sprout Leaf on Top of Head (Coordinates fully >= 1 within grid) -->
+            <Path Data="M 19,6 C 17,1 23,0 24,2 C 24,5 21,6 19,6 Z" Fill="#34D399"/>
         </Grid>
     </ControlTemplate>
 
-    <!-- Consistent Compact Avocado Mascot for Headers & Title Bars (24x26 ViewBox) -->
+    <!-- Consistent Compact Avocado Mascot for Headers & Title Bars (20x22 ViewBox) -->
     <ControlTemplate x:Key="AvocadoMascotCompact">
-        <Viewbox Width="22" Height="24" Stretch="Uniform" HorizontalAlignment="Center" VerticalAlignment="Center">
+        <Viewbox Width="20" Height="22" Stretch="Uniform" HorizontalAlignment="Center" VerticalAlignment="Center">
             <ContentControl Template="{StaticResource AvocadoMascot}"/>
         </Viewbox>
     </ControlTemplate>
@@ -511,11 +511,12 @@
     <!-- Window Chrome Control Button (Minimize, Maximize, Close) -->
     <Style x:Key="WindowControlButton" TargetType="Button">
         <Setter Property="Width" Value="42"/>
-        <Setter Property="Height" Value="40"/>
+        <Setter Property="Height" Value="42"/>
         <Setter Property="Background" Value="Transparent"/>
         <Setter Property="Foreground" Value="{DynamicResource TextSecondaryBrush}"/>
         <Setter Property="BorderThickness" Value="0"/>
         <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="VerticalAlignment" Value="Stretch"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
@@ -539,11 +540,12 @@
     <!-- Window Close Button -->
     <Style x:Key="WindowCloseButton" TargetType="Button">
         <Setter Property="Width" Value="42"/>
-        <Setter Property="Height" Value="40"/>
+        <Setter Property="Height" Value="42"/>
         <Setter Property="Background" Value="Transparent"/>
         <Setter Property="Foreground" Value="{DynamicResource TextSecondaryBrush}"/>
         <Setter Property="BorderThickness" Value="0"/>
         <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="VerticalAlignment" Value="Stretch"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">

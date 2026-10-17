@@ -35,7 +35,7 @@
                 <Grid Grid.Column="1" Background="Transparent"/>
 
                 <!-- Right Controls: Quick Floating HUD, Theme Toggle + Window Buttons -->
-                <StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Center" WindowChrome.IsHitTestVisibleInChrome="True">
+                <StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Stretch" WindowChrome.IsHitTestVisibleInChrome="True">
                     <!-- Quick Toggle Companion HUD -->
                     <Button x:Name="HudToggleHeaderBtn" Click="ShowHud_Click" ToolTip="Toggle Desktop Companion HUD (Show/Hide)"
                             Style="{StaticResource SecondaryButton}" Height="28" Padding="10,0" Margin="0,0,8,0" VerticalAlignment="Center">
@@ -58,11 +58,11 @@
                     <!-- Light / Dark Mode Toggle Button -->
                     <Button x:Name="ThemeToggleBtn" Click="ThemeToggle_Click" ToolTip="Toggle Light / Dark Mode"
                             WindowChrome.IsHitTestVisibleInChrome="True"
-                            Width="32" Height="28" Background="Transparent" BorderThickness="0" Cursor="Hand" Margin="0,0,6,0">
+                            Width="32" Height="28" Background="Transparent" BorderThickness="0" Cursor="Hand" Margin="0,0,8,0" VerticalAlignment="Center">
                         <Path x:Name="ThemeIconPath" Data="{StaticResource SunGeometry}" Fill="{DynamicResource GoldBrush}" Stretch="Uniform" Width="15" Height="15" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                     </Button>
 
-                    <!-- Precise Vector Window Management Buttons -->
+                    <!-- Precise Vector Window Management Buttons (Stretch 42px) -->
                     <Button Click="MinimizeWindow_Click" Style="{StaticResource WindowControlButton}" ToolTip="Minimize" WindowChrome.IsHitTestVisibleInChrome="True">
                         <Path Data="{StaticResource WinMinimizeGeometry}" Fill="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}" Stretch="Uniform" Width="10" Height="2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                     </Button>
