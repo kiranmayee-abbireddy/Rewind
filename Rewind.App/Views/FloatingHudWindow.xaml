@@ -60,6 +60,11 @@
                     Width="60" Height="64"
                     HorizontalAlignment="Center" VerticalAlignment="Center"
                     Cursor="Hand" ToolTip="Click to dock Guac back to screen edge">
+                <Button.Template>
+                    <ControlTemplate TargetType="Button">
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </ControlTemplate>
+                </Button.Template>
                 <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
                     <Ellipse Width="56" Height="56" HorizontalAlignment="Center" VerticalAlignment="Center">
                         <Ellipse.Fill>

@@ -68,9 +68,13 @@ namespace Rewind.App.Views
 
             UpdateLayout();
 
+            // Clear any previous animations holding Left/Top
+            BeginAnimation(Window.LeftProperty, null);
+            BeginAnimation(Window.TopProperty, null);
+
             var workingArea = SystemParameters.WorkArea;
-            var w = ActualWidth > 0 ? ActualWidth : 100;
-            var h = ActualHeight > 0 ? ActualHeight : 100;
+            var w = ActualWidth > 0 ? ActualWidth : (54 + 48);
+            var h = ActualHeight > 0 ? ActualHeight : (60 + 48);
 
             double targetLeft = Left;
             double targetTop = Top;
@@ -104,7 +108,6 @@ namespace Rewind.App.Views
 
             if (animate)
             {
-                var sb = new Storyboard();
                 var animX = new DoubleAnimation(Left, targetLeft, new Duration(TimeSpan.FromMilliseconds(260)))
                 {
                     EasingFunction = new QuarticEase { EasingMode = EasingMode.EaseOut }
@@ -114,14 +117,19 @@ namespace Rewind.App.Views
                     EasingFunction = new QuarticEase { EasingMode = EasingMode.EaseOut }
                 };
 
-                Storyboard.SetTarget(animX, this);
-                Storyboard.SetTargetProperty(animX, new PropertyPath(Window.LeftProperty));
-                Storyboard.SetTarget(animY, this);
-                Storyboard.SetTargetProperty(animY, new PropertyPath(Window.TopProperty));
+                animX.Completed += (s, e) =>
+                {
+                    BeginAnimation(Window.LeftProperty, null);
+                    Left = targetLeft;
+                };
+                animY.Completed += (s, e) =>
+                {
+                    BeginAnimation(Window.TopProperty, null);
+                    Top = targetTop;
+                };
 
-                sb.Children.Add(animX);
-                sb.Children.Add(animY);
-                sb.Begin();
+                BeginAnimation(Window.LeftProperty, animX);
+                BeginAnimation(Window.TopProperty, animY);
             }
             else
             {
@@ -143,38 +151,66 @@ namespace Rewind.App.Views
 
             UpdateLayout();
 
+            // Clear any active edge docking animations
+            BeginAnimation(Window.LeftProperty, null);
+            BeginAnimation(Window.TopProperty, null);
+
             var workingArea = SystemParameters.WorkArea;
-            var w = ActualWidth > 0 ? ActualWidth : 288;
-            var h = ActualHeight > 0 ? ActualHeight : 268;
+            // Full quick ball diameter is 240x220 + 48 padding
+            var w = ActualWidth > 0 ? ActualWidth : (240 + 48);
+            var h = ActualHeight > 0 ? ActualHeight : (220 + 48);
 
             // Shift position cleanly on-screen so the floating orbit is fully visible
-            double targetLeft = Left;
-            double targetTop = Top;
+            double startLeft = Left;
+            double startTop = Top;
+            double targetLeft = startLeft;
+            double targetTop = startTop;
 
             if (_currentEdge == DockEdge.Right)
             {
-                targetLeft = workingArea.Right - w - 20;
+                targetLeft = workingArea.Right - w - 24;
             }
             else if (_currentEdge == DockEdge.Left)
             {
-                targetLeft = workingArea.Left + 20;
+                targetLeft = workingArea.Left + 24;
             }
 
             if (targetTop < workingArea.Top + 20) targetTop = workingArea.Top + 20;
             if (targetTop + h > workingArea.Bottom - 20) targetTop = workingArea.Bottom - h - 20;
 
-            Left = targetLeft;
-            Top = targetTop;
+            // Animate window position smoothly onto screen
+            var animX = new DoubleAnimation(startLeft, targetLeft, new Duration(TimeSpan.FromMilliseconds(260)))
+            {
+                EasingFunction = new QuarticEase { EasingMode = EasingMode.EaseOut }
+            };
+            var animY = new DoubleAnimation(startTop, targetTop, new Duration(TimeSpan.FromMilliseconds(260)))
+            {
+                EasingFunction = new QuarticEase { EasingMode = EasingMode.EaseOut }
+            };
+
+            animX.Completed += (s, e) =>
+            {
+                BeginAnimation(Window.LeftProperty, null);
+                Left = targetLeft;
+            };
+            animY.Completed += (s, e) =>
+            {
+                BeginAnimation(Window.TopProperty, null);
+                Top = targetTop;
+            };
+
+            BeginAnimation(Window.LeftProperty, animX);
+            BeginAnimation(Window.TopProperty, animY);
 
             // Spring pop-in animation
             QuickBallScale.ScaleX = 0.5;
             QuickBallScale.ScaleY = 0.5;
 
-            var scaleAnimX = new DoubleAnimation(0.5, 1.0, new Duration(TimeSpan.FromMilliseconds(260)))
+            var scaleAnimX = new DoubleAnimation(0.5, 1.0, new Duration(TimeSpan.FromMilliseconds(280)))
             {
                 EasingFunction = new BackEase { Amplitude = 0.45, EasingMode = EasingMode.EaseOut }
             };
-            var scaleAnimY = new DoubleAnimation(0.5, 1.0, new Duration(TimeSpan.FromMilliseconds(260)))
+            var scaleAnimY = new DoubleAnimation(0.5, 1.0, new Duration(TimeSpan.FromMilliseconds(280)))
             {
                 EasingFunction = new BackEase { Amplitude = 0.45, EasingMode = EasingMode.EaseOut }
             };
