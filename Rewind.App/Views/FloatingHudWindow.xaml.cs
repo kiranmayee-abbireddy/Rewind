@@ -52,12 +52,12 @@ namespace Rewind.App.Views
         {
             var workingArea = SystemParameters.WorkArea;
             _currentEdge = DockEdge.Right;
-            Top = workingArea.Top + 140;
+            Top = workingArea.Top + 160;
             DockSecretlyToEdge(animate: false);
         }
 
         /// <summary>
-        /// Positions the mascot half-off the screen edge, secretly peeking inward
+        /// Positions the mascot inclined (tilted) half-off the screen edge, secretly peeking inward
         /// </summary>
         private void DockSecretlyToEdge(bool animate = true)
         {
@@ -69,11 +69,9 @@ namespace Rewind.App.Views
             UpdateLayout();
 
             var workingArea = SystemParameters.WorkArea;
-            var w = ActualWidth > 0 ? ActualWidth : 86;
-            var h = ActualHeight > 0 ? ActualHeight : 90;
+            var w = ActualWidth > 0 ? ActualWidth : 100;
+            var h = ActualHeight > 0 ? ActualHeight : 100;
 
-            // Half-out screen peek offsets: 
-            // In WPF, window Left/Top can be positioned so only half of the 54x58 mascot is on screen
             double targetLeft = Left;
             double targetTop = Top;
 
@@ -81,33 +79,37 @@ namespace Rewind.App.Views
             if (targetTop < workingArea.Top + 20) targetTop = workingArea.Top + 20;
             if (targetTop + h > workingArea.Bottom - 20) targetTop = workingArea.Bottom - h - 20;
 
-            // Half peeking offset: Keep ~26px of the mascot on screen, rest half outside
+            // Inclined angle: when on Right edge, tilt inward (-28°). When on Left edge, mirror and tilt (+28°).
             switch (_currentEdge)
             {
                 case DockEdge.Right:
-                    targetLeft = workingArea.Right - 42;
-                    MascotPeekScale.ScaleX = 1.0; // Facing screen
+                    targetLeft = workingArea.Right - 55;
+                    MascotPeekScale.ScaleX = 1.0;
+                    MascotPeekRotate.Angle = -28;
                     break;
                 case DockEdge.Left:
-                    targetLeft = workingArea.Left - (w - 42);
-                    MascotPeekScale.ScaleX = -1.0; // Mirrored facing inward to screen
+                    targetLeft = workingArea.Left - (w - 55);
+                    MascotPeekScale.ScaleX = -1.0;
+                    MascotPeekRotate.Angle = 28;
                     break;
                 case DockEdge.Top:
-                    targetTop = workingArea.Top - (h - 44);
+                    targetTop = workingArea.Top - (h - 55);
+                    MascotPeekRotate.Angle = 0;
                     break;
                 case DockEdge.Bottom:
-                    targetTop = workingArea.Bottom - 44;
+                    targetTop = workingArea.Bottom - 55;
+                    MascotPeekRotate.Angle = 0;
                     break;
             }
 
             if (animate)
             {
                 var sb = new Storyboard();
-                var animX = new DoubleAnimation(Left, targetLeft, new Duration(TimeSpan.FromMilliseconds(280)))
+                var animX = new DoubleAnimation(Left, targetLeft, new Duration(TimeSpan.FromMilliseconds(260)))
                 {
                     EasingFunction = new QuarticEase { EasingMode = EasingMode.EaseOut }
                 };
-                var animY = new DoubleAnimation(Top, targetTop, new Duration(TimeSpan.FromMilliseconds(280)))
+                var animY = new DoubleAnimation(Top, targetTop, new Duration(TimeSpan.FromMilliseconds(260)))
                 {
                     EasingFunction = new QuarticEase { EasingMode = EasingMode.EaseOut }
                 };
@@ -129,7 +131,7 @@ namespace Rewind.App.Views
         }
 
         /// <summary>
-        /// Emerges from the edge into a floating Quick Ball action bar
+        /// Emerges from the edge into a fully straight mascot with floating circular options around it (no background)
         /// </summary>
         private void ExpandQuickBall()
         {
@@ -142,39 +144,39 @@ namespace Rewind.App.Views
             UpdateLayout();
 
             var workingArea = SystemParameters.WorkArea;
-            var w = ActualWidth > 0 ? ActualWidth : 340;
-            var h = ActualHeight > 0 ? ActualHeight : 65;
+            var w = ActualWidth > 0 ? ActualWidth : 288;
+            var h = ActualHeight > 0 ? ActualHeight : 268;
 
-            // Ensure Quick Ball is comfortably floating on screen away from edge
+            // Shift position cleanly on-screen so the floating orbit is fully visible
             double targetLeft = Left;
             double targetTop = Top;
 
             if (_currentEdge == DockEdge.Right)
             {
-                targetLeft = workingArea.Right - w - 24;
+                targetLeft = workingArea.Right - w - 20;
             }
             else if (_currentEdge == DockEdge.Left)
             {
-                targetLeft = workingArea.Left + 24;
+                targetLeft = workingArea.Left + 20;
             }
 
-            if (targetTop < workingArea.Top + 24) targetTop = workingArea.Top + 24;
-            if (targetTop + h > workingArea.Bottom - 24) targetTop = workingArea.Bottom - h - 24;
+            if (targetTop < workingArea.Top + 20) targetTop = workingArea.Top + 20;
+            if (targetTop + h > workingArea.Bottom - 20) targetTop = workingArea.Bottom - h - 20;
 
-            // Smooth expansion animation
             Left = targetLeft;
             Top = targetTop;
 
-            QuickBallScale.ScaleX = 0.6;
-            QuickBallScale.ScaleY = 0.6;
+            // Spring pop-in animation
+            QuickBallScale.ScaleX = 0.5;
+            QuickBallScale.ScaleY = 0.5;
 
-            var scaleAnimX = new DoubleAnimation(0.6, 1.0, new Duration(TimeSpan.FromMilliseconds(260)))
+            var scaleAnimX = new DoubleAnimation(0.5, 1.0, new Duration(TimeSpan.FromMilliseconds(260)))
             {
-                EasingFunction = new BackEase { Amplitude = 0.35, EasingMode = EasingMode.EaseOut }
+                EasingFunction = new BackEase { Amplitude = 0.45, EasingMode = EasingMode.EaseOut }
             };
-            var scaleAnimY = new DoubleAnimation(0.6, 1.0, new Duration(TimeSpan.FromMilliseconds(260)))
+            var scaleAnimY = new DoubleAnimation(0.5, 1.0, new Duration(TimeSpan.FromMilliseconds(260)))
             {
-                EasingFunction = new BackEase { Amplitude = 0.35, EasingMode = EasingMode.EaseOut }
+                EasingFunction = new BackEase { Amplitude = 0.45, EasingMode = EasingMode.EaseOut }
             };
 
             QuickBallScale.BeginAnimation(ScaleTransform.ScaleXProperty, scaleAnimX);
@@ -230,7 +232,7 @@ namespace Rewind.App.Views
                 }
                 else
                 {
-                    // Clicked: emerge smoothly from the screen edge into Quick Ball
+                    // Clicked: emerge cleanly and show floating circular options
                     ExpandQuickBall();
                 }
 
@@ -242,8 +244,7 @@ namespace Rewind.App.Views
         private void DetermineNearestEdgeAndDock()
         {
             var workingArea = SystemParameters.WorkArea;
-            var w = ActualWidth > 0 ? ActualWidth : 86;
-            var h = ActualHeight > 0 ? ActualHeight : 90;
+            var w = ActualWidth > 0 ? ActualWidth : 100;
 
             var distLeft = Math.Abs(Left - workingArea.Left);
             var distRight = Math.Abs((workingArea.Right - w) - Left);
@@ -271,9 +272,8 @@ namespace Rewind.App.Views
                     try
                     {
                         DragMove();
-                        // Update nearest edge after user drags the quick ball
                         var workingArea = SystemParameters.WorkArea;
-                        var w = ActualWidth > 0 ? ActualWidth : 340;
+                        var w = ActualWidth > 0 ? ActualWidth : 288;
                         var distLeft = Math.Abs(Left - workingArea.Left);
                         var distRight = Math.Abs((workingArea.Right - w) - Left);
                         _currentEdge = (distLeft < distRight) ? DockEdge.Left : DockEdge.Right;
@@ -283,7 +283,7 @@ namespace Rewind.App.Views
             }
         }
 
-        private void QuickBallMascot_Click(object sender, RoutedEventArgs e)
+        private void CenterMascot_Click(object sender, RoutedEventArgs e)
         {
             DockSecretlyToEdge(animate: true);
         }
