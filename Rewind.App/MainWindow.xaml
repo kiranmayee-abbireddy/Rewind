@@ -34,32 +34,37 @@
                 <!-- Center: Drag Area (Clean Minimalist Title Bar) -->
                 <Grid Grid.Column="1" Background="Transparent"/>
 
-                <!-- Right Controls: Quick Floating HUD, Theme Toggle + Window Buttons -->
+                <!-- Right Controls: IDE-Style Header Icon Toolbar + Window Controls -->
                 <StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Stretch" WindowChrome.IsHitTestVisibleInChrome="True">
-                    <!-- Quick Toggle Companion HUD -->
-                    <Button x:Name="HudToggleHeaderBtn" Click="ShowHud_Click" ToolTip="Toggle Desktop Companion HUD (Show/Hide)"
-                            Style="{StaticResource SecondaryButton}" Height="28" Padding="10,0" Margin="0,0,8,0" VerticalAlignment="Center">
-                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                            <Path Data="{StaticResource WinHudPipetteGeometry}" Fill="{DynamicResource TextSecondaryBrush}" Stretch="Uniform" Width="12" Height="12" Margin="0,0,5,0" VerticalAlignment="Center"/>
-                            <TextBlock x:Name="HudToggleHeaderLabel" Text="HUD" FontSize="11" FontWeight="SemiBold" VerticalAlignment="Center"/>
-                        </StackPanel>
+                    <!-- Toggle Sidebar Left / Right / Hide (IDE Style Layout Controls) -->
+                    <Button x:Name="ToggleSidebarSideBtn" Click="ToggleSidebarSide_Click" ToolTip="Dock Sidebar to Left or Right"
+                            Style="{StaticResource HeaderIconButton}">
+                        <Path x:Name="ToggleSidebarSideIcon" Data="{StaticResource SidebarLeftGeometry}" Fill="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}" Stretch="Uniform" Width="13" Height="13" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                     </Button>
 
-                    <!-- Quick Open Settings Preferences Button -->
+                    <Button x:Name="ToggleSidebarVisibilityBtn" Click="ToggleSidebarVisibility_Click" ToolTip="Toggle Sidebar Visibility (Show/Hide)"
+                            Style="{StaticResource HeaderIconButton}">
+                        <Path x:Name="ToggleSidebarVisibilityIcon" Data="{StaticResource SidebarHideGeometry}" Fill="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}" Stretch="Uniform" Width="13" Height="13" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Button>
+
+                    <Rectangle Width="1" Height="16" Fill="{DynamicResource BorderBrush}" Margin="4,0" VerticalAlignment="Center"/>
+
+                    <!-- Desktop Companion HUD Icon Button -->
+                    <Button x:Name="HudToggleHeaderBtn" Click="ShowHud_Click" ToolTip="Toggle Desktop Companion HUD (Watching Mascot)"
+                            Style="{StaticResource HeaderIconButton}">
+                        <Path Data="{StaticResource WinHudPipetteGeometry}" Fill="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}" Stretch="Uniform" Width="13" Height="13" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Button>
+
+                    <!-- Settings Preferences Icon Button -->
                     <Button x:Name="HeaderSettingsBtn" Click="OpenSettings_Click" ToolTip="Settings &amp; Capture Profiles"
-                            WindowChrome.IsHitTestVisibleInChrome="True"
-                            Style="{StaticResource SecondaryButton}" Height="28" Padding="10,0" Margin="0,0,8,0" VerticalAlignment="Center">
-                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                            <Path Data="{StaticResource GearGeometry}" Fill="{DynamicResource TextSecondaryBrush}" Stretch="Uniform" Width="12" Height="12" Margin="0,0,5,0" VerticalAlignment="Center"/>
-                            <TextBlock Text="Settings" FontSize="11" FontWeight="SemiBold" VerticalAlignment="Center"/>
-                        </StackPanel>
+                            Style="{StaticResource HeaderIconButton}">
+                        <Path Data="{StaticResource GearGeometry}" Fill="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}" Stretch="Uniform" Width="13" Height="13" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                     </Button>
 
-                    <!-- Light / Dark Mode Toggle Button -->
+                    <!-- Light / Dark Mode Toggle Icon Button -->
                     <Button x:Name="ThemeToggleBtn" Click="ThemeToggle_Click" ToolTip="Toggle Light / Dark Mode"
-                            WindowChrome.IsHitTestVisibleInChrome="True"
-                            Width="32" Height="28" Background="Transparent" BorderThickness="0" Cursor="Hand" Margin="0,0,8,0" VerticalAlignment="Center">
-                        <Path x:Name="ThemeIconPath" Data="{StaticResource SunGeometry}" Fill="{DynamicResource GoldBrush}" Stretch="Uniform" Width="15" Height="15" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            Style="{StaticResource HeaderIconButton}" Margin="1,0,8,0">
+                        <Path x:Name="ThemeIconPath" Data="{StaticResource SunGeometry}" Fill="{DynamicResource GoldBrush}" Stretch="Uniform" Width="14" Height="14" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                     </Button>
 
                     <!-- Precise Vector Window Management Buttons (Stretch 42px) -->
@@ -76,15 +81,19 @@
             </Grid>
         </Border>
 
-        <!-- Main Content Area -->
-        <Grid Grid.Row="1">
+        <!-- Main Content Area: Resizable 3-Column IDE Layout -->
+        <Grid Grid.Row="1" x:Name="MainContentGrid">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="280"/>
-                <ColumnDefinition Width="*"/>
+                <!-- Left Slot (Default: Sidebar) -->
+                <ColumnDefinition x:Name="LeftColDef" Width="280" MinWidth="180" MaxWidth="500"/>
+                <!-- Splitter Slot -->
+                <ColumnDefinition x:Name="SplitterColDef" Width="4"/>
+                <!-- Center / Main Slot -->
+                <ColumnDefinition x:Name="RightColDef" Width="*" MinWidth="350"/>
             </Grid.ColumnDefinitions>
 
-            <!-- Sidebar: Sessions List & Controls (Structured 3-Row Grid: Settings Card Guaranteed Visible in Any Resolution & Fullscreen) -->
-            <Border Grid.Column="0" Background="{DynamicResource BgSecondaryBrush}" BorderBrush="{DynamicResource BorderBrush}" BorderThickness="0,0,1,0" Padding="14,14,14,14" ClipToBounds="True">
+            <!-- Sidebar: Sessions List & Controls -->
+            <Border x:Name="SidebarBorder" Grid.Column="0" Background="{DynamicResource BgSecondaryBrush}" BorderBrush="{DynamicResource BorderBrush}" BorderThickness="0,0,1,0" Padding="14,14,14,14" ClipToBounds="True">
                 <Grid>
                     <Grid.RowDefinitions>
                         <!-- Row 0: Mascot Header, New Session & Past Sessions Title -->
@@ -223,8 +232,25 @@
                 </Grid>
             </Border>
 
+            <!-- IDE-Style Resizable Draggable GridSplitter -->
+            <GridSplitter x:Name="SidebarSplitter" Grid.Column="1" Width="4" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                          Background="Transparent" Cursor="SizeWE" ShowsPreview="False" Focusable="False">
+                <GridSplitter.Template>
+                    <ControlTemplate TargetType="GridSplitter">
+                        <Border x:Name="splitBd" Background="Transparent">
+                            <Rectangle Width="1" Fill="{DynamicResource BorderBrush}" HorizontalAlignment="Center" VerticalAlignment="Stretch"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="splitBd" Property="Background" Value="{DynamicResource AccentBrush}"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </GridSplitter.Template>
+            </GridSplitter>
+
             <!-- Main Workspace Area -->
-            <Grid Grid.Column="1" Margin="24">
+            <Grid x:Name="MainWorkspaceGrid" Grid.Column="2" Margin="24">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>

@@ -529,6 +529,102 @@ namespace Rewind.App
             }
         }
 
+        private bool _isSidebarVisible = true;
+        private bool _isSidebarOnRight = false;
+        private double _lastSidebarWidth = 280;
+
+        private void ToggleSidebarVisibility_Click(object sender, RoutedEventArgs e)
+        {
+            _isSidebarVisible = !_isSidebarVisible;
+
+            if (_isSidebarVisible)
+            {
+                SidebarBorder.Visibility = Visibility.Visible;
+                SidebarSplitter.Visibility = Visibility.Visible;
+                if (_isSidebarOnRight)
+                {
+                    RightColDef.Width = new GridLength(_lastSidebarWidth > 0 ? _lastSidebarWidth : 280);
+                    RightColDef.MinWidth = 180;
+                    RightColDef.MaxWidth = 500;
+                }
+                else
+                {
+                    LeftColDef.Width = new GridLength(_lastSidebarWidth > 0 ? _lastSidebarWidth : 280);
+                    LeftColDef.MinWidth = 180;
+                    LeftColDef.MaxWidth = 500;
+                }
+                ToggleSidebarVisibilityIcon.Opacity = 1.0;
+            }
+            else
+            {
+                if (_isSidebarOnRight)
+                {
+                    if (RightColDef.ActualWidth > 50) _lastSidebarWidth = RightColDef.ActualWidth;
+                    RightColDef.MinWidth = 0;
+                    RightColDef.Width = new GridLength(0);
+                }
+                else
+                {
+                    if (LeftColDef.ActualWidth > 50) _lastSidebarWidth = LeftColDef.ActualWidth;
+                    LeftColDef.MinWidth = 0;
+                    LeftColDef.Width = new GridLength(0);
+                }
+                SidebarBorder.Visibility = Visibility.Collapsed;
+                SidebarSplitter.Visibility = Visibility.Collapsed;
+                ToggleSidebarVisibilityIcon.Opacity = 0.4;
+            }
+        }
+
+        private void ToggleSidebarSide_Click(object sender, RoutedEventArgs e)
+        {
+            _isSidebarOnRight = !_isSidebarOnRight;
+
+            // Preserve current width
+            var currentWidth = _isSidebarOnRight ? LeftColDef.ActualWidth : RightColDef.ActualWidth;
+            if (currentWidth > 50) _lastSidebarWidth = currentWidth;
+
+            if (_isSidebarOnRight)
+            {
+                // Move Sidebar to Column 2 (Right), MainWorkspace to Column 0 (Left), Splitter to Column 1
+                Grid.SetColumn(MainWorkspaceGrid, 0);
+                Grid.SetColumn(SidebarSplitter, 1);
+                Grid.SetColumn(SidebarBorder, 2);
+
+                // Configure Column Definitions: Col 0 is Star, Col 2 is Sidebar Width
+                LeftColDef.MinWidth = 350;
+                LeftColDef.MaxWidth = double.PositiveInfinity;
+                LeftColDef.Width = new GridLength(1, GridUnitType.Star);
+
+                RightColDef.MinWidth = _isSidebarVisible ? 180 : 0;
+                RightColDef.MaxWidth = 500;
+                RightColDef.Width = _isSidebarVisible ? new GridLength(_lastSidebarWidth) : new GridLength(0);
+
+                SidebarBorder.BorderThickness = new Thickness(1, 0, 0, 0);
+                ToggleSidebarSideIcon.Data = (System.Windows.Media.Geometry)FindResource("SidebarRightGeometry");
+                ToggleSidebarSideBtn.ToolTip = "Dock Sidebar to Left";
+            }
+            else
+            {
+                // Move Sidebar back to Column 0 (Left), MainWorkspace to Column 2 (Right), Splitter to Column 1
+                Grid.SetColumn(SidebarBorder, 0);
+                Grid.SetColumn(SidebarSplitter, 1);
+                Grid.SetColumn(MainWorkspaceGrid, 2);
+
+                // Configure Column Definitions: Col 0 is Sidebar Width, Col 2 is Star
+                LeftColDef.MinWidth = _isSidebarVisible ? 180 : 0;
+                LeftColDef.MaxWidth = 500;
+                LeftColDef.Width = _isSidebarVisible ? new GridLength(_lastSidebarWidth) : new GridLength(0);
+
+                RightColDef.MinWidth = 350;
+                RightColDef.MaxWidth = double.PositiveInfinity;
+                RightColDef.Width = new GridLength(1, GridUnitType.Star);
+
+                SidebarBorder.BorderThickness = new Thickness(0, 0, 1, 0);
+                ToggleSidebarSideIcon.Data = (System.Windows.Media.Geometry)FindResource("SidebarLeftGeometry");
+                ToggleSidebarSideBtn.ToolTip = "Dock Sidebar to Right";
+            }
+        }
+
         private void ShowHud_Click(object sender, RoutedEventArgs e)
         {
             if (_hudWindow.IsVisible)
@@ -543,9 +639,9 @@ namespace Rewind.App
 
         private void UpdateHudToggleButton(bool isVisible)
         {
-            if (HudToggleHeaderLabel != null)
+            if (HudToggleHeaderBtn != null)
             {
-                HudToggleHeaderLabel.Text = isVisible ? "Hide HUD" : "Show HUD";
+                HudToggleHeaderBtn.Opacity = isVisible ? 1.0 : 0.55;
             }
         }
 
