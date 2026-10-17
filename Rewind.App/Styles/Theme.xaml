@@ -98,9 +98,9 @@
     <Geometry x:Key="SidebarRightGeometry">M3,3 L21,3 L21,21 L3,21 Z M16,5 L19,5 L19,19 L16,19 Z M5,5 L14,5 L14,19 L5,19 Z</Geometry>
     <Geometry x:Key="SidebarHideGeometry">M3,3 L21,3 L21,21 L3,21 Z M5,5 L19,5 L19,19 L5,19 Z</Geometry>
 
-    <!-- Adorable Borderless Avocado QA Mascot ("Guac" with QA headset and Living Animation) -->
+    <!-- Adorable Chubby Avocado QA Mascot ("Guac" inspired by user's reference artwork) -->
     <ControlTemplate x:Key="AvocadoMascot">
-        <Grid Width="38" Height="44" HorizontalAlignment="Center" VerticalAlignment="Center" RenderTransformOrigin="0.5,0.9">
+        <Grid Width="52" Height="62" HorizontalAlignment="Center" VerticalAlignment="Center" RenderTransformOrigin="0.5,0.92">
             <Grid.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform x:Name="MascotScale" ScaleX="1.0" ScaleY="1.0"/>
@@ -108,118 +108,145 @@
                 </TransformGroup>
             </Grid.RenderTransform>
 
-            <!-- Organic Pear-shaped Body (Rich Emerald with Subtle Drop Glow) -->
-            <Path Data="M 19,6 C 27,6 32,13 32,24 C 32,35 27,43 19,43 C 11,43 6,35 6,24 C 6,13 11,6 19,6 Z">
-                <Path.Fill>
-                    <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
-                        <GradientStop Color="#0D5F47" Offset="0"/>
-                        <GradientStop Color="#064E3B" Offset="1"/>
-                    </LinearGradientBrush>
-                </Path.Fill>
-                <Path.Effect>
-                    <DropShadowEffect Color="#043226" BlurRadius="4" ShadowDepth="1" Opacity="0.4"/>
-                </Path.Effect>
-            </Path>
+            <!-- Ground Drop Shadow -->
+            <Ellipse Width="34" Height="7" Fill="#10000000" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,1"/>
 
-            <!-- Avocado Inner Flesh (Soft Creamy Honeydew/Lime Jade) -->
-            <Path Data="M 19,9 C 25,9 29.5,15 29.5,24 C 29.5,33 25.5,40 19,40 C 12.5,40 8.5,33 8.5,24 C 8.5,15 13,9 19,9 Z">
-                <Path.Fill>
-                    <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
-                        <GradientStop Color="#D1FAE5" Offset="0"/>
-                        <GradientStop Color="#A7F3D0" Offset="0.5"/>
-                        <GradientStop Color="#6EE7B7" Offset="1"/>
-                    </LinearGradientBrush>
-                </Path.Fill>
-            </Path>
+            <!-- Cute Chubby Little Feet (Dark Avocado Green with rounded caps) -->
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,3">
+                <Border Width="8" Height="9" Background="#1B4D2E" CornerRadius="4" Margin="0,0,10,0"/>
+                <Border Width="8" Height="9" Background="#1B4D2E" CornerRadius="4"/>
+            </StackPanel>
 
-            <!-- Cute QA Headset Arc -->
-            <Path Data="M 7,23 C 7,11 31,11 31,23" Stroke="#10B981" StrokeThickness="2" StrokeStartLineCap="Round" StrokeEndLineCap="Round" Opacity="0.85"/>
-            <!-- Left Earpiece -->
-            <Border Width="4" Height="7" CornerRadius="2" Background="#064E3B" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5,4,0,0"/>
-            <!-- Right Earpiece -->
-            <Border Width="4" Height="7" CornerRadius="2" Background="#064E3B" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,4,5,0"/>
+            <!-- Cute Little Avocado Arms (Outstretched waving) -->
+            <!-- Left Arm -->
+            <Path Data="M 11,29 C 4,31 4,37 10,38 C 12,38 13,35 13,32 Z" Fill="#448B3D" Stroke="#1B4D2E" StrokeThickness="1.5" StrokeLineJoin="Round" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="2,26,0,0"/>
+            <!-- Right Arm -->
+            <Path Data="M 2,29 C 9,31 9,37 3,38 C 1,38 0,35 0,32 Z" Fill="#448B3D" Stroke="#1B4D2E" StrokeThickness="1.5" StrokeLineJoin="Round" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,26,2,0"/>
 
-            <!-- Avocado Seed Pit Belly / Face (Warm Amber Gold) -->
-            <Border Width="18" Height="19" CornerRadius="9.5" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,4">
-                <Border.Background>
-                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
-                        <GradientStop Color="#B45309" Offset="0"/>
-                        <GradientStop Color="#78350F" Offset="1"/>
-                    </LinearGradientBrush>
-                </Border.Background>
-                <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
-                    <!-- Glistening Eyes (Animated Blink) -->
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,-3,0,0">
-                        <!-- Left Eye -->
-                        <Grid x:Name="LeftEye" Margin="0,0,4,0" RenderTransformOrigin="0.5,0.5">
-                            <Grid.RenderTransform>
-                                <ScaleTransform ScaleY="1.0"/>
-                            </Grid.RenderTransform>
-                            <Ellipse Width="4" Height="5" Fill="#1E1308"/>
-                            <Ellipse Width="1.5" Height="1.5" Fill="#FFFFFF" Margin="0,0,1,2"/>
-                        </Grid>
-                        <!-- Right Eye -->
-                        <Grid x:Name="RightEye" RenderTransformOrigin="0.5,0.5">
-                            <Grid.RenderTransform>
-                                <ScaleTransform ScaleY="1.0"/>
-                            </Grid.RenderTransform>
-                            <Ellipse Width="4" Height="5" Fill="#1E1308"/>
-                            <Ellipse Width="1.5" Height="1.5" Fill="#FFFFFF" Margin="0,0,1,2"/>
-                        </Grid>
-                    </StackPanel>
-                    <!-- Pink Blush Cheeks -->
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,4,0,0">
-                        <Border Width="3" Height="2" CornerRadius="1" Background="#FB7185" Opacity="0.8" Margin="0,0,8,0"/>
-                        <Border Width="3" Height="2" CornerRadius="1" Background="#FB7185" Opacity="0.8"/>
-                    </StackPanel>
-                    <!-- Happy Smile Curve -->
-                    <Path Data="M 1,0 Q 2.5,2 4,0" Stroke="#FEF3C7" StrokeThickness="1" StrokeStartLineCap="Round" StrokeEndLineCap="Round" 
-                          HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,3"/>
-                </Grid>
-            </Border>
-
-            <!-- Sprout Leaf on Top of Head with gentle wave -->
-            <Path x:Name="SproutLeaf" Data="M 19,6 C 17,1 23,0 24,2 C 24,5 21,6 19,6 Z" Fill="#34D399" RenderTransformOrigin="0.2,1.0">
+            <!-- Top Stem & Leaf -->
+            <!-- Brown Twig Stem -->
+            <Path Data="M 24,12 C 24,6 27,4 27,2 C 28.5,2 29,3.5 28.5,6 C 28,9 26.5,12 26.5,12 Z" Fill="#6D401F" Stroke="#3D220F" StrokeThickness="1" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,0,0,0"/>
+            <!-- Cute Green Leaf with waggle wave -->
+            <Path x:Name="SproutLeaf" Data="M 26,6 C 35,3 38,9 33,12 C 29,14 26,9 26,6 Z" Fill="#4CAF50" Stroke="#1B4D2E" StrokeThickness="1.2" RenderTransformOrigin="0.0,0.8" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="6,1,0,0">
                 <Path.RenderTransform>
                     <RotateTransform Angle="0"/>
                 </Path.RenderTransform>
             </Path>
+
+            <!-- Main Avocado Body: Thick Outer Dark-Green Skin Rind -->
+            <Path Data="M 26,10 C 37,10 44,18 44,30 C 44,45 37,55 26,55 C 15,55 8,45 8,30 C 8,18 15,10 26,10 Z"
+                  Fill="#2D6A35" Stroke="#183D1F" StrokeThickness="2" StrokeLineJoin="Round"
+                  HorizontalAlignment="Center" VerticalAlignment="Center"/>
+
+            <!-- Inner Light Green Rind Margin -->
+            <Path Data="M 26,12 C 35.5,12 41.5,19.5 41.5,30.5 C 41.5,43.5 35.5,53 26,53 C 16.5,53 10.5,43.5 10.5,30.5 C 10.5,19.5 16.5,12 26,12 Z"
+                  Fill="#85CC47" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+
+            <!-- Avocado Creamy Honeydew/Pastel Lime Flesh -->
+            <Path Data="M 26,14 C 34.5,14 39.5,21 39.5,31 C 39.5,42.5 34.5,51 26,51 C 17.5,51 12.5,42.5 12.5,31 C 12.5,21 17.5,14 26,14 Z"
+                  HorizontalAlignment="Center" VerticalAlignment="Center">
+                <Path.Fill>
+                    <RadialGradientBrush Center="0.5,0.4" GradientOrigin="0.5,0.4" RadiusX="0.6" RadiusY="0.6">
+                        <GradientStop Color="#FEFCE8" Offset="0"/>
+                        <GradientStop Color="#F3FBB8" Offset="0.5"/>
+                        <GradientStop Color="#D8F572" Offset="0.85"/>
+                        <GradientStop Color="#BBE953" Offset="1"/>
+                    </RadialGradientBrush>
+                </Path.Fill>
+            </Path>
+
+            <!-- Large Round Seed Pit (Belly) with 3D Gloss Highlight -->
+            <Grid Width="20" Height="20" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,13">
+                <!-- Pit Base Sphere with border -->
+                <Ellipse Fill="#B85D19" Stroke="#693007" StrokeThickness="1.5" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+                <!-- Pit Depth Radial Gradient Shadow -->
+                <Ellipse HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="1">
+                    <Ellipse.Fill>
+                        <RadialGradientBrush Center="0.38,0.32" GradientOrigin="0.38,0.32" RadiusX="0.65" RadiusY="0.65">
+                            <GradientStop Color="#E68535" Offset="0"/>
+                            <GradientStop Color="#BD5B14" Offset="0.45"/>
+                            <GradientStop Color="#8B3C08" Offset="0.85"/>
+                            <GradientStop Color="#542103" Offset="1"/>
+                        </RadialGradientBrush>
+                    </Ellipse.Fill>
+                </Ellipse>
+                <!-- Pit Cute Curvature Gloss Arc (Like in user's image) -->
+                <Path Data="M 4,7 C 5,4 9,3 12,4" Stroke="#FFFFFF" StrokeThickness="1.5" StrokeStartLineCap="Round" StrokeEndLineCap="Round" Opacity="0.65"/>
+                <Ellipse Width="2.5" Height="1.8" Fill="#FFFFFF" Opacity="0.75" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5,5,0,0"/>
+            </Grid>
+
+            <!-- Kawaii Avocado Face (Located in upper flesh, above seed) -->
+            <Grid HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,21,0,0" Width="32" Height="18">
+                <!-- Cute Pink Blush Cheeks (Soft oval glow) -->
+                <Ellipse Width="6" Height="3.5" Fill="#FF8A8A" Opacity="0.75" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="2,5,0,0"/>
+                <Ellipse Width="6" Height="3.5" Fill="#FF8A8A" Opacity="0.75" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,5,2,0"/>
+
+                <!-- Kawaii Eyes with Big Anime Highlights & Animated Blink -->
+                <!-- Left Eye -->
+                <Grid x:Name="LeftEye" Width="6.5" Height="7.5" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="7,0,0,0" RenderTransformOrigin="0.5,0.5">
+                    <Grid.RenderTransform>
+                        <ScaleTransform ScaleY="1.0"/>
+                    </Grid.RenderTransform>
+                    <!-- Dark Pupil -->
+                    <Ellipse Fill="#18181B" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+                    <!-- Large Primary Sparkle Highlight -->
+                    <Ellipse Width="2.6" Height="2.6" Fill="#FFFFFF" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="1.2,1.2,0,0"/>
+                    <!-- Small Secondary Catchlight -->
+                    <Ellipse Width="1.2" Height="1.2" Fill="#FFFFFF" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,1.2,1.2"/>
+                </Grid>
+
+                <!-- Right Eye -->
+                <Grid x:Name="RightEye" Width="6.5" Height="7.5" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,7,0" RenderTransformOrigin="0.5,0.5">
+                    <Grid.RenderTransform>
+                        <ScaleTransform ScaleY="1.0"/>
+                    </Grid.RenderTransform>
+                    <!-- Dark Pupil -->
+                    <Ellipse Fill="#18181B" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+                    <!-- Large Primary Sparkle Highlight -->
+                    <Ellipse Width="2.6" Height="2.6" Fill="#FFFFFF" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="1.2,1.2,0,0"/>
+                    <!-- Small Secondary Catchlight -->
+                    <Ellipse Width="1.2" Height="1.2" Fill="#FFFFFF" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,1.2,1.2"/>
+                </Grid>
+
+                <!-- Cute Sweet Cat-curve / Happy Smile -->
+                <Path Data="M 13.5,9 C 14.8,11.5 17.2,11.5 18.5,9" Stroke="#18181B" StrokeThickness="1.5" StrokeStartLineCap="Round" StrokeEndLineCap="Round" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            </Grid>
         </Grid>
         <ControlTemplate.Triggers>
             <EventTrigger RoutedEvent="Loaded">
                 <BeginStoryboard>
                     <Storyboard RepeatBehavior="Forever">
-                        <!-- Idle Cute Breathing / Peek Squash-Stretch -->
+                        <!-- Idle Cute Breathing / Squash-Stretch -->
                         <DoubleAnimationUsingKeyFrames Storyboard.TargetName="MascotScale" Storyboard.TargetProperty="ScaleY">
                             <SplineDoubleKeyFrame KeyTime="0:0:0" Value="1.0"/>
-                            <SplineDoubleKeyFrame KeyTime="0:0:1.4" Value="1.06"/>
-                            <SplineDoubleKeyFrame KeyTime="0:0:2.8" Value="1.0"/>
+                            <SplineDoubleKeyFrame KeyTime="0:0:1.3" Value="1.05"/>
+                            <SplineDoubleKeyFrame KeyTime="0:0:2.6" Value="1.0"/>
                         </DoubleAnimationUsingKeyFrames>
                         <DoubleAnimationUsingKeyFrames Storyboard.TargetName="MascotScale" Storyboard.TargetProperty="ScaleX">
                             <SplineDoubleKeyFrame KeyTime="0:0:0" Value="1.0"/>
-                            <SplineDoubleKeyFrame KeyTime="0:0:1.4" Value="0.97"/>
-                            <SplineDoubleKeyFrame KeyTime="0:0:2.8" Value="1.0"/>
+                            <SplineDoubleKeyFrame KeyTime="0:0:1.3" Value="0.97"/>
+                            <SplineDoubleKeyFrame KeyTime="0:0:2.6" Value="1.0"/>
                         </DoubleAnimationUsingKeyFrames>
-                        <!-- Sprout leaf breeze waggle -->
+                        <!-- Sprout leaf breeze wave -->
                         <DoubleAnimationUsingKeyFrames Storyboard.TargetName="SproutLeaf" Storyboard.TargetProperty="(UIElement.RenderTransform).(RotateTransform.Angle)">
                             <SplineDoubleKeyFrame KeyTime="0:0:0" Value="0"/>
-                            <SplineDoubleKeyFrame KeyTime="0:0:0.7" Value="8"/>
-                            <SplineDoubleKeyFrame KeyTime="0:0:1.4" Value="-4"/>
-                            <SplineDoubleKeyFrame KeyTime="0:0:2.1" Value="6"/>
-                            <SplineDoubleKeyFrame KeyTime="0:0:2.8" Value="0"/>
+                            <SplineDoubleKeyFrame KeyTime="0:0:0.65" Value="10"/>
+                            <SplineDoubleKeyFrame KeyTime="0:0:1.3" Value="-5"/>
+                            <SplineDoubleKeyFrame KeyTime="0:0:1.95" Value="8"/>
+                            <SplineDoubleKeyFrame KeyTime="0:0:2.6" Value="0"/>
                         </DoubleAnimationUsingKeyFrames>
-                        <!-- Cute Eye Blink every 2.8s cycle -->
+                        <!-- Cute Eye Blink every 2.6s cycle -->
                         <DoubleAnimationUsingKeyFrames Storyboard.TargetName="LeftEye" Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleY)">
                             <DiscreteDoubleKeyFrame KeyTime="0:0:0" Value="1.0"/>
-                            <DiscreteDoubleKeyFrame KeyTime="0:0:2.4" Value="1.0"/>
-                            <DiscreteDoubleKeyFrame KeyTime="0:0:2.45" Value="0.1"/>
-                            <DiscreteDoubleKeyFrame KeyTime="0:0:2.55" Value="1.0"/>
+                            <DiscreteDoubleKeyFrame KeyTime="0:0:2.2" Value="1.0"/>
+                            <DiscreteDoubleKeyFrame KeyTime="0:0:2.26" Value="0.08"/>
+                            <DiscreteDoubleKeyFrame KeyTime="0:0:2.36" Value="1.0"/>
                         </DoubleAnimationUsingKeyFrames>
                         <DoubleAnimationUsingKeyFrames Storyboard.TargetName="RightEye" Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleY)">
                             <DiscreteDoubleKeyFrame KeyTime="0:0:0" Value="1.0"/>
-                            <DiscreteDoubleKeyFrame KeyTime="0:0:2.4" Value="1.0"/>
-                            <DiscreteDoubleKeyFrame KeyTime="0:0:2.45" Value="0.1"/>
-                            <DiscreteDoubleKeyFrame KeyTime="0:0:2.55" Value="1.0"/>
+                            <DiscreteDoubleKeyFrame KeyTime="0:0:2.2" Value="1.0"/>
+                            <DiscreteDoubleKeyFrame KeyTime="0:0:2.26" Value="0.08"/>
+                            <DiscreteDoubleKeyFrame KeyTime="0:0:2.36" Value="1.0"/>
                         </DoubleAnimationUsingKeyFrames>
                     </Storyboard>
                 </BeginStoryboard>
