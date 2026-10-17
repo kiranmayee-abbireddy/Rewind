@@ -18,12 +18,11 @@
                 <!-- Avocado Mascot Avatar (Seamless & Borderless) -->
                 <ContentControl Template="{StaticResource AvocadoMascotCompact}" VerticalAlignment="Center" Margin="2,0,8,0" IsHitTestVisible="False"/>
 
-                <!-- REC & Timer Status Pill -->
-                <Border x:Name="StatusPillBorder" Background="{DynamicResource BgSecondaryBrush}" CornerRadius="12" Padding="8,4" Margin="0,0,8,0" BorderBrush="{DynamicResource BorderBrush}" BorderThickness="1">
+                <!-- REC & Timer Status Display (Clean Professional Layout) -->
+                <Border x:Name="StatusPillBorder" Background="{DynamicResource BgSecondaryBrush}" CornerRadius="6" Padding="8,4" Margin="0,0,8,0" BorderBrush="{DynamicResource BorderBrush}" BorderThickness="1">
                     <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                        <Border x:Name="StatusDot" Width="7" Height="7" CornerRadius="3.5" Background="#EF4444" Margin="0,0,6,0" VerticalAlignment="Center"/>
                         <TextBlock x:Name="StatusText" Text="REC" FontWeight="Bold" FontSize="11" Foreground="#EF4444" Margin="0,0,6,0" VerticalAlignment="Center"/>
-                        <TextBlock x:Name="BufferTimeText" Text="00:00" FontWeight="Bold" FontSize="11" Foreground="{DynamicResource TextPrimaryBrush}" VerticalAlignment="Center"/>
+                        <TextBlock x:Name="BufferTimeText" Text="00:00" FontFamily="Consolas, monospace" FontWeight="Bold" FontSize="11" Foreground="{DynamicResource TextPrimaryBrush}" VerticalAlignment="Center"/>
                     </StackPanel>
                 </Border>
 

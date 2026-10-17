@@ -211,7 +211,6 @@ namespace Rewind.App
             {
                 if (state == "Recording")
                 {
-                    MainStatusDot.Background = (System.Windows.Media.Brush)FindResource("DangerBrush");
                     MainStatusLabel.Text = "RECORDING";
                     MainStatusLabel.Foreground = (System.Windows.Media.Brush)FindResource("DangerBrush");
                     StartStopCaptureBtn.Content = "⏹ Stop Capture";
@@ -221,14 +220,12 @@ namespace Rewind.App
                 }
                 else if (state == "Paused")
                 {
-                    MainStatusDot.Background = (System.Windows.Media.Brush)FindResource("WarningBrush");
                     MainStatusLabel.Text = "PAUSED";
                     MainStatusLabel.Foreground = (System.Windows.Media.Brush)FindResource("WarningBrush");
                     PauseResumeBtn.Content = "▶ Resume";
                 }
                 else
                 {
-                    MainStatusDot.Background = (System.Windows.Media.Brush)FindResource("TextSecondaryBrush");
                     MainStatusLabel.Text = "IDLE";
                     MainStatusLabel.Foreground = (System.Windows.Media.Brush)FindResource("TextSecondaryBrush");
                     StartStopCaptureBtn.Content = "▶ Start Capture";

@@ -184,10 +184,8 @@
                                         <Path Data="{StaticResource TrashGeometry}" Fill="{DynamicResource TextSecondaryBrush}" Stretch="Uniform" Width="11" Height="11" Opacity="0.6"/>
                                     </Button>
 
-                                    <Grid Grid.Row="1" Grid.ColumnSpan="2" Margin="0,5,0,0">
-                                        <Border HorizontalAlignment="Left" CornerRadius="3" Padding="5,1" Background="{DynamicResource BgSecondaryBrush}" BorderBrush="{DynamicResource BorderBrush}" BorderThickness="1">
-                                            <TextBlock Text="{Binding Status}" FontSize="10" FontWeight="SemiBold" Foreground="{DynamicResource AccentBrush}"/>
-                                        </Border>
+                                    <Grid Grid.Row="1" Grid.ColumnSpan="2" Margin="0,4,0,0">
+                                        <TextBlock Text="{Binding Status}" FontSize="11" Foreground="{DynamicResource AccentBrush}" FontWeight="SemiBold" HorizontalAlignment="Left" VerticalAlignment="Center"/>
                                         <TextBlock Text="{Binding CreatedAt, StringFormat='{}{0:MM/dd HH:mm}'}" HorizontalAlignment="Right" VerticalAlignment="Center" FontSize="10.5" Foreground="{DynamicResource TextSecondaryBrush}"/>
                                     </Grid>
                                 </Grid>
@@ -242,10 +240,7 @@
 
                     <StackPanel Grid.Column="0" VerticalAlignment="Center">
                         <TextBox x:Name="ActiveSessionTitleBox" Text="Active Session" FontSize="20" FontWeight="Bold" Background="Transparent" Foreground="{DynamicResource TextPrimaryBrush}" BorderThickness="0" Margin="0,0,0,3"/>
-                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                            <Border Width="6" Height="6" CornerRadius="3" Background="{DynamicResource AccentBrush}" Margin="0,0,6,0"/>
-                            <TextBlock x:Name="ActiveSessionSubtext" Text="Capture: Idle • No active recording" FontSize="11.5" Foreground="{DynamicResource TextSecondaryBrush}"/>
-                        </StackPanel>
+                        <TextBlock x:Name="ActiveSessionSubtext" Text="Capture: Idle • No active recording" FontSize="11.5" Foreground="{DynamicResource TextSecondaryBrush}"/>
                     </StackPanel>
 
                     <!-- Studio Action Ribbon -->
@@ -260,7 +255,7 @@
                     </StackPanel>
                 </Grid>
 
-                <!-- Cinematic Recording Monitor Card -->
+                <!-- Recording Monitor Card -->
                 <Border Grid.Row="1" Background="{DynamicResource BgCardBrush}" BorderBrush="{DynamicResource BorderBrush}" BorderThickness="1" CornerRadius="6" Padding="14,12" Margin="0,0,0,18">
                     <Grid>
                         <Grid.ColumnDefinitions>
@@ -269,14 +264,12 @@
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
 
-                        <!-- Live Status Pill & Timecode Meter -->
-                        <Border Grid.Column="0" Background="{DynamicResource BgSecondaryBrush}" BorderBrush="{DynamicResource BorderBrush}" BorderThickness="1" CornerRadius="4" Padding="10,6" Margin="0,0,16,0" VerticalAlignment="Center">
-                            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                                <Border x:Name="MainStatusDot" Width="8" Height="8" CornerRadius="4" Background="{DynamicResource TextSecondaryBrush}" Margin="0,0,8,0"/>
-                                <TextBlock x:Name="MainStatusLabel" Text="IDLE" FontWeight="Bold" FontSize="11" Foreground="{DynamicResource TextSecondaryBrush}" VerticalAlignment="Center" Margin="0,0,8,0"/>
-                                <TextBlock x:Name="MainTimecodeText" Text="00:00" FontFamily="Consolas, monospace" FontWeight="Bold" FontSize="12" Foreground="{DynamicResource TextPrimaryBrush}" VerticalAlignment="Center"/>
-                            </StackPanel>
-                        </Border>
+                        <!-- Live Status Indicator & Timecode (Clean Typography) -->
+                        <StackPanel Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center" Margin="0,0,20,0">
+                            <TextBlock x:Name="MainStatusLabel" Text="IDLE" FontWeight="Bold" FontSize="13" Foreground="{DynamicResource TextSecondaryBrush}" VerticalAlignment="Center"/>
+                            <TextBlock Text="/" FontSize="12" Foreground="{DynamicResource BorderBrush}" Margin="8,0" VerticalAlignment="Center"/>
+                            <TextBlock x:Name="MainTimecodeText" Text="00:00" FontFamily="Consolas, monospace" FontWeight="Bold" FontSize="13" Foreground="{DynamicResource TextPrimaryBrush}" VerticalAlignment="Center"/>
+                        </StackPanel>
 
                         <StackPanel Grid.Column="1" VerticalAlignment="Center">
                             <TextBlock x:Name="BufferStatsText" Text="Continuous rolling buffer is stopped. Click 'Start Capture' to begin monitoring." FontSize="12" Foreground="{DynamicResource TextPrimaryBrush}" FontWeight="SemiBold"/>
@@ -342,9 +335,8 @@
                                             <TextBlock Text="{Binding Title}" FontWeight="Bold" FontSize="15" Foreground="{DynamicResource TextPrimaryBrush}" TextTrimming="CharacterEllipsis"/>
                                             <TextBlock Text="{Binding ObservedBehavior}" FontSize="12.5" Foreground="{DynamicResource TextSecondaryBrush}" Margin="0,5,0,7" LineHeight="17" MaxHeight="36" TextWrapping="Wrap" TextTrimming="CharacterEllipsis"/>
                                             <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                                                <Border Background="{DynamicResource BgSecondaryBrush}" CornerRadius="4" Padding="6,2" Margin="0,0,8,0" BorderBrush="{DynamicResource BorderBrush}" BorderThickness="1">
-                                                    <TextBlock Text="{Binding DurationSeconds, StringFormat='Duration: {0:0.0}s'}" FontSize="10.5" Foreground="{DynamicResource AccentBrush}" FontWeight="SemiBold"/>
-                                                </Border>
+                                                <TextBlock Text="{Binding DurationSeconds, StringFormat='Duration: {0:0.0}s'}" FontSize="11" Foreground="{DynamicResource AccentBrush}" FontWeight="SemiBold"/>
+                                                <TextBlock Text="•" FontSize="10" Foreground="{DynamicResource TextSecondaryBrush}" Margin="8,0" VerticalAlignment="Center"/>
                                                 <TextBlock Text="{Binding CreatedAt, StringFormat='Preserved at {0:HH:mm:ss}'}" FontSize="11" Foreground="{DynamicResource TextSecondaryBrush}" VerticalAlignment="Center"/>
                                             </StackPanel>
                                         </StackPanel>

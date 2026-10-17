@@ -125,7 +125,6 @@ namespace Rewind.App.Views
                     statusLabel = "IDLE";
                 }
 
-                StatusDot.Background = statusBrush;
                 StatusText.Text = statusLabel;
                 StatusText.Foreground = statusBrush;
 
