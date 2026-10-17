@@ -174,6 +174,7 @@ namespace Rewind.App
                 Sessions.Add(s);
             }
             SessionsList.ItemsSource = Sessions;
+            UpdateSessionsEmptyState();
 
             if (Sessions.Count > 0)
             {
@@ -185,6 +186,22 @@ namespace Rewind.App
             }
         }
 
+        private void UpdateSessionsEmptyState()
+        {
+            if (SessionsEmptyState != null)
+            {
+                SessionsEmptyState.Visibility = Sessions.Count == 0 ? Visibility.Visible : Visibility.Collapsed;
+            }
+        }
+
+        private void UpdateBugsEmptyState()
+        {
+            if (BugsEmptyState != null)
+            {
+                BugsEmptyState.Visibility = Bugs.Count == 0 ? Visibility.Visible : Visibility.Collapsed;
+            }
+        }
+
         private void CreateNewSession()
         {
             var session = new Session
@@ -193,6 +210,7 @@ namespace Rewind.App
             };
             _dbService.SaveSession(session);
             Sessions.Insert(0, session);
+            UpdateSessionsEmptyState();
             SelectSession(session);
         }
 
@@ -220,6 +238,7 @@ namespace Rewind.App
             }
             BugsList.ItemsSource = Bugs;
             BugCountLabel.Text = $"{Bugs.Count} bugs saved";
+            UpdateBugsEmptyState();
         }
 
         private void OnCaptureStateChanged(string state)
@@ -700,6 +719,7 @@ namespace Rewind.App
             // Delete from database
             _dbService.DeleteSession(session.Id);
             Sessions.Remove(session);
+            UpdateSessionsEmptyState();
 
             if (_activeSession?.Id == session.Id)
             {

@@ -220,6 +220,74 @@
         </Viewbox>
     </ControlTemplate>
 
+    <!-- Empty Sessions Vector Illustration (Guac with notepad/archive folder) -->
+    <ControlTemplate x:Key="EmptySessionsIllustration">
+        <Grid Width="110" Height="100" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <!-- Ambient Soft Glow Circle -->
+            <Ellipse Width="88" Height="88" Fill="{DynamicResource BgCardBrush}" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <Ellipse.Effect>
+                    <BlurEffect Radius="18"/>
+                </Ellipse.Effect>
+            </Ellipse>
+
+            <!-- Illustrated Dashed Session Outline Tray -->
+            <Border Width="82" Height="64" CornerRadius="10" BorderBrush="{DynamicResource BorderBrush}" BorderThickness="1.5" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,6" Background="{DynamicResource BgSecondaryBrush}" Opacity="0.75">
+                <Grid>
+                    <!-- Folder Tab Notch -->
+                    <Border Width="28" Height="6" CornerRadius="3" Background="{DynamicResource BorderBrush}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="8,8,0,0" Opacity="0.5"/>
+                    <Border Width="40" Height="4" CornerRadius="2" Background="{DynamicResource BorderBrush}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="8,19,0,0" Opacity="0.3"/>
+                    <Border Width="24" Height="4" CornerRadius="2" Background="{DynamicResource BorderBrush}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="8,27,0,0" Opacity="0.2"/>
+                </Grid>
+            </Border>
+
+            <!-- Guac QA Mascot Peeking Happily over the Folder -->
+            <Viewbox Width="52" Height="60" Stretch="Uniform" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="14,2,0,0">
+                <ContentControl Template="{StaticResource AvocadoMascot}"/>
+            </Viewbox>
+
+            <!-- Floating Mini Sparkle Star -->
+            <Path Data="M 0,4 Q 4,4 4,0 Q 4,4 8,4 Q 4,4 4,8 Q 4,4 0,4 Z" Fill="{DynamicResource AccentBrush}" Opacity="0.65" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,12,14,0"/>
+        </Grid>
+    </ControlTemplate>
+
+    <!-- Empty Bugs & Evidence Vector Illustration (Guac with Inspection Magnifier & Serene All-Clear) -->
+    <ControlTemplate x:Key="EmptyBugsIllustration">
+        <Grid Width="160" Height="120" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <!-- Soft Ambient Halo -->
+            <Ellipse Width="110" Height="110" Fill="{DynamicResource BgCardBrush}" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <Ellipse.Effect>
+                    <BlurEffect Radius="24"/>
+                </Ellipse.Effect>
+            </Ellipse>
+
+            <!-- Sleek Verification Shield Vector Backdrop -->
+            <Path Data="M12,1 L3,5 L3,11 C3,16.55 6.84,21.74 12,23 C17.16,21.74 21,16.55 21,11 L21,5 L12,1 Z" 
+                  Fill="{DynamicResource BgSecondaryBrush}" Stroke="{DynamicResource BorderBrush}" StrokeThickness="1.2"
+                  Stretch="Uniform" Width="80" Height="80" HorizontalAlignment="Center" VerticalAlignment="Center" Opacity="0.6"/>
+
+            <!-- Centered Guac QA Mascot in Verification Pose -->
+            <Viewbox Width="64" Height="72" Stretch="Uniform" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,-4,0,0">
+                <ContentControl Template="{StaticResource AvocadoMascot}"/>
+            </Viewbox>
+
+            <!-- Magnifying Glass Vector held on side -->
+            <Canvas Width="32" Height="32" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,24,12">
+                <!-- Lens Ring -->
+                <Ellipse Width="18" Height="18" Canvas.Left="2" Canvas.Top="2" Stroke="{DynamicResource AccentBrush}" StrokeThickness="2.5" Fill="{DynamicResource BgCardBrush}" Opacity="0.95"/>
+                <!-- Lens Reflection -->
+                <Path Data="M 6,5 A 6,6 0 0 1 14,7" Stroke="#FFFFFF" StrokeThickness="1.5" StrokeStartLineCap="Round" StrokeEndLineCap="Round" Opacity="0.7"/>
+                <!-- Handle -->
+                <Line X1="15" Y1="15" X2="27" Y2="27" Stroke="{DynamicResource AccentBrush}" StrokeThickness="3.5" StrokeStartLineCap="Round" StrokeEndLineCap="Round"/>
+                <!-- Checkmark inside lens for 'Clean' -->
+                <Path Data="M 7,11 L 10,14 L 14,8" Stroke="{DynamicResource SuccessBrush}" StrokeThickness="2" StrokeStartLineCap="Round" StrokeEndLineCap="Round"/>
+            </Canvas>
+
+            <!-- Floating Sparkle Stars -->
+            <Path Data="M 0,5 Q 5,5 5,0 Q 5,5 10,5 Q 5,5 5,10 Q 5,5 0,5 Z" Fill="{DynamicResource GoldBrush}" Opacity="0.8" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="22,18,0,0"/>
+            <Path Data="M 0,3 Q 3,3 3,0 Q 3,3 6,3 Q 3,3 3,6 Q 3,3 0,3 Z" Fill="{DynamicResource AccentBrush}" Opacity="0.5" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,22,28,0"/>
+        </Grid>
+    </ControlTemplate>
+
     <!-- Global Base Window & Font Styling -->
     <Style TargetType="Window">
         <Setter Property="FontFamily" Value="Segoe UI, -apple-system, BlinkMacSystemFont, Roboto, sans-serif"/>

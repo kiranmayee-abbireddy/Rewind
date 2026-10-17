@@ -140,71 +140,82 @@
                             </Grid>
                         </StackPanel>
 
-                        <!-- Session History List (Fills Center, Scrolls Gracefully with No Visual Scrollbars) -->
-                        <ListBox Grid.Row="1" x:Name="SessionsList" SelectionChanged="SessionsList_SelectionChanged" 
-                                 Background="Transparent" BorderThickness="0" 
-                                 ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-                                 ScrollViewer.VerticalScrollBarVisibility="Hidden">
-                            <ListBox.ItemContainerStyle>
-                                <Style TargetType="ListBoxItem">
-                                    <Setter Property="Background" Value="Transparent"/>
-                                    <Setter Property="BorderThickness" Value="0"/>
-                                    <Setter Property="Padding" Value="0"/>
-                                    <Setter Property="Margin" Value="0,0,0,5"/>
-                                    <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
-                                    <Setter Property="Template">
-                                        <Setter.Value>
-                                            <ControlTemplate TargetType="ListBoxItem">
-                                                <Border x:Name="ItemBorder" Background="{DynamicResource BgCardBrush}" BorderBrush="{DynamicResource BorderBrush}" BorderThickness="1" CornerRadius="6" Padding="11,9">
-                                                    <Grid>
-                                                        <!-- Left subtle accent indicator line for selection -->
-                                                        <Border x:Name="ActiveIndicator" Width="3" Background="{DynamicResource AccentBrush}" HorizontalAlignment="Left" CornerRadius="1.5" Margin="-11,-9,0,-9" Visibility="Collapsed"/>
-                                                        <ContentPresenter/>
-                                                    </Grid>
-                                                </Border>
-                                                <ControlTemplate.Triggers>
-                                                    <Trigger Property="IsMouseOver" Value="True">
-                                                        <Setter TargetName="ItemBorder" Property="BorderBrush" Value="{DynamicResource AccentBrush}"/>
-                                                    </Trigger>
-                                                    <Trigger Property="IsSelected" Value="True">
-                                                        <Setter TargetName="ItemBorder" Property="BorderBrush" Value="{DynamicResource AccentBrush}"/>
-                                                        <Setter TargetName="ActiveIndicator" Property="Visibility" Value="Visible"/>
-                                                    </Trigger>
-                                                </ControlTemplate.Triggers>
-                                            </ControlTemplate>
-                                        </Setter.Value>
-                                    </Setter>
-                                </Style>
-                            </ListBox.ItemContainerStyle>
-                            <ListBox.ItemTemplate>
-                                <DataTemplate>
-                                    <Grid>
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="Auto"/>
-                                            <RowDefinition Height="Auto"/>
-                                        </Grid.RowDefinitions>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="*"/>
-                                            <ColumnDefinition Width="Auto"/>
-                                        </Grid.ColumnDefinitions>
+                        <!-- Session History List & Empty State Container -->
+                        <Grid Grid.Row="1">
+                            <!-- Empty Sessions Illustration & Prompt -->
+                            <Border x:Name="SessionsEmptyState" Visibility="Collapsed" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,20,0,20">
+                                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                                    <ContentControl Template="{StaticResource EmptySessionsIllustration}" HorizontalAlignment="Center"/>
+                                    <TextBlock Text="No past sessions" FontSize="13" FontWeight="SemiBold" Foreground="{DynamicResource TextPrimaryBrush}" HorizontalAlignment="Center" Margin="0,12,0,3"/>
+                                    <TextBlock Text="Your QA history will appear here." FontSize="11" Foreground="{DynamicResource TextSecondaryBrush}" HorizontalAlignment="Center" TextAlignment="Center" MaxWidth="160" TextWrapping="Wrap"/>
+                                </StackPanel>
+                            </Border>
 
-                                        <TextBlock Grid.Row="0" Grid.Column="0" Text="{Binding Title}" FontWeight="SemiBold" Foreground="{DynamicResource TextPrimaryBrush}" FontSize="12.5" TextTrimming="CharacterEllipsis"/>
-                                        
-                                        <!-- Delete Session Icon Button (Hover / Click) -->
-                                        <Button Grid.Row="0" Grid.Column="1" Click="DeleteSessionItem_Click" Tag="{Binding}"
-                                                ToolTip="Delete Session &amp; Saved Evidence"
-                                                Background="Transparent" BorderThickness="0" Padding="4,2" Margin="4,-2,0,0" Cursor="Hand" VerticalAlignment="Center">
-                                            <Path Data="{StaticResource TrashGeometry}" Fill="{DynamicResource TextSecondaryBrush}" Stretch="Uniform" Width="11" Height="11" Opacity="0.6"/>
-                                        </Button>
+                            <ListBox x:Name="SessionsList" SelectionChanged="SessionsList_SelectionChanged" 
+                                     Background="Transparent" BorderThickness="0" 
+                                     ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                                     ScrollViewer.VerticalScrollBarVisibility="Hidden">
+                                <ListBox.ItemContainerStyle>
+                                    <Style TargetType="ListBoxItem">
+                                        <Setter Property="Background" Value="Transparent"/>
+                                        <Setter Property="BorderThickness" Value="0"/>
+                                        <Setter Property="Padding" Value="0"/>
+                                        <Setter Property="Margin" Value="0,0,0,5"/>
+                                        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+                                        <Setter Property="Template">
+                                            <Setter.Value>
+                                                <ControlTemplate TargetType="ListBoxItem">
+                                                    <Border x:Name="ItemBorder" Background="{DynamicResource BgCardBrush}" BorderBrush="{DynamicResource BorderBrush}" BorderThickness="1" CornerRadius="6" Padding="11,9">
+                                                        <Grid>
+                                                            <!-- Left subtle accent indicator line for selection -->
+                                                            <Border x:Name="ActiveIndicator" Width="3" Background="{DynamicResource AccentBrush}" HorizontalAlignment="Left" CornerRadius="1.5" Margin="-11,-9,0,-9" Visibility="Collapsed"/>
+                                                            <ContentPresenter/>
+                                                        </Grid>
+                                                    </Border>
+                                                    <ControlTemplate.Triggers>
+                                                        <Trigger Property="IsMouseOver" Value="True">
+                                                            <Setter TargetName="ItemBorder" Property="BorderBrush" Value="{DynamicResource AccentBrush}"/>
+                                                        </Trigger>
+                                                        <Trigger Property="IsSelected" Value="True">
+                                                            <Setter TargetName="ItemBorder" Property="BorderBrush" Value="{DynamicResource AccentBrush}"/>
+                                                            <Setter TargetName="ActiveIndicator" Property="Visibility" Value="Visible"/>
+                                                        </Trigger>
+                                                    </ControlTemplate.Triggers>
+                                                </ControlTemplate>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </Style>
+                                </ListBox.ItemContainerStyle>
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <Grid>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="Auto"/>
+                                            </Grid.RowDefinitions>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="Auto"/>
+                                            </Grid.ColumnDefinitions>
 
-                                        <Grid Grid.Row="1" Grid.ColumnSpan="2" Margin="0,4,0,0">
-                                            <TextBlock Text="{Binding Status}" FontSize="11" Foreground="{DynamicResource AccentBrush}" FontWeight="SemiBold" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                                            <TextBlock Text="{Binding CreatedAt, StringFormat='{}{0:MM/dd HH:mm}'}" HorizontalAlignment="Right" VerticalAlignment="Center" FontSize="10.5" Foreground="{DynamicResource TextSecondaryBrush}"/>
+                                            <TextBlock Grid.Row="0" Grid.Column="0" Text="{Binding Title}" FontWeight="SemiBold" Foreground="{DynamicResource TextPrimaryBrush}" FontSize="12.5" TextTrimming="CharacterEllipsis"/>
+                                            
+                                            <!-- Delete Session Icon Button (Hover / Click) -->
+                                            <Button Grid.Row="0" Grid.Column="1" Click="DeleteSessionItem_Click" Tag="{Binding}"
+                                                    ToolTip="Delete Session &amp; Saved Evidence"
+                                                    Background="Transparent" BorderThickness="0" Padding="4,2" Margin="4,-2,0,0" Cursor="Hand" VerticalAlignment="Center">
+                                                <Path Data="{StaticResource TrashGeometry}" Fill="{DynamicResource TextSecondaryBrush}" Stretch="Uniform" Width="11" Height="11" Opacity="0.6"/>
+                                            </Button>
+
+                                            <Grid Grid.Row="1" Grid.ColumnSpan="2" Margin="0,4,0,0">
+                                                <TextBlock Text="{Binding Status}" FontSize="11" Foreground="{DynamicResource AccentBrush}" FontWeight="SemiBold" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                                                <TextBlock Text="{Binding CreatedAt, StringFormat='{}{0:MM/dd HH:mm}'}" HorizontalAlignment="Right" VerticalAlignment="Center" FontSize="10.5" Foreground="{DynamicResource TextSecondaryBrush}"/>
+                                            </Grid>
                                         </Grid>
-                                    </Grid>
-                                </DataTemplate>
-                            </ListBox.ItemTemplate>
-                        </ListBox>
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+                            </ListBox>
+                        </Grid>
 
                         <!-- Persistent Footer Settings Card (Guaranteed Row 2, Always Fully Visible in Fullscreen & Any Height) -->
                         <Border Grid.Row="2" Background="{DynamicResource BgCardBrush}" BorderBrush="{DynamicResource BorderBrush}" BorderThickness="1" CornerRadius="8" Padding="10" Margin="0,10,0,0"
@@ -319,8 +330,20 @@
                         <TextBlock x:Name="BugCountLabel" Text="0 bugs saved" HorizontalAlignment="Right" FontSize="12" Foreground="{DynamicResource TextSecondaryBrush}"/>
                     </Grid>
 
-                    <!-- Bugs Items Control / List (Scrollable without visible scrollbar) -->
-                    <ListBox x:Name="BugsList" Background="Transparent" BorderThickness="0" MouseDoubleClick="BugsList_MouseDoubleClick" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Hidden">
+                    <!-- Bugs Items Control / List & Empty State Overlay -->
+                    <Grid>
+                        <!-- Empty Bugs Illustration State -->
+                        <Border x:Name="BugsEmptyState" Visibility="Collapsed" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,30,0,40">
+                            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                                <ContentControl Template="{StaticResource EmptyBugsIllustration}" HorizontalAlignment="Center"/>
+                                <TextBlock Text="No bugs preserved yet" FontSize="15" FontWeight="SemiBold" Foreground="{DynamicResource TextPrimaryBrush}" HorizontalAlignment="Center" Margin="0,16,0,4"/>
+                                <TextBlock Text="Continuous rolling buffer is running silently. When a defect or glitch occurs, press your hotkey or click 'Preserve Evidence' to save the clip." 
+                                           FontSize="12" Foreground="{DynamicResource TextSecondaryBrush}" HorizontalAlignment="Center" TextAlignment="Center" MaxWidth="380" TextWrapping="Wrap" LineHeight="17"/>
+                            </StackPanel>
+                        </Border>
+
+                        <!-- Bugs Items Control / List (Scrollable without visible scrollbar) -->
+                        <ListBox x:Name="BugsList" Background="Transparent" BorderThickness="0" MouseDoubleClick="BugsList_MouseDoubleClick" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Hidden">
                         <ListBox.ItemContainerStyle>
                             <Style TargetType="ListBoxItem">
                                 <Setter Property="Background" Value="Transparent"/>
@@ -381,6 +404,7 @@
                             </DataTemplate>
                         </ListBox.ItemTemplate>
                     </ListBox>
+                    </Grid>
                 </DockPanel>
             </Grid>
         </Grid>
