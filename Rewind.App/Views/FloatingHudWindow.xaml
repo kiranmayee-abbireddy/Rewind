@@ -7,7 +7,7 @@
         WindowStartupLocation="Manual">
 
     <Grid Margin="24">
-        <!-- MODE 1: Secret Peeking Mascot (Docked half-out against the screen edge with 30° tilt) -->
+        <!-- MODE 1: Secret Peeking Mascot (Docked half-out against the screen edge with side-glancing cute peeking face) -->
         <Border x:Name="PeekingMascotCapsule"
                 Width="54" Height="60"
                 Cursor="Hand"
@@ -21,7 +21,7 @@
                 <Grid.RenderTransform>
                     <TransformGroup>
                         <ScaleTransform x:Name="MascotPeekScale" ScaleX="1" ScaleY="1"/>
-                        <RotateTransform x:Name="MascotPeekRotate" Angle="-28"/>
+                        <RotateTransform x:Name="MascotPeekRotate" Angle="0"/>
                     </TransformGroup>
                 </Grid.RenderTransform>
 
@@ -35,8 +35,8 @@
                     </Ellipse.Fill>
                 </Ellipse>
 
-                <!-- Living Animated Avocado Mascot with breathing & wink -->
-                <ContentControl Template="{StaticResource AvocadoMascot}" HorizontalAlignment="Center" VerticalAlignment="Center" IsHitTestVisible="False"/>
+                <!-- Living Animated Avocado Mascot with sneaky edge side glance & blink -->
+                <ContentControl Template="{StaticResource AvocadoMascotPeeking}" HorizontalAlignment="Center" VerticalAlignment="Center" IsHitTestVisible="False"/>
             </Grid>
         </Border>
 

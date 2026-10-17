@@ -83,25 +83,29 @@ namespace Rewind.App.Views
             if (targetTop < workingArea.Top + 20) targetTop = workingArea.Top + 20;
             if (targetTop + h > workingArea.Bottom - 20) targetTop = workingArea.Bottom - h - 20;
 
-            // Inclined angle: when on Right edge, tilt inward (-28°). When on Left edge, mirror and tilt (+28°).
+            // Peeking orientation: MascotPeeking template naturally faces leftwards/inward.
+            // On Right edge: ScaleX = 1.0 (looking inward into the screen to the left), Angle = 0 (or slight subtle -6° lean)
+            // On Left edge: ScaleX = -1.0 (flipped horizontally to look inward into the screen to the right), Angle = 0 (or slight 6° lean)
             switch (_currentEdge)
             {
                 case DockEdge.Right:
                     targetLeft = workingArea.Right - 55;
                     MascotPeekScale.ScaleX = 1.0;
-                    MascotPeekRotate.Angle = -28;
+                    MascotPeekRotate.Angle = -6;
                     break;
                 case DockEdge.Left:
                     targetLeft = workingArea.Left - (w - 55);
                     MascotPeekScale.ScaleX = -1.0;
-                    MascotPeekRotate.Angle = 28;
+                    MascotPeekRotate.Angle = 6;
                     break;
                 case DockEdge.Top:
                     targetTop = workingArea.Top - (h - 55);
+                    MascotPeekScale.ScaleX = 1.0;
                     MascotPeekRotate.Angle = 0;
                     break;
                 case DockEdge.Bottom:
                     targetTop = workingArea.Bottom - 55;
+                    MascotPeekScale.ScaleX = 1.0;
                     MascotPeekRotate.Angle = 0;
                     break;
             }
