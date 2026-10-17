@@ -13,5 +13,7 @@ namespace Rewind.App.Models
         public string CaptureSettings { get; set; } = "1080p @ 15fps, 60s buffer";
         public string Status { get; set; } = "Draft"; // Draft, Recording, Paused, Completed
         public string Notes { get; set; } = string.Empty;
+        public bool IsDeleted { get; set; } = false;
+        public DateTime? DeletedAt { get; set; }
     }
 }

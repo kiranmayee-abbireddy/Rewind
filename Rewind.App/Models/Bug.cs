@@ -20,6 +20,8 @@ namespace Rewind.App.Models
         public string Status { get; set; } = "Open"; // Open, Verified, Fixed, Ignored
         public bool AiAssisted { get; set; } = false;
         public string AiSuggestions { get; set; } = string.Empty;
+        public bool IsDeleted { get; set; } = false;
+        public DateTime? DeletedAt { get; set; }
         public double DurationSeconds => Math.Max(0, ClipEndSeconds - ClipStartSeconds);
     }
 }

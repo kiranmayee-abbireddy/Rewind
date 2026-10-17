@@ -70,6 +70,7 @@
     <Geometry x:Key="PlayGeometry">M8,5 L19,12 L8,19 Z</Geometry>
     <Geometry x:Key="PlusGeometry">M19,13 H13 V19 H11 V13 H5 V11 H11 V5 H13 V11 H19 V13 Z</Geometry>
     <Geometry x:Key="TrashGeometry">M6,19 C6,20.1 6.9,21 8,21 H16 C17.1,21 18,20.1 18,19 V7 H6 V19 Z M19,4 H15.5 L14.5,3 H9.5 L8.5,4 H5 V6 H19 V4 Z</Geometry>
+    <Geometry x:Key="RestoreGeometry">M13,3 A9,9 0 0,0 4,12 H1 L4.89,15.89 L5,16 L9,12 H6 A7,7 0 1,1 13,20 A7,7 0 0,1 6.08,15.15 L4.65,16.58 A9,9 0 1,0 13,3 Z</Geometry>
     <!-- Sleek Modern Theme Toggle Geometries (Standard Solid 24x24 Vector Geometries) -->
     <Geometry x:Key="SunGeometry">M12,7 A5,5 0 1,0 12,17 A5,5 0 1,0 12,7 Z M11,1 L13,1 L13,4 L11,4 Z M11,20 L13,20 L13,23 L11,23 Z M1,11 L4,11 L4,13 L1,13 Z M20,11 L23,11 L23,13 L20,13 Z M4.93,3.51 L6.34,2.1 L8.46,4.22 L7.05,5.64 Z M15.54,18.36 L16.95,16.95 L19.07,19.07 L17.66,20.49 Z M2.1,17.66 L3.51,19.07 L5.64,16.95 L4.22,15.54 Z M16.95,7.05 L18.36,5.64 L20.49,7.76 L19.07,9.17 Z</Geometry>
     <Geometry x:Key="MoonGeometry">M12.3,2 C6.9,2.6 2.8,7.2 2.8,12.8 C2.8,18.9 7.8,23.9 13.9,23.9 C18.5,23.9 22.4,21 23.7,16.9 C20.9,17.9 17.6,17.3 15.3,15 C13,12.7 12.4,9.4 13.4,6.6 C13,5 12.6,3.5 12.3,2 Z</Geometry>

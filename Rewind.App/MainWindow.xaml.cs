@@ -694,10 +694,10 @@ namespace Rewind.App
         {
             var bugs = _dbService.GetBugsForSession(session.Id);
             var confirmMsg = bugs.Count > 0
-                ? $"Are you sure you want to permanently delete session '{session.Title}' along with its {bugs.Count} saved bug evidence clip(s)?"
-                : $"Are you sure you want to delete session '{session.Title}'?";
+                ? $"Move session '{session.Title}' and its {bugs.Count} evidence clip(s) to the Recycle Bin?\n\nItems in the bin are safely preserved and can be restored within 30 days."
+                : $"Move session '{session.Title}' to the Recycle Bin?\n\nItems in the bin are safely preserved and can be restored within 30 days.";
 
-            var result = MessageBox.Show(confirmMsg, "Delete Session", MessageBoxButton.YesNo, MessageBoxImage.Warning);
+            var result = MessageBox.Show(confirmMsg, "Move to Recycle Bin", MessageBoxButton.YesNo, MessageBoxImage.Question);
             if (result != MessageBoxResult.Yes) return;
 
             if (_activeSession?.Id == session.Id && _captureEngine.IsRunning)
@@ -705,19 +705,8 @@ namespace Rewind.App
                 _captureEngine.Stop();
             }
 
-            // Remove all associated clips and files on disk
-            try
-            {
-                var sessionClipsDir = Path.Combine(_dbService.BaseDirectory, "sessions", session.Id);
-                if (Directory.Exists(sessionClipsDir))
-                {
-                    Directory.Delete(sessionClipsDir, recursive: true);
-                }
-            }
-            catch { }
-
-            // Delete from database
-            _dbService.DeleteSession(session.Id);
+            // Soft-delete to Recycle Bin (files preserved on disk for up to 30 days)
+            _dbService.SoftDeleteSession(session.Id);
             Sessions.Remove(session);
             UpdateSessionsEmptyState();
 
@@ -731,6 +720,40 @@ namespace Rewind.App
                 {
                     CreateNewSession();
                 }
+            }
+        }
+
+        private void OpenRecycleBin_Click(object sender, RoutedEventArgs e)
+        {
+            if (_isModalDialogOpen) return;
+
+            var wasRunning = _captureEngine.IsRunning && !_captureEngine.IsPaused;
+            try
+            {
+                _isModalDialogOpen = true;
+                if (wasRunning) _captureEngine.Pause();
+
+                var dlg = new RecycleBinDialog(_dbService)
+                {
+                    Owner = this
+                };
+
+                dlg.ShowDialog();
+
+                if (dlg.ItemsChanged)
+                {
+                    // Reload active sessions and bugs
+                    LoadSessions();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Could not open Recycle Bin: {ex.Message}", "Recycle Bin Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+            finally
+            {
+                _isModalDialogOpen = false;
+                if (wasRunning && _captureEngine.IsRunning && _captureEngine.IsPaused) _captureEngine.Resume();
             }
         }
 

@@ -188,7 +188,7 @@ namespace Rewind.App.Views
 
         private void Delete_Click(object sender, RoutedEventArgs e)
         {
-            var res = MessageBox.Show($"Are you sure you want to permanently delete bug '{_bug.Title}'?", "Confirm Delete", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            var res = MessageBox.Show($"Move bug '{_bug.Title}' to the Recycle Bin?\n\nItems in the bin are safely preserved and can be restored within 30 days.", "Move to Recycle Bin", MessageBoxButton.YesNo, MessageBoxImage.Question);
             if (res == MessageBoxResult.Yes)
             {
                 IsDeleted = true;

@@ -55,6 +55,12 @@
                         <Path Data="{StaticResource WinHudPipetteGeometry}" Fill="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}" Stretch="Uniform" Width="13" Height="13" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                     </Button>
 
+                    <!-- Recycle Bin Button (30-day retention) -->
+                    <Button x:Name="HeaderRecycleBinBtn" Click="OpenRecycleBin_Click" ToolTip="Recycle Bin (Restore deleted sessions &amp; bugs within 30 days)"
+                            Style="{StaticResource HeaderIconButton}">
+                        <Path Data="{StaticResource TrashGeometry}" Fill="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}" Stretch="Uniform" Width="13" Height="13" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Button>
+
                     <!-- Settings Preferences Icon Button -->
                     <Button x:Name="HeaderSettingsBtn" Click="OpenSettings_Click" ToolTip="Settings &amp; Capture Profiles"
                             Style="{StaticResource HeaderIconButton}">
@@ -134,9 +140,15 @@
                                 </StackPanel>
                             </Button>
 
-                            <!-- Past Sessions Header Label -->
+                            <!-- Past Sessions Header Label & Recycle Bin Shortcut -->
                             <Grid Margin="2,0,2,8">
-                                <TextBlock Text="PAST SESSIONS" FontSize="10.5" FontWeight="Bold" Foreground="{DynamicResource TextSecondaryBrush}"/>
+                                <TextBlock Text="PAST SESSIONS" FontSize="10.5" FontWeight="Bold" Foreground="{DynamicResource TextSecondaryBrush}" VerticalAlignment="Center"/>
+                                <Button Click="OpenRecycleBin_Click" HorizontalAlignment="Right" Background="Transparent" BorderThickness="0" Padding="4,2" Cursor="Hand" ToolTip="Open Recycle Bin (Restorable within 30 days)">
+                                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                        <Path Data="{StaticResource TrashGeometry}" Fill="{DynamicResource TextSecondaryBrush}" Stretch="Uniform" Width="10" Height="10" Margin="0,0,4,0" Opacity="0.75" VerticalAlignment="Center"/>
+                                        <TextBlock Text="Bin" FontSize="10.5" Foreground="{DynamicResource TextSecondaryBrush}" FontWeight="SemiBold"/>
+                                    </StackPanel>
+                                </Button>
                             </Grid>
                         </StackPanel>
 
