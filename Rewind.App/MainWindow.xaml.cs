@@ -58,6 +58,23 @@ namespace Rewind.App
 
             _hudWindow = new FloatingHudWindow();
             _hudWindow.OnPreserveRequested += OnHudPreserveRequested;
+            _hudWindow.OnPauseResumeRequested += () =>
+            {
+                Dispatcher.Invoke(() =>
+                {
+                    if (_captureEngine.IsRunning)
+                    {
+                        if (_captureEngine.IsPaused)
+                        {
+                            _captureEngine.Resume();
+                        }
+                        else
+                        {
+                            _captureEngine.Pause();
+                        }
+                    }
+                });
+            };
             _hudWindow.OnOpenMainRequested += () =>
             {
                 Show();

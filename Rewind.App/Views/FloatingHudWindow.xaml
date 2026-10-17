@@ -6,27 +6,78 @@
         Topmost="True" ShowInTaskbar="False" ResizeMode="NoResize"
         WindowStartupLocation="Manual">
 
+    <Grid Margin="16">
+        <!-- MODE 1: Secret Peeking Mascot (Docked half-out against the screen edge) -->
+        <Border x:Name="PeekingMascotCapsule"
+                Width="54" Height="58"
+                Cursor="Hand"
+                Background="Transparent"
+                PreviewMouseLeftButtonDown="PeekingMascot_PreviewMouseLeftButtonDown"
+                MouseMove="PeekingMascot_MouseMove"
+                PreviewMouseLeftButtonUp="PeekingMascot_PreviewMouseLeftButtonUp"
+                MouseRightButtonUp="PeekingMascot_MouseRightButtonUp"
+                ToolTip="REWIND Companion (Watching from edge) • Click to open quick ball • Drag to reposition • Right-click to hide">
+            <Grid x:Name="MascotContainer" HorizontalAlignment="Center" VerticalAlignment="Center" RenderTransformOrigin="0.5,0.5">
+                <Grid.RenderTransform>
+                    <TransformGroup>
+                        <TranslateTransform x:Name="MascotTranslate" X="0" Y="0"/>
+                        <ScaleTransform x:Name="MascotPeekScale" ScaleX="1" ScaleY="1"/>
+                    </TransformGroup>
+                </Grid.RenderTransform>
 
-    <Grid Margin="12">
-        <!-- Full Expanded Companion Capsule (Horizontal Pill Bar) -->
-        <Border x:Name="HudCapsule" CornerRadius="22" Background="{DynamicResource BgCardBrush}" BorderBrush="{DynamicResource BorderBrush}" BorderThickness="1.5" Padding="6,4,8,4"
-                MouseLeftButtonDown="HudCapsule_MouseDown" Cursor="Hand" ToolTip="REWIND QA Companion • Drag to reposition • Double-click to open dashboard">
+                <!-- Subtle Aura Glow around the peek mascot -->
+                <Ellipse Width="46" Height="46" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <Ellipse.Fill>
+                        <RadialGradientBrush>
+                            <GradientStop Color="#5510B981" Offset="0"/>
+                            <GradientStop Color="#0010B981" Offset="1"/>
+                        </RadialGradientBrush>
+                    </Ellipse.Fill>
+                </Ellipse>
+
+                <!-- Adorable Living Avocado Mascot with natural breathing & wink animations -->
+                <ContentControl Template="{StaticResource AvocadoMascot}" HorizontalAlignment="Center" VerticalAlignment="Center" IsHitTestVisible="False"/>
+            </Grid>
+        </Border>
+
+        <!-- MODE 2: Floating Quick Ball & Action Hub (Smoothly unfurled upon click) -->
+        <Border x:Name="QuickBallCapsule"
+                Visibility="Collapsed"
+                Background="{DynamicResource BgCardBrush}"
+                BorderBrush="{DynamicResource BorderBrush}"
+                BorderThickness="1.5"
+                CornerRadius="24"
+                Padding="6,4,8,4"
+                MouseLeftButtonDown="QuickBall_MouseDown"
+                Cursor="Hand"
+                ToolTip="REWIND Quick Companion Hub • Drag to move • Click mascot to dock secretly">
             <Border.Effect>
-                <DropShadowEffect BlurRadius="20" ShadowDepth="4" Direction="270" Color="#000000" Opacity="0.75"/>
+                <DropShadowEffect BlurRadius="22" ShadowDepth="4" Direction="270" Color="#000000" Opacity="0.8"/>
             </Border.Effect>
-            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                <!-- Avocado Mascot Avatar (Seamless & Borderless) -->
-                <ContentControl Template="{StaticResource AvocadoMascotCompact}" VerticalAlignment="Center" Margin="2,0,8,0" IsHitTestVisible="False"/>
+            <Border.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform x:Name="QuickBallScale" ScaleX="1.0" ScaleY="1.0" CenterX="20" CenterY="20"/>
+                    <TranslateTransform x:Name="QuickBallTranslate" X="0" Y="0"/>
+                </TransformGroup>
+            </Border.RenderTransform>
 
-                <!-- REC & Timer Status Display (Clean Professional Layout) -->
-                <Border x:Name="StatusPillBorder" Background="{DynamicResource BgSecondaryBrush}" CornerRadius="6" Padding="8,4" Margin="0,0,8,0" BorderBrush="{DynamicResource BorderBrush}" BorderThickness="1">
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                <!-- Mascot Button inside Quick Ball (Click to minimize back to edge) -->
+                <Button Click="QuickBallMascot_Click"
+                        Background="Transparent" BorderThickness="0" Padding="2,0,6,0"
+                        Cursor="Hand" ToolTip="Click to dock Guac back to screen edge">
+                    <ContentControl Template="{StaticResource AvocadoMascotCompact}" VerticalAlignment="Center" IsHitTestVisible="False"/>
+                </Button>
+
+                <!-- Status & Running Timer (High-Contrast Professional Clean Typography) -->
+                <Border Background="{DynamicResource BgSecondaryBrush}" CornerRadius="6" Padding="8,4" Margin="0,0,8,0" BorderBrush="{DynamicResource BorderBrush}" BorderThickness="1">
                     <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                        <TextBlock x:Name="StatusText" Text="REC" FontWeight="Bold" FontSize="11" Foreground="#EF4444" Margin="0,0,6,0" VerticalAlignment="Center"/>
+                        <TextBlock x:Name="StatusText" Text="REC" FontWeight="Bold" FontSize="11" Foreground="{DynamicResource DangerBrush}" Margin="0,0,6,0" VerticalAlignment="Center"/>
                         <TextBlock x:Name="BufferTimeText" Text="00:00" FontFamily="Consolas, monospace" FontWeight="Bold" FontSize="11" Foreground="{DynamicResource TextPrimaryBrush}" VerticalAlignment="Center"/>
                     </StackPanel>
                 </Border>
 
-                <!-- Quick Preserve Bug Button (Gold Action Pill) -->
+                <!-- Quick Preserve Bug Action Button -->
                 <Button x:Name="PreserveBtn" Click="PreserveButton_Click" Style="{StaticResource PrimaryButton}" 
                         Background="{DynamicResource GoldBrush}" BorderBrush="{DynamicResource GoldBrush}"
                         Height="28" Padding="10,0" Margin="0,0,6,0" ToolTip="Preserve Bug • Capture recent buffer evidence">
@@ -36,40 +87,26 @@
                     </StackPanel>
                 </Button>
 
-                <!-- Open Dashboard Button -->
+                <!-- Pause / Resume Quick Toggle Button -->
+                <Button x:Name="PauseResumeBtn" Click="PauseResumeButton_Click" Style="{StaticResource SecondaryButton}" Width="28" Height="28" Padding="0" Margin="0,0,4,0" ToolTip="Pause / Resume Capture">
+                    <Path x:Name="PauseResumeIcon" Data="{StaticResource PauseGeometry}" Fill="{DynamicResource TextSecondaryBrush}" Stretch="Uniform" Width="9" Height="10" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                </Button>
+
+                <!-- Open Full Dashboard Button -->
                 <Button x:Name="OpenMainBtn" Click="OpenMain_Click" Style="{StaticResource SecondaryButton}" Width="28" Height="28" Padding="0" Margin="0,0,4,0" ToolTip="Open Full Dashboard">
                     <Path Data="{StaticResource WinExpandGeometry}" Stroke="{DynamicResource TextSecondaryBrush}" StrokeThickness="1.5" Stretch="Uniform" Width="10" Height="10" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                 </Button>
 
-                <!-- Minimize to Avatar Only Button -->
-                <Button x:Name="MinimizeBtn" Click="ToggleMinimize_Click" Style="{StaticResource SecondaryButton}" Width="28" Height="28" Padding="0" Margin="0,0,4,0" ToolTip="Minimize to Mascot">
+                <!-- Dock back to Edge Button -->
+                <Button Click="DockToEdge_Click" Style="{StaticResource SecondaryButton}" Width="28" Height="28" Padding="0" Margin="0,0,4,0" ToolTip="Dock Mascot Secretly to Edge">
                     <Path Data="{StaticResource WinMinimizeGeometry}" Fill="{DynamicResource TextSecondaryBrush}" Stretch="Uniform" Width="9" Height="2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                 </Button>
 
-                <!-- Hide HUD Completely Button -->
-                <Button x:Name="HideHudBtn" Click="HideHud_Click" Style="{StaticResource SecondaryButton}" Width="28" Height="28" Padding="0" ToolTip="Hide Companion (Toggle in dashboard header to restore)">
+                <!-- Hide Companion Button -->
+                <Button Click="HideHud_Click" Style="{StaticResource SecondaryButton}" Width="28" Height="28" Padding="0" ToolTip="Hide Companion (Toggle in dashboard header to restore)">
                     <Path Data="{StaticResource WinCloseGeometry}" Fill="{DynamicResource TextSecondaryBrush}" Stretch="Uniform" Width="8" Height="8" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                 </Button>
             </StackPanel>
         </Border>
-
-        <!-- Minimized Avocado Mascot Only (Borderless, Direct Click Target) -->
-        <Grid x:Name="MinimizedCapsule" Visibility="Collapsed" Width="44" Height="48"
-              PreviewMouseLeftButtonDown="MinimizedCapsule_PreviewMouseLeftButtonDown"
-              MouseMove="MinimizedCapsule_MouseMove"
-              PreviewMouseLeftButtonUp="MinimizedCapsule_PreviewMouseLeftButtonUp"
-              MouseRightButtonUp="MinimizedCapsule_MouseRightButtonUp"
-              Background="Transparent"
-              Cursor="Hand" ToolTip="REWIND Avocado Companion • Click to expand • Right-click to hide • Drag to move">
-                <!-- Avocado Mascot Face Center (Completely Borderless) -->
-                <ContentControl Template="{StaticResource AvocadoMascot}" HorizontalAlignment="Center" VerticalAlignment="Center" IsHitTestVisible="False"/>
-                
-                <!-- Mini status dot indicating REC/IDLE on mascot sprout -->
-                <Border x:Name="MiniStatusDot" Width="8" Height="8" CornerRadius="4" Background="#EF4444" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,0,2,0">
-                    <Border.Effect>
-                        <DropShadowEffect Color="#EF4444" BlurRadius="6" ShadowDepth="0" Opacity="0.95"/>
-                    </Border.Effect>
-                </Border>
-            </Grid>
     </Grid>
 </Window>

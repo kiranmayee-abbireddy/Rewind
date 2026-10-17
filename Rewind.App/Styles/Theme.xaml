@@ -54,6 +54,8 @@
     <Geometry x:Key="VideoCameraGeometry">M4,6 C2.89,6 2,6.89 2,8 L2,16 C2,17.11 2.89,18 4,18 L14,18 C15.11,18 16,17.11 16,16 L16,13.5 L20,17.5 C20.55,18.05 21.5,17.66 21.5,16.88 L21.5,7.12 C21.5,6.34 20.55,5.95 20,6.5 L16,10.5 L16,8 C16,6.89 15.11,6 4,6 Z</Geometry>
     <Geometry x:Key="ShieldCheckGeometry">M12,1 L3,5 L3,11 C3,16.55 6.84,21.74 12,23 C17.16,21.74 21,16.55 21,11 L21,5 L12,1 Z M10,17 L5.5,12.5 L6.91,11.09 L10,14.17 L17.09,7.09 L18.5,8.5 L10,17 Z</Geometry>
     <Geometry x:Key="GearGeometry">M12,15.5 A3.5,3.5 0 0 1 8.5,12 A3.5,3.5 0 0 1 12,8.5 A3.5,3.5 0 0 1 15.5,12 A3.5,3.5 0 0 1 12,15.5 M19.43,12.97 C19.47,12.65 19.5,12.33 19.5,12 C19.5,11.67 19.47,11.34 19.43,11 L21.54,9.37 C21.73,9.22 21.78,8.95 21.66,8.73 L19.66,5.27 C19.54,5.05 19.27,4.97 19.05,5.05 L16.56,6.05 C16.04,5.65 15.48,5.32 14.87,5.07 L14.49,2.42 C14.46,2.18 14.25,2 14,2 L10,2 C9.75,2 9.54,2.18 9.51,2.42 L9.13,5.07 C8.52,5.32 7.96,5.66 7.44,6.05 L4.95,5.05 C4.73,4.96 4.46,5.05 4.34,5.27 L2.34,8.73 C2.21,8.95 2.27,9.22 2.46,9.37 L4.57,11 C4.53,11.34 4.5,11.67 4.5,12 C4.5,12.33 4.53,12.65 4.57,12.97 L2.46,14.63 C2.27,14.78 2.21,15.05 2.34,15.27 L4.34,18.73 C4.46,18.95 4.73,19.03 4.95,18.95 L7.44,17.95 C7.96,18.34 8.52,18.68 9.13,18.93 L9.51,21.58 C9.54,21.82 9.75,22 10,22 L14,22 C14.25,22 14.46,21.82 14.49,21.58 L14.87,18.93 C15.48,18.68 16.04,18.34 16.56,17.95 L19.05,18.95 C19.27,19.04 19.54,18.95 19.66,18.73 L21.66,15.27 C21.78,15.05 21.73,14.78 21.54,14.63 L19.43,12.97 Z</Geometry>
+    <Geometry x:Key="PauseGeometry">M6,4 L10,4 L10,20 L6,20 Z M14,4 L18,4 L18,20 L14,20 Z</Geometry>
+    <Geometry x:Key="PlayGeometry">M8,5 L19,12 L8,19 Z</Geometry>
     <Geometry x:Key="PlusGeometry">M19,13 H13 V19 H11 V13 H5 V11 H11 V5 H13 V11 H19 V13 Z</Geometry>
     <Geometry x:Key="TrashGeometry">M6,19 C6,20.1 6.9,21 8,21 H16 C17.1,21 18,20.1 18,19 V7 H6 V19 Z M19,4 H15.5 L14.5,3 H9.5 L8.5,4 H5 V6 H19 V4 Z</Geometry>
     <!-- Sleek Modern Theme Toggle Geometries (Standard Solid 24x24 Vector Geometries) -->
@@ -68,9 +70,16 @@
     <Geometry x:Key="WinHudPipetteGeometry">M12,2 C6.5,2 2,6.5 2,12 C2,17.5 6.5,22 12,22 C17.5,22 22,17.5 22,12 C22,6.5 17.5,2 12,2 Z M12,5 C14.5,5 17.5,8 17.5,12 C17.5,16 15,19 12,19 C9,19 6.5,16 6.5,12 C6.5,8 9.5,5 12,5 Z M12,9 A3,3 0 1,0 12,15 A3,3 0 1,0 12,9 Z</Geometry>
     <Geometry x:Key="WinExpandGeometry">M5,3 L9,3 L9,7 M9,3 L4,8 M11,13 L7,13 L7,9 M7,13 L12,8</Geometry>
 
-    <!-- Adorable Borderless Avocado QA Mascot ("Guac" with QA headset) -->
+    <!-- Adorable Borderless Avocado QA Mascot ("Guac" with QA headset and Living Animation) -->
     <ControlTemplate x:Key="AvocadoMascot">
-        <Grid Width="38" Height="44" HorizontalAlignment="Center" VerticalAlignment="Center">
+        <Grid Width="38" Height="44" HorizontalAlignment="Center" VerticalAlignment="Center" RenderTransformOrigin="0.5,0.9">
+            <Grid.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform x:Name="MascotScale" ScaleX="1.0" ScaleY="1.0"/>
+                    <RotateTransform x:Name="MascotRotate" Angle="0"/>
+                </TransformGroup>
+            </Grid.RenderTransform>
+
             <!-- Organic Pear-shaped Body (Rich Emerald with Subtle Drop Glow) -->
             <Path Data="M 19,6 C 27,6 32,13 32,24 C 32,35 27,43 19,43 C 11,43 6,35 6,24 C 6,13 11,6 19,6 Z">
                 <Path.Fill>
@@ -111,15 +120,21 @@
                     </LinearGradientBrush>
                 </Border.Background>
                 <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
-                    <!-- Glistening Eyes -->
+                    <!-- Glistening Eyes (Animated Blink) -->
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,-3,0,0">
                         <!-- Left Eye -->
-                        <Grid Margin="0,0,4,0">
+                        <Grid x:Name="LeftEye" Margin="0,0,4,0" RenderTransformOrigin="0.5,0.5">
+                            <Grid.RenderTransform>
+                                <ScaleTransform ScaleY="1.0"/>
+                            </Grid.RenderTransform>
                             <Ellipse Width="4" Height="5" Fill="#1E1308"/>
                             <Ellipse Width="1.5" Height="1.5" Fill="#FFFFFF" Margin="0,0,1,2"/>
                         </Grid>
                         <!-- Right Eye -->
-                        <Grid>
+                        <Grid x:Name="RightEye" RenderTransformOrigin="0.5,0.5">
+                            <Grid.RenderTransform>
+                                <ScaleTransform ScaleY="1.0"/>
+                            </Grid.RenderTransform>
                             <Ellipse Width="4" Height="5" Fill="#1E1308"/>
                             <Ellipse Width="1.5" Height="1.5" Fill="#FFFFFF" Margin="0,0,1,2"/>
                         </Grid>
@@ -135,9 +150,53 @@
                 </Grid>
             </Border>
 
-            <!-- Sprout Leaf on Top of Head (Coordinates fully >= 1 within grid) -->
-            <Path Data="M 19,6 C 17,1 23,0 24,2 C 24,5 21,6 19,6 Z" Fill="#34D399"/>
+            <!-- Sprout Leaf on Top of Head with gentle wave -->
+            <Path x:Name="SproutLeaf" Data="M 19,6 C 17,1 23,0 24,2 C 24,5 21,6 19,6 Z" Fill="#34D399" RenderTransformOrigin="0.2,1.0">
+                <Path.RenderTransform>
+                    <RotateTransform Angle="0"/>
+                </Path.RenderTransform>
+            </Path>
         </Grid>
+        <ControlTemplate.Triggers>
+            <EventTrigger RoutedEvent="Loaded">
+                <BeginStoryboard>
+                    <Storyboard RepeatBehavior="Forever">
+                        <!-- Idle Cute Breathing / Peek Squash-Stretch -->
+                        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="MascotScale" Storyboard.TargetProperty="ScaleY">
+                            <SplineDoubleKeyFrame KeyTime="0:0:0" Value="1.0"/>
+                            <SplineDoubleKeyFrame KeyTime="0:0:1.4" Value="1.06"/>
+                            <SplineDoubleKeyFrame KeyTime="0:0:2.8" Value="1.0"/>
+                        </DoubleAnimationUsingKeyFrames>
+                        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="MascotScale" Storyboard.TargetProperty="ScaleX">
+                            <SplineDoubleKeyFrame KeyTime="0:0:0" Value="1.0"/>
+                            <SplineDoubleKeyFrame KeyTime="0:0:1.4" Value="0.97"/>
+                            <SplineDoubleKeyFrame KeyTime="0:0:2.8" Value="1.0"/>
+                        </DoubleAnimationUsingKeyFrames>
+                        <!-- Sprout leaf breeze waggle -->
+                        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="SproutLeaf" Storyboard.TargetProperty="(UIElement.RenderTransform).(RotateTransform.Angle)">
+                            <SplineDoubleKeyFrame KeyTime="0:0:0" Value="0"/>
+                            <SplineDoubleKeyFrame KeyTime="0:0:0.7" Value="8"/>
+                            <SplineDoubleKeyFrame KeyTime="0:0:1.4" Value="-4"/>
+                            <SplineDoubleKeyFrame KeyTime="0:0:2.1" Value="6"/>
+                            <SplineDoubleKeyFrame KeyTime="0:0:2.8" Value="0"/>
+                        </DoubleAnimationUsingKeyFrames>
+                        <!-- Cute Eye Blink every 2.8s cycle -->
+                        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="LeftEye" Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleY)">
+                            <DiscreteDoubleKeyFrame KeyTime="0:0:0" Value="1.0"/>
+                            <DiscreteDoubleKeyFrame KeyTime="0:0:2.4" Value="1.0"/>
+                            <DiscreteDoubleKeyFrame KeyTime="0:0:2.45" Value="0.1"/>
+                            <DiscreteDoubleKeyFrame KeyTime="0:0:2.55" Value="1.0"/>
+                        </DoubleAnimationUsingKeyFrames>
+                        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="RightEye" Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleY)">
+                            <DiscreteDoubleKeyFrame KeyTime="0:0:0" Value="1.0"/>
+                            <DiscreteDoubleKeyFrame KeyTime="0:0:2.4" Value="1.0"/>
+                            <DiscreteDoubleKeyFrame KeyTime="0:0:2.45" Value="0.1"/>
+                            <DiscreteDoubleKeyFrame KeyTime="0:0:2.55" Value="1.0"/>
+                        </DoubleAnimationUsingKeyFrames>
+                    </Storyboard>
+                </BeginStoryboard>
+            </EventTrigger>
+        </ControlTemplate.Triggers>
     </ControlTemplate>
 
     <!-- Consistent Compact Avocado Mascot for Headers & Title Bars (20x22 ViewBox) -->
