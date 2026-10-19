@@ -111,29 +111,29 @@
             <!-- Ground Drop Shadow -->
             <Ellipse Width="34" Height="7" Fill="#10000000" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,1"/>
 
-            <!-- Cute Chubby Little Feet (Dark Avocado Green with rounded caps) -->
+            <!-- Cute Chubby Little Feet (Dark Avocado Green with rounded caps, centered) -->
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,3">
-                <Border Width="8" Height="9" Background="#1B4D2E" CornerRadius="4" Margin="0,0,10,0"/>
+                <Border Width="8" Height="9" Background="#1B4D2E" CornerRadius="4" Margin="0,0,6,0"/>
                 <Border Width="8" Height="9" Background="#1B4D2E" CornerRadius="4"/>
             </StackPanel>
 
-            <!-- Cute Little Avocado Arms (Outstretched waving) -->
+            <!-- Cute Symmetrical Avocado Arms (Outstretched happily on both sides) -->
             <!-- Left Arm -->
-            <Path Data="M 11,29 C 4,31 4,37 10,38 C 12,38 13,35 13,32 Z" Fill="#448B3D" Stroke="#1B4D2E" StrokeThickness="1.5" StrokeLineJoin="Round" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="2,26,0,0"/>
-            <!-- Right Arm -->
-            <Path Data="M 2,29 C 9,31 9,37 3,38 C 1,38 0,35 0,32 Z" Fill="#448B3D" Stroke="#1B4D2E" StrokeThickness="1.5" StrokeLineJoin="Round" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,26,2,0"/>
+            <Path Data="M 12,29 C 4,31 4,37 10,38 C 12,38 13,35 13,32 Z" Fill="#448B3D" Stroke="#1B4D2E" StrokeThickness="1.5" StrokeLineJoin="Round" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="1,26,0,0"/>
+            <!-- Right Arm (Properly mirrored at margin 1) -->
+            <Path Data="M 1,29 C 9,31 9,37 3,38 C 1,38 0,35 0,32 Z" Fill="#448B3D" Stroke="#1B4D2E" StrokeThickness="1.5" StrokeLineJoin="Round" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,26,1,0"/>
 
-            <!-- Top Stem & Leaf -->
-            <!-- Brown Twig Stem -->
-            <Path Data="M 24,12 C 24,6 27,4 27,2 C 28.5,2 29,3.5 28.5,6 C 28,9 26.5,12 26.5,12 Z" Fill="#6D401F" Stroke="#3D220F" StrokeThickness="1" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,0,0,0"/>
-            <!-- Cute Green Leaf with waggle wave -->
-            <Path x:Name="SproutLeaf" Data="M 26,6 C 35,3 38,9 33,12 C 29,14 26,9 26,6 Z" Fill="#4CAF50" Stroke="#1B4D2E" StrokeThickness="1.2" RenderTransformOrigin="0.0,0.8" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="6,1,0,0">
+            <!-- Top Stem & Leaf (Centered upright) -->
+            <!-- Brown Twig Stem centered at X=26 -->
+            <Path Data="M 24.5,12 C 24.5,6 26.5,3.5 26.5,2 C 27.5,2 28,3.5 27.5,6 C 27,9 26.5,12 26.5,12 Z" Fill="#6D401F" Stroke="#3D220F" StrokeThickness="1" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,0,0,0"/>
+            <!-- Cute Green Leaf with gentle waggle -->
+            <Path x:Name="SproutLeaf" Data="M 26,6 C 35,3 38,9 33,12 C 29,14 26,9 26,6 Z" Fill="#4CAF50" Stroke="#1B4D2E" StrokeThickness="1.2" RenderTransformOrigin="0.0,0.8" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="8,1,0,0">
                 <Path.RenderTransform>
                     <RotateTransform Angle="0"/>
                 </Path.RenderTransform>
             </Path>
 
-            <!-- Main Avocado Body: Thick Outer Dark-Green Skin Rind -->
+            <!-- Main Avocado Body: Perfectly Symmetrical Thick Outer Dark-Green Skin Rind -->
             <Path Data="M 26,10 C 37,10 44,18 44,30 C 44,45 37,55 26,55 C 15,55 8,45 8,30 C 8,18 15,10 26,10 Z"
                   Fill="#2D6A35" Stroke="#183D1F" StrokeThickness="2" StrokeLineJoin="Round"
                   HorizontalAlignment="Center" VerticalAlignment="Center"/>
@@ -155,7 +155,7 @@
                 </Path.Fill>
             </Path>
 
-            <!-- Large Round Seed Pit (Belly) with 3D Gloss Highlight -->
+            <!-- Large Round Seed Pit (Centered Belly) with 3D Spherical Gloss -->
             <Grid Width="20" Height="20" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,13">
                 <!-- Pit Base Sphere with border -->
                 <Ellipse Fill="#B85D19" Stroke="#693007" StrokeThickness="1.5" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
@@ -175,13 +175,13 @@
                 <Ellipse Width="2.5" Height="1.8" Fill="#FFFFFF" Opacity="0.75" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5,5,0,0"/>
             </Grid>
 
-            <!-- Kawaii Avocado Face - Directly Forward-Facing (Direct eye-contact and smile) -->
+            <!-- Kawaii Avocado Face - Looking Directly Forward At The User (Fully straight, direct eye-contact) -->
             <Grid HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,21,0,0" Width="32" Height="18">
-                <!-- Cute Pink Blush Cheeks (Soft oval glow) -->
-                <Ellipse Width="6" Height="3.5" Fill="#FF8A8A" Opacity="0.75" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="2,5,0,0"/>
-                <Ellipse Width="6" Height="3.5" Fill="#FF8A8A" Opacity="0.75" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,5,2,0"/>
+                <!-- Symmetrical Pink Blush Cheeks (Centered horizontally on both cheeks) -->
+                <Ellipse Width="6" Height="3.5" Fill="#FF8A8A" Opacity="0.75" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="1,5,0,0"/>
+                <Ellipse Width="6" Height="3.5" Fill="#FF8A8A" Opacity="0.75" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,5,1,0"/>
 
-                <!-- Kawaii Eyes with Big Anime Highlights & Animated Blink -->
+                <!-- Kawaii Eyes Looking Directly Forward with Big Centered Sparkle Catchlights & Animated Blink -->
                 <!-- Left Eye -->
                 <Grid x:Name="LeftEye" Width="6.5" Height="7.5" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="7,0,0,0" RenderTransformOrigin="0.5,0.5">
                     <Grid.RenderTransform>
@@ -189,10 +189,10 @@
                     </Grid.RenderTransform>
                     <!-- Dark Pupil -->
                     <Ellipse Fill="#18181B" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
-                    <!-- Large Primary Sparkle Highlight -->
-                    <Ellipse Width="2.6" Height="2.6" Fill="#FFFFFF" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="1.2,1.2,0,0"/>
+                    <!-- Large Primary Sparkle Highlight positioned for direct forward gaze -->
+                    <Ellipse Width="2.6" Height="2.6" Fill="#FFFFFF" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,1.2,0,0"/>
                     <!-- Small Secondary Catchlight -->
-                    <Ellipse Width="1.2" Height="1.2" Fill="#FFFFFF" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,1.2,1.2"/>
+                    <Ellipse Width="1.2" Height="1.2" Fill="#FFFFFF" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,1.0,1.2"/>
                 </Grid>
 
                 <!-- Right Eye -->
@@ -202,13 +202,13 @@
                     </Grid.RenderTransform>
                     <!-- Dark Pupil -->
                     <Ellipse Fill="#18181B" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
-                    <!-- Large Primary Sparkle Highlight -->
-                    <Ellipse Width="2.6" Height="2.6" Fill="#FFFFFF" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="1.2,1.2,0,0"/>
+                    <!-- Large Primary Sparkle Highlight positioned for direct forward gaze -->
+                    <Ellipse Width="2.6" Height="2.6" Fill="#FFFFFF" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,1.2,0,0"/>
                     <!-- Small Secondary Catchlight -->
-                    <Ellipse Width="1.2" Height="1.2" Fill="#FFFFFF" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,1.2,1.2"/>
+                    <Ellipse Width="1.2" Height="1.2" Fill="#FFFFFF" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="1.0,0,0,1.2"/>
                 </Grid>
 
-                <!-- Cute Sweet Cat-curve / Happy Smile -->
+                <!-- Cute Sweet Cat-curve / Happy Centered Smile -->
                 <Path Data="M 13.5,9 C 14.8,11.5 17.2,11.5 18.5,9" Stroke="#18181B" StrokeThickness="1.5" StrokeStartLineCap="Round" StrokeEndLineCap="Round" HorizontalAlignment="Center" VerticalAlignment="Center"/>
             </Grid>
         </Grid>
@@ -427,8 +427,8 @@
                 </Grid>
             </Border>
 
-            <!-- Guac QA Mascot Peeking Happily over the Folder -->
-            <Viewbox Width="52" Height="60" Stretch="Uniform" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="14,2,0,0">
+            <!-- Guac QA Mascot Peeking Happily over the Folder (Centered forward-looking) -->
+            <Viewbox Width="52" Height="60" Stretch="Uniform" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,2,0,0">
                 <ContentControl Template="{StaticResource AvocadoMascot}"/>
             </Viewbox>
 
