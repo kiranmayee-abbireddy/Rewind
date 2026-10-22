@@ -223,24 +223,10 @@
         </ControlTemplate.Triggers>
     </ControlTemplate>
 
-    <!-- Side-Glancing Peeking Avocado QA Mascot (High-quality side view peeking in from edge, matching reference artwork) -->
+    <!-- Side-Glancing Peeking Avocado QA Mascot (Clean peeking head and face tilted from edge, NO limbs or legs) -->
     <ControlTemplate x:Key="AvocadoMascotPeeking">
         <Viewbox Width="54" Height="65" Stretch="Uniform" HorizontalAlignment="Center" VerticalAlignment="Center">
             <Canvas Width="100" Height="120">
-                <!-- Drop shadow beneath feet -->
-                <Ellipse Canvas.Left="20" Canvas.Top="108" Width="60" Height="10" Fill="#15000000"/>
-
-                <!-- Stubby Feet (Turned slightly inward to the screen) -->
-                <!-- Left Foot (Screen inward) -->
-                <Path Data="M 30,102 C 30,113 42,113 42,102 Z" Fill="#2D5A27" Stroke="#163814" StrokeThickness="2.5" StrokeLineJoin="Round"/>
-                <!-- Right Foot (Tucked behind slightly) -->
-                <Path Data="M 50,102 C 50,113 62,113 62,102 Z" Fill="#2D5A27" Stroke="#163814" StrokeThickness="2.5" StrokeLineJoin="Round"/>
-
-                <!-- Cute Clinging Arm: Left hand gripping/holding the edge of the screen as if peeking around it -->
-                <Path Data="M 23,54 C 13,56 11,68 22,70 C 25,70 27,67 28,63 Z" Fill="#70B843" Stroke="#163814" StrokeThickness="2.5" StrokeLineJoin="Round"/>
-                <!-- Right Arm: Tucked shyly on the back -->
-                <Path Data="M 72,58 C 80,60 80,69 73,70 Z" Fill="#70B843" Stroke="#163814" StrokeThickness="2.5" StrokeLineJoin="Round"/>
-
                 <!-- Top Stem & Leaf tilted forward curiously -->
                 <Path Data="M 45,22 C 45,13 49,9 49,5 C 52,5 52,8 50,13 C 48,18 48,22 48,22 Z" Fill="#633917" Stroke="#381E09" StrokeThickness="2" StrokeLineJoin="Round"/>
                 <Path x:Name="PeekSproutLeaf" Data="M 49,14 C 65,9 71,18 61,24 C 54,28 49,20 49,14 Z" Fill="#4CAF50" Stroke="#163814" StrokeThickness="2" RenderTransformOrigin="0.0,0.7">

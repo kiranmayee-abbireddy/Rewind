@@ -89,28 +89,28 @@ namespace Rewind.App.Views
             if (targetTop + h > workingArea.Bottom - 20) targetTop = workingArea.Bottom - h - 20;
 
             // Peeking orientation: MascotPeeking template naturally faces leftwards/inward.
-            // On Right edge: ScaleX = 1.0 (looking inward into the screen to the left).
-            // Window is 102 wide with 24 margin on each side, capsule is 54 wide.
-            // When targetLeft = workingArea.Right - 78, 54px of capsule rests perfectly against the bezel with body half tucked.
+            // On Right edge: ScaleX = 1.0, MascotPeekRotate.Angle = -24° (tilted diagonally inward from the right bezel).
+            // On Left edge: ScaleX = -1.0, MascotPeekRotate.Angle = 24° (tilted diagonally inward from the left bezel).
+            // Capsule is 54 wide inside a grid with 24 margin on each side (total width 102).
             switch (_currentEdge)
             {
                 case DockEdge.Right:
-                    targetLeft = workingArea.Right - 78;
+                    targetLeft = workingArea.Right - 72;
                     MascotPeekScale.ScaleX = 1.0;
-                    MascotPeekRotate.Angle = 0;
+                    MascotPeekRotate.Angle = -24;
                     break;
                 case DockEdge.Left:
-                    targetLeft = workingArea.Left - 24;
+                    targetLeft = workingArea.Left - 30;
                     MascotPeekScale.ScaleX = -1.0;
-                    MascotPeekRotate.Angle = 0;
+                    MascotPeekRotate.Angle = 24;
                     break;
                 case DockEdge.Top:
-                    targetTop = workingArea.Top - 24;
+                    targetTop = workingArea.Top - 30;
                     MascotPeekScale.ScaleX = 1.0;
-                    MascotPeekRotate.Angle = 0;
+                    MascotPeekRotate.Angle = 180;
                     break;
                 case DockEdge.Bottom:
-                    targetTop = workingArea.Bottom - 78;
+                    targetTop = workingArea.Bottom - 72;
                     MascotPeekScale.ScaleX = 1.0;
                     MascotPeekRotate.Angle = 0;
                     break;
