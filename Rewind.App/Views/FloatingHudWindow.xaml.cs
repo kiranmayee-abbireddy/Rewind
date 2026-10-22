@@ -53,6 +53,12 @@ namespace Rewind.App.Views
             var workingArea = SystemParameters.WorkArea;
             _currentEdge = DockEdge.Right;
             Top = workingArea.Top + 160;
+
+            // Ensure window layout is realized so ActualWidth/ActualHeight are accurate on first launch
+            Measure(new Size(double.PositiveInfinity, double.PositiveInfinity));
+            Arrange(new Rect(0, 0, DesiredSize.Width, DesiredSize.Height));
+            UpdateLayout();
+
             DockSecretlyToEdge(animate: false);
         }
 
@@ -73,8 +79,7 @@ namespace Rewind.App.Views
             BeginAnimation(Window.TopProperty, null);
 
             var workingArea = SystemParameters.WorkArea;
-            var w = ActualWidth > 0 ? ActualWidth : (54 + 48);
-            var h = ActualHeight > 0 ? ActualHeight : (60 + 48);
+            var h = 108.0;
 
             double targetLeft = Left;
             double targetTop = Top;
@@ -84,27 +89,28 @@ namespace Rewind.App.Views
             if (targetTop + h > workingArea.Bottom - 20) targetTop = workingArea.Bottom - h - 20;
 
             // Peeking orientation: MascotPeeking template naturally faces leftwards/inward.
-            // On Right edge: ScaleX = 1.0 (looking inward into the screen to the left), Angle = 0 (or slight subtle -6° lean)
-            // On Left edge: ScaleX = -1.0 (flipped horizontally to look inward into the screen to the right), Angle = 0 (or slight 6° lean)
+            // On Right edge: ScaleX = 1.0 (looking inward into the screen to the left).
+            // Window is 102 wide with 24 margin on each side, capsule is 54 wide.
+            // When targetLeft = workingArea.Right - 78, 54px of capsule rests perfectly against the bezel with body half tucked.
             switch (_currentEdge)
             {
                 case DockEdge.Right:
-                    targetLeft = workingArea.Right - 55;
+                    targetLeft = workingArea.Right - 78;
                     MascotPeekScale.ScaleX = 1.0;
-                    MascotPeekRotate.Angle = -6;
+                    MascotPeekRotate.Angle = 0;
                     break;
                 case DockEdge.Left:
-                    targetLeft = workingArea.Left - (w - 55);
+                    targetLeft = workingArea.Left - 24;
                     MascotPeekScale.ScaleX = -1.0;
-                    MascotPeekRotate.Angle = 6;
+                    MascotPeekRotate.Angle = 0;
                     break;
                 case DockEdge.Top:
-                    targetTop = workingArea.Top - (h - 55);
+                    targetTop = workingArea.Top - 24;
                     MascotPeekScale.ScaleX = 1.0;
                     MascotPeekRotate.Angle = 0;
                     break;
                 case DockEdge.Bottom:
-                    targetTop = workingArea.Bottom - 55;
+                    targetTop = workingArea.Bottom - 78;
                     MascotPeekScale.ScaleX = 1.0;
                     MascotPeekRotate.Angle = 0;
                     break;
