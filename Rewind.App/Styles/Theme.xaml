@@ -325,9 +325,9 @@
         </ControlTemplate.Triggers>
     </ControlTemplate>
 
-    <!-- Consistent Compact Avocado Mascot for Headers & Title Bars (20x22 ViewBox) -->
+    <!-- Consistent Compact Avocado Mascot for Headers & Title Bars (24x26 ViewBox) -->
     <ControlTemplate x:Key="AvocadoMascotCompact">
-        <Viewbox Width="20" Height="22" Stretch="Uniform" HorizontalAlignment="Center" VerticalAlignment="Center">
+        <Viewbox Width="24" Height="26" Stretch="Uniform" HorizontalAlignment="Center" VerticalAlignment="Center">
             <ContentControl Template="{StaticResource AvocadoMascot}"/>
         </Viewbox>
     </ControlTemplate>

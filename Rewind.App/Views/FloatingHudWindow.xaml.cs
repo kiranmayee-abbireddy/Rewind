@@ -91,26 +91,26 @@ namespace Rewind.App.Views
             // Peeking orientation: MascotPeeking template naturally faces leftwards/inward.
             // On Right edge: ScaleX = 1.0, MascotPeekRotate.Angle = -32° (tilted diagonally inward from the right bezel).
             // On Left edge: ScaleX = -1.0, MascotPeekRotate.Angle = 32° (tilted diagonally inward from the left bezel).
-            // Capsule is 54 wide inside a grid with 24 margin on each side (total width 102).
+            // Perfectly calibrated so upper half and slight lower half peek out inside edge symmetrically on both edges.
             switch (_currentEdge)
             {
                 case DockEdge.Right:
-                    targetLeft = workingArea.Right - 84;
+                    targetLeft = workingArea.Right - 58;
                     MascotPeekScale.ScaleX = 1.0;
                     MascotPeekRotate.Angle = -32;
                     break;
                 case DockEdge.Left:
-                    targetLeft = workingArea.Left - 18;
+                    targetLeft = workingArea.Left - 44;
                     MascotPeekScale.ScaleX = -1.0;
                     MascotPeekRotate.Angle = 32;
                     break;
                 case DockEdge.Top:
-                    targetTop = workingArea.Top - 18;
+                    targetTop = workingArea.Top - 44;
                     MascotPeekScale.ScaleX = 1.0;
                     MascotPeekRotate.Angle = 180;
                     break;
                 case DockEdge.Bottom:
-                    targetTop = workingArea.Bottom - 84;
+                    targetTop = workingArea.Bottom - 58;
                     MascotPeekScale.ScaleX = 1.0;
                     MascotPeekRotate.Angle = 0;
                     break;
