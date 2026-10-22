@@ -93,6 +93,19 @@ namespace Rewind.App.Services
         [System.Runtime.InteropServices.DllImport("user32.dll")]
         private static extern bool DrawIconEx(IntPtr hdc, int xLeft, int yTop, IntPtr hIcon, int cxWidth, int cyWidth, int istepIfAniCur, IntPtr hbrFlickerFreeDraw, int diFlags);
 
+        [System.Runtime.InteropServices.DllImport("user32.dll")]
+        private static extern int GetSystemMetrics(int nIndex);
+
+        [System.Runtime.InteropServices.DllImport("user32.dll")]
+        private static extern bool SetProcessDPIAware();
+
+        private const int SM_CXSCREEN = 0;
+        private const int SM_CYSCREEN = 1;
+        private const int SM_XVIRTUALSCREEN = 76;
+        private const int SM_YVIRTUALSCREEN = 77;
+        private const int SM_CXVIRTUALSCREEN = 78;
+        private const int SM_CYVIRTUALSCREEN = 79;
+
         private const int CURSOR_SHOWING = 0x00000001;
         private const int DI_NORMAL = 0x0003;
 
@@ -152,10 +165,32 @@ namespace Rewind.App.Services
                         }
                         else
                         {
-                            width = (int)System.Windows.SystemParameters.PrimaryScreenWidth;
-                            height = (int)System.Windows.SystemParameters.PrimaryScreenHeight;
-                            if (width <= 0) width = 1920;
-                            if (height <= 0) height = 1080;
+                            try
+                            {
+                                SetProcessDPIAware();
+                            }
+                            catch { }
+
+                            // Check virtual screen coordinates (supports single and multi-monitor setups)
+                            var vx = GetSystemMetrics(SM_XVIRTUALSCREEN);
+                            var vy = GetSystemMetrics(SM_YVIRTUALSCREEN);
+                            var vw = GetSystemMetrics(SM_CXVIRTUALSCREEN);
+                            var vh = GetSystemMetrics(SM_CYVIRTUALSCREEN);
+
+                            if (vw > 0 && vh > 0)
+                            {
+                                srcX = vx;
+                                srcY = vy;
+                                width = vw;
+                                height = vh;
+                            }
+                            else
+                            {
+                                width = GetSystemMetrics(SM_CXSCREEN);
+                                height = GetSystemMetrics(SM_CYSCREEN);
+                                if (width <= 0) width = 1920;
+                                if (height <= 0) height = 1080;
+                            }
                         }
 
                         using var bmp = new Bitmap(width, height, PixelFormat.Format32bppRgb);
