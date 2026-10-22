@@ -100,7 +100,7 @@
 
     <!-- Adorable Chubby Avocado QA Mascot (Exactly matching reference artwork - 100x120 vector canvas) -->
     <ControlTemplate x:Key="AvocadoMascot">
-        <Viewbox Width="68" Height="80" Stretch="Uniform" HorizontalAlignment="Center" VerticalAlignment="Center">
+        <Viewbox Width="54" Height="65" Stretch="Uniform" HorizontalAlignment="Center" VerticalAlignment="Center">
             <Canvas Width="100" Height="120">
                 <!-- Drop shadow beneath feet -->
                 <Ellipse Canvas.Left="20" Canvas.Top="108" Width="60" Height="10" Fill="#15000000"/>
@@ -325,9 +325,9 @@
         </ControlTemplate.Triggers>
     </ControlTemplate>
 
-    <!-- Consistent Compact Avocado Mascot for Headers & Title Bars (Noticeably Larger 40x44 ViewBox) -->
+    <!-- Consistent Compact Avocado Mascot for Headers & Title Bars (Clean 24x26 ViewBox) -->
     <ControlTemplate x:Key="AvocadoMascotCompact">
-        <Viewbox Width="40" Height="44" Stretch="Uniform" HorizontalAlignment="Center" VerticalAlignment="Center">
+        <Viewbox Width="24" Height="26" Stretch="Uniform" HorizontalAlignment="Center" VerticalAlignment="Center">
             <ContentControl Template="{StaticResource AvocadoMascot}"/>
         </Viewbox>
     </ControlTemplate>
