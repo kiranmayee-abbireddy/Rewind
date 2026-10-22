@@ -155,8 +155,8 @@
                 </Path.Fill>
             </Path>
 
-            <!-- Large Round Seed Pit (Centered Belly) with 3D Spherical Gloss -->
-            <Grid Width="20" Height="20" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,13">
+            <!-- Large Round Seed Pit (Centered in lower belly) with 3D Spherical Gloss -->
+            <Grid Width="22" Height="22" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,10">
                 <!-- Pit Base Sphere with border -->
                 <Ellipse Fill="#B85D19" Stroke="#693007" StrokeThickness="1.5" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
                 <!-- Pit Depth Radial Gradient Shadow -->
@@ -175,41 +175,41 @@
                 <Ellipse Width="2.5" Height="1.8" Fill="#FFFFFF" Opacity="0.75" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5,5,0,0"/>
             </Grid>
 
-            <!-- Kawaii Avocado Face - Looking Directly Forward At The User (Fully straight, direct eye-contact) -->
-            <Grid HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,21,0,0" Width="32" Height="18">
+            <!-- Kawaii Avocado Face - Looking Directly Forward At The User (Positioned in upper flesh clearly above the seed) -->
+            <Grid HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,17,0,0" Width="32" Height="14">
                 <!-- Symmetrical Pink Blush Cheeks (Centered horizontally on both cheeks) -->
-                <Ellipse Width="6" Height="3.5" Fill="#FF8A8A" Opacity="0.75" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="1,5,0,0"/>
-                <Ellipse Width="6" Height="3.5" Fill="#FF8A8A" Opacity="0.75" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,5,1,0"/>
+                <Ellipse Width="6" Height="3.2" Fill="#FF8A8A" Opacity="0.75" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="1,4,0,0"/>
+                <Ellipse Width="6" Height="3.2" Fill="#FF8A8A" Opacity="0.75" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,4,1,0"/>
 
                 <!-- Kawaii Eyes Looking Directly Forward with Big Centered Sparkle Catchlights & Animated Blink -->
                 <!-- Left Eye -->
-                <Grid x:Name="LeftEye" Width="6.5" Height="7.5" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="7,0,0,0" RenderTransformOrigin="0.5,0.5">
+                <Grid x:Name="LeftEye" Width="6" Height="7" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="7,0,0,0" RenderTransformOrigin="0.5,0.5">
                     <Grid.RenderTransform>
                         <ScaleTransform ScaleY="1.0"/>
                     </Grid.RenderTransform>
                     <!-- Dark Pupil -->
                     <Ellipse Fill="#18181B" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
                     <!-- Large Primary Sparkle Highlight positioned for direct forward gaze -->
-                    <Ellipse Width="2.6" Height="2.6" Fill="#FFFFFF" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,1.2,0,0"/>
+                    <Ellipse Width="2.4" Height="2.4" Fill="#FFFFFF" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,1.0,0,0"/>
                     <!-- Small Secondary Catchlight -->
-                    <Ellipse Width="1.2" Height="1.2" Fill="#FFFFFF" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,1.0,1.2"/>
+                    <Ellipse Width="1.1" Height="1.1" Fill="#FFFFFF" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,0.9,1.0"/>
                 </Grid>
 
                 <!-- Right Eye -->
-                <Grid x:Name="RightEye" Width="6.5" Height="7.5" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,7,0" RenderTransformOrigin="0.5,0.5">
+                <Grid x:Name="RightEye" Width="6" Height="7" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,0,7,0" RenderTransformOrigin="0.5,0.5">
                     <Grid.RenderTransform>
                         <ScaleTransform ScaleY="1.0"/>
                     </Grid.RenderTransform>
                     <!-- Dark Pupil -->
                     <Ellipse Fill="#18181B" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
                     <!-- Large Primary Sparkle Highlight positioned for direct forward gaze -->
-                    <Ellipse Width="2.6" Height="2.6" Fill="#FFFFFF" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,1.2,0,0"/>
+                    <Ellipse Width="2.4" Height="2.4" Fill="#FFFFFF" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,1.0,0,0"/>
                     <!-- Small Secondary Catchlight -->
-                    <Ellipse Width="1.2" Height="1.2" Fill="#FFFFFF" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="1.0,0,0,1.2"/>
+                    <Ellipse Width="1.1" Height="1.1" Fill="#FFFFFF" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="0.9,0,0,1.0"/>
                 </Grid>
 
-                <!-- Cute Sweet Cat-curve / Happy Centered Smile -->
-                <Path Data="M 13.5,9 C 14.8,11.5 17.2,11.5 18.5,9" Stroke="#18181B" StrokeThickness="1.5" StrokeStartLineCap="Round" StrokeEndLineCap="Round" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <!-- Cute Sweet Cat-curve / Happy Centered Smile (Centered between eyes and above pit) -->
+                <Path Data="M 13.5,8 C 14.8,10.2 17.2,10.2 18.5,8" Stroke="#18181B" StrokeThickness="1.5" StrokeStartLineCap="Round" StrokeEndLineCap="Round" HorizontalAlignment="Center" VerticalAlignment="Top"/>
             </Grid>
         </Grid>
         <ControlTemplate.Triggers>
