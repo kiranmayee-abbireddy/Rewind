@@ -72,14 +72,17 @@ namespace Rewind.App.Views
             QuickBallCapsule.Visibility = Visibility.Collapsed;
             PeekingMascotCapsule.Visibility = Visibility.Visible;
 
-            UpdateLayout();
-
-            // Clear any previous animations holding Left/Top
+            // Clear any active animations holding Left/Top
             BeginAnimation(Window.LeftProperty, null);
             BeginAnimation(Window.TopProperty, null);
 
+            // In peeking mode, the window is strictly 102x108 (54x60 mascot + 24px margins)
+            Width = 102;
+            Height = 108;
+            UpdateLayout();
+
             var workingArea = SystemParameters.WorkArea;
-            var h = 108.0;
+            var h = Height;
 
             double targetLeft = Left;
             double targetTop = Top;
@@ -91,7 +94,7 @@ namespace Rewind.App.Views
             // Peeking orientation: MascotPeeking template naturally faces leftwards/inward.
             // On Right edge: ScaleX = 1.0, MascotPeekRotate.Angle = -32° (tilted diagonally inward from the right bezel).
             // On Left edge: ScaleX = -1.0, MascotPeekRotate.Angle = 32° (tilted diagonally inward from the left bezel).
-            // Perfectly calibrated so upper half and slight lower half peek out inside edge symmetrically on both edges.
+            // Symmetrically calibrated so upper half and slight lower half peek out inside edge consistently on both sides.
             switch (_currentEdge)
             {
                 case DockEdge.Right:
@@ -156,19 +159,21 @@ namespace Rewind.App.Views
             if (_isQuickBallExpanded) return;
             _isQuickBallExpanded = true;
 
-            PeekingMascotCapsule.Visibility = Visibility.Collapsed;
-            QuickBallCapsule.Visibility = Visibility.Visible;
-
-            UpdateLayout();
-
             // Clear any active edge docking animations
             BeginAnimation(Window.LeftProperty, null);
             BeginAnimation(Window.TopProperty, null);
 
+            PeekingMascotCapsule.Visibility = Visibility.Collapsed;
+            QuickBallCapsule.Visibility = Visibility.Visible;
+
+            // Set explicit QuickBall mode dimensions (240x220 + 48 margins = 288x268)
+            Width = 288;
+            Height = 268;
+            UpdateLayout();
+
             var workingArea = SystemParameters.WorkArea;
-            // Full quick ball diameter is 240x220 + 48 padding
-            var w = ActualWidth > 0 ? ActualWidth : (240 + 48);
-            var h = ActualHeight > 0 ? ActualHeight : (220 + 48);
+            var w = Width;
+            var h = Height;
 
             // Shift position cleanly on-screen so the floating orbit is fully visible
             double startLeft = Left;
@@ -290,7 +295,7 @@ namespace Rewind.App.Views
         private void DetermineNearestEdgeAndDock()
         {
             var workingArea = SystemParameters.WorkArea;
-            var w = ActualWidth > 0 ? ActualWidth : 100;
+            var w = 102.0;
 
             var distLeft = Math.Abs(Left - workingArea.Left);
             var distRight = Math.Abs((workingArea.Right - w) - Left);
@@ -319,7 +324,7 @@ namespace Rewind.App.Views
                     {
                         DragMove();
                         var workingArea = SystemParameters.WorkArea;
-                        var w = ActualWidth > 0 ? ActualWidth : 288;
+                        var w = 288.0;
                         var distLeft = Math.Abs(Left - workingArea.Left);
                         var distRight = Math.Abs((workingArea.Right - w) - Left);
                         _currentEdge = (distLeft < distRight) ? DockEdge.Left : DockEdge.Right;

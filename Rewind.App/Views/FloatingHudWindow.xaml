@@ -1,15 +1,18 @@
 <Window x:Class="Rewind.App.Views.FloatingHudWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="REWIND Companion" SizeToContent="WidthAndHeight"
+        Title="REWIND Companion"
+        Width="102" Height="108"
         WindowStyle="None" AllowsTransparency="True" Background="Transparent"
         Topmost="True" ShowInTaskbar="False" ResizeMode="NoResize"
         WindowStartupLocation="Manual">
 
-    <Grid Margin="24">
+    <Grid>
         <!-- MODE 1: Secret Peeking Mascot (Docked half-out against the screen edge with side-glancing cute peeking face) -->
         <Border x:Name="PeekingMascotCapsule"
                 Width="54" Height="60"
+                HorizontalAlignment="Left" VerticalAlignment="Top"
+                Margin="24"
                 Cursor="Hand"
                 Background="Transparent"
                 PreviewMouseLeftButtonDown="PeekingMascot_PreviewMouseLeftButtonDown"
