@@ -98,141 +98,110 @@
     <Geometry x:Key="SidebarRightGeometry">M3,3 L21,3 L21,21 L3,21 Z M16,5 L19,5 L19,19 L16,19 Z M5,5 L14,5 L14,19 L5,19 Z</Geometry>
     <Geometry x:Key="SidebarHideGeometry">M3,3 L21,3 L21,21 L3,21 Z M5,5 L19,5 L19,19 L5,19 Z</Geometry>
 
-    <!-- Adorable Chubby Avocado QA Mascot (Front Facing - When Clicked / In App) -->
+    <!-- Adorable Chubby Avocado QA Mascot (Exactly matching reference artwork - 100x120 vector canvas) -->
     <ControlTemplate x:Key="AvocadoMascot">
-        <Grid Width="52" Height="62" HorizontalAlignment="Center" VerticalAlignment="Center" RenderTransformOrigin="0.5,0.92">
-            <Grid.RenderTransform>
-                <TransformGroup>
-                    <ScaleTransform x:Name="MascotScale" ScaleX="1.0" ScaleY="1.0"/>
-                    <RotateTransform x:Name="MascotRotate" Angle="0"/>
-                </TransformGroup>
-            </Grid.RenderTransform>
+        <Viewbox Width="54" Height="65" Stretch="Uniform" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <Canvas Width="100" Height="120">
+                <!-- Drop shadow beneath feet -->
+                <Ellipse Canvas.Left="20" Canvas.Top="108" Width="60" Height="10" Fill="#15000000"/>
 
-            <!-- Ground Drop Shadow -->
-            <Ellipse Width="34" Height="7" Fill="#10000000" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,1"/>
+                <!-- Stubby Feet (Dark forest avocado green with dark outline, like in reference) -->
+                <!-- Left Foot -->
+                <Path Data="M 33,102 C 33,113 45,113 45,102 Z" Fill="#2D5A27" Stroke="#163814" StrokeThickness="2.5" StrokeLineJoin="Round"/>
+                <!-- Right Foot -->
+                <Path Data="M 55,102 C 55,113 67,113 67,102 Z" Fill="#2D5A27" Stroke="#163814" StrokeThickness="2.5" StrokeLineJoin="Round"/>
 
-            <!-- Cute Chubby Little Feet (Dark Avocado Green with rounded caps, centered) -->
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,3">
-                <Border Width="8" Height="9" Background="#1B4D2E" CornerRadius="4" Margin="0,0,6,0"/>
-                <Border Width="8" Height="9" Background="#1B4D2E" CornerRadius="4"/>
-            </StackPanel>
+                <!-- Cute Outstretched Stubby Arms -->
+                <!-- Left Arm: angled slightly downward-outward -->
+                <Path Data="M 27,55 C 16,56 16,68 25,69 C 27,69 29,67 30,64 Z" Fill="#70B843" Stroke="#163814" StrokeThickness="2.5" StrokeLineJoin="Round"/>
+                <!-- Right Arm: angled slightly downward-outward -->
+                <Path Data="M 73,55 C 84,56 84,68 75,69 C 73,69 71,67 70,64 Z" Fill="#70B843" Stroke="#163814" StrokeThickness="2.5" StrokeLineJoin="Round"/>
 
-            <!-- Cute Symmetrical Avocado Arms (Outstretched happily on both sides) -->
-            <!-- Left Arm -->
-            <Path Data="M 12,29 C 4,31 4,37 10,38 C 12,38 13,35 13,32 Z" Fill="#448B3D" Stroke="#1B4D2E" StrokeThickness="1.5" StrokeLineJoin="Round" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="1,26,0,0"/>
-            <!-- Right Arm (Properly mirrored at margin 1) -->
-            <Path Data="M 1,29 C 9,31 9,37 3,38 C 1,38 0,35 0,32 Z" Fill="#448B3D" Stroke="#1B4D2E" StrokeThickness="1.5" StrokeLineJoin="Round" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,26,1,0"/>
+                <!-- Cute Top Stem & Sprout Leaf (Right at top center X=50) -->
+                <!-- Brown Stem -->
+                <Path Data="M 48,22 C 48,13 52,9 52,5 C 55,5 55,8 53,13 C 51,18 51,22 51,22 Z" Fill="#633917" Stroke="#381E09" StrokeThickness="2" StrokeLineJoin="Round"/>
+                <!-- Cute Leaf curving to the right -->
+                <Path x:Name="SproutLeaf" Data="M 52,14 C 68,9 74,18 64,24 C 57,28 52,20 52,14 Z" Fill="#4CAF50" Stroke="#163814" StrokeThickness="2" RenderTransformOrigin="0.0,0.7">
+                    <Path.RenderTransform>
+                        <RotateTransform Angle="0"/>
+                    </Path.RenderTransform>
+                </Path>
 
-            <!-- Top Stem & Leaf (Centered upright) -->
-            <!-- Brown Twig Stem centered at X=26 -->
-            <Path Data="M 24.5,12 C 24.5,6 26.5,3.5 26.5,2 C 27.5,2 28,3.5 27.5,6 C 27,9 26.5,12 26.5,12 Z" Fill="#6D401F" Stroke="#3D220F" StrokeThickness="1" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,0,0,0"/>
-            <!-- Cute Green Leaf with gentle waggle -->
-            <Path x:Name="SproutLeaf" Data="M 26,6 C 35,3 38,9 33,12 C 29,14 26,9 26,6 Z" Fill="#4CAF50" Stroke="#1B4D2E" StrokeThickness="1.2" RenderTransformOrigin="0.0,0.8" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="8,1,0,0">
-                <Path.RenderTransform>
-                    <RotateTransform Angle="0"/>
-                </Path.RenderTransform>
-            </Path>
+                <!-- Outer Avocado Rind (Dark Avocado Green pear shape, thick outline) -->
+                <Path Data="M 50,18 C 68,18 78,32 78,54 C 84,72 88,96 76,104 C 64,112 36,112 24,104 C 12,96 16,72 22,54 C 22,32 32,18 50,18 Z"
+                      Fill="#235020" Stroke="#143212" StrokeThickness="3.5" StrokeLineJoin="Round"/>
 
-            <!-- Main Avocado Body: Perfectly Symmetrical Thick Outer Dark-Green Skin Rind -->
-            <Path Data="M 26,10 C 37,10 44,18 44,30 C 44,45 37,55 26,55 C 15,55 8,45 8,30 C 8,18 15,10 26,10 Z"
-                  Fill="#2D6A35" Stroke="#183D1F" StrokeThickness="2" StrokeLineJoin="Round"
-                  HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <!-- Inner Lime Margin (Bright fresh green rind border) -->
+                <Path Data="M 50,21 C 66,21 75,34 75,54 C 81,71 85,93 74,101 C 63,109 37,109 26,101 C 15,93 19,71 25,54 C 25,34 34,21 50,21 Z"
+                      Fill="#80C838"/>
 
-            <!-- Inner Light Green Rind Margin -->
-            <Path Data="M 26,12 C 35.5,12 41.5,19.5 41.5,30.5 C 41.5,43.5 35.5,53 26,53 C 16.5,53 10.5,43.5 10.5,30.5 C 10.5,19.5 16.5,12 26,12 Z"
-                  Fill="#85CC47" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <!-- Creamy Light Honeydew / Pastel Yellow Flesh -->
+                <Path Data="M 50,24 C 64,24 71,36 71,55 C 77,71 80,91 71,98 C 61,105 39,105 29,98 C 20,91 23,71 29,55 C 29,36 36,24 50,24 Z"
+                      Fill="#E6F587"/>
 
-            <!-- Avocado Creamy Honeydew/Pastel Lime Flesh -->
-            <Path Data="M 26,14 C 34.5,14 39.5,21 39.5,31 C 39.5,42.5 34.5,51 26,51 C 17.5,51 12.5,42.5 12.5,31 C 12.5,21 17.5,14 26,14 Z"
-                  HorizontalAlignment="Center" VerticalAlignment="Center">
-                <Path.Fill>
-                    <RadialGradientBrush Center="0.5,0.4" GradientOrigin="0.5,0.4" RadiusX="0.6" RadiusY="0.6">
-                        <GradientStop Color="#FEFCE8" Offset="0"/>
-                        <GradientStop Color="#F3FBB8" Offset="0.5"/>
-                        <GradientStop Color="#D8F572" Offset="0.85"/>
-                        <GradientStop Color="#BBE953" Offset="1"/>
-                    </RadialGradientBrush>
-                </Path.Fill>
-            </Path>
-
-            <!-- Large Round Seed Pit (Centered in lower belly) with 3D Spherical Gloss -->
-            <Grid Width="22" Height="22" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,10">
-                <!-- Pit Base Sphere with border -->
-                <Ellipse Fill="#B85D19" Stroke="#693007" StrokeThickness="1.5" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
-                <!-- Pit Depth Radial Gradient Shadow -->
-                <Ellipse HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="1">
+                <!-- Perfectly Centered Round Brown Seed Pit (Belly) -->
+                <!-- Outer Pit Circle with dark brown border -->
+                <Ellipse Canvas.Left="34" Canvas.Top="62" Width="32" Height="32" Fill="#B35B1C" Stroke="#66310C" StrokeThickness="2.5"/>
+                <!-- Pit depth shadow -->
+                <Ellipse Canvas.Left="35" Canvas.Top="63" Width="30" Height="30">
                     <Ellipse.Fill>
-                        <RadialGradientBrush Center="0.38,0.32" GradientOrigin="0.38,0.32" RadiusX="0.65" RadiusY="0.65">
-                            <GradientStop Color="#E68535" Offset="0"/>
-                            <GradientStop Color="#BD5B14" Offset="0.45"/>
-                            <GradientStop Color="#8B3C08" Offset="0.85"/>
-                            <GradientStop Color="#542103" Offset="1"/>
+                        <RadialGradientBrush Center="0.4,0.35" GradientOrigin="0.4,0.35" RadiusX="0.65" RadiusY="0.65">
+                            <GradientStop Color="#DE7B2C" Offset="0"/>
+                            <GradientStop Color="#B35B1C" Offset="0.5"/>
+                            <GradientStop Color="#783408" Offset="0.9"/>
+                            <GradientStop Color="#4A1E03" Offset="1"/>
                         </RadialGradientBrush>
                     </Ellipse.Fill>
                 </Ellipse>
-                <!-- Pit Cute Curvature Gloss Arc (Like in user's image) -->
-                <Path Data="M 4,7 C 5,4 9,3 12,4" Stroke="#FFFFFF" StrokeThickness="1.5" StrokeStartLineCap="Round" StrokeEndLineCap="Round" Opacity="0.65"/>
-                <Ellipse Width="2.5" Height="1.8" Fill="#FFFFFF" Opacity="0.75" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5,5,0,0"/>
-            </Grid>
+                <!-- Pit Crescent Shine Arc -->
+                <Path Data="M 39,72 A 10,10 0 0 1 51,66" Stroke="#FFFFFF" StrokeThickness="2.2" StrokeStartLineCap="Round" StrokeEndLineCap="Round" Opacity="0.65"/>
+                <Ellipse Canvas.Left="40" Canvas.Top="68" Width="3.5" Height="2.5" Fill="#FFFFFF" Opacity="0.8"/>
 
-            <!-- Kawaii Avocado Face - Looking Directly Forward At The User (Positioned in upper flesh clearly above the seed) -->
-            <Grid HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,17,0,0" Width="32" Height="14">
-                <!-- Symmetrical Pink Blush Cheeks (Centered horizontally on both cheeks) -->
-                <Ellipse Width="6" Height="3.2" Fill="#FF8A8A" Opacity="0.75" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="1,4,0,0"/>
-                <Ellipse Width="6" Height="3.2" Fill="#FF8A8A" Opacity="0.75" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,4,1,0"/>
+                <!-- Kawaii Face - Sitting in Upper Flesh Directly Above Pit (X=50 center) -->
+                <!-- Soft Pink Blush Cheeks (Centered symmetrically on both sides) -->
+                <Ellipse Canvas.Left="31" Canvas.Top="47" Width="9" Height="5.5" Fill="#FFA1A1" Opacity="0.8"/>
+                <Ellipse Canvas.Left="60" Canvas.Top="47" Width="9" Height="5.5" Fill="#FFA1A1" Opacity="0.8"/>
 
-                <!-- Kawaii Eyes Looking Directly Forward with Big Centered Sparkle Catchlights & Animated Blink -->
-                <!-- Left Eye -->
-                <Grid x:Name="LeftEye" Width="6" Height="7" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="7,0,0,0" RenderTransformOrigin="0.5,0.5">
-                    <Grid.RenderTransform>
+                <!-- Left Eye: Big cute anime eye looking directly straight forward -->
+                <Canvas x:Name="LeftEye" Canvas.Left="38" Canvas.Top="38" Width="9" Height="10" RenderTransformOrigin="0.5,0.5">
+                    <Canvas.RenderTransform>
                         <ScaleTransform ScaleY="1.0"/>
-                    </Grid.RenderTransform>
-                    <!-- Dark Pupil -->
-                    <Ellipse Fill="#18181B" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
-                    <!-- Large Primary Sparkle Highlight positioned for direct forward gaze -->
-                    <Ellipse Width="2.4" Height="2.4" Fill="#FFFFFF" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,1.0,0,0"/>
-                    <!-- Small Secondary Catchlight -->
-                    <Ellipse Width="1.1" Height="1.1" Fill="#FFFFFF" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,0.9,1.0"/>
-                </Grid>
+                    </Canvas.RenderTransform>
+                    <!-- Dark pupil -->
+                    <Ellipse Canvas.Left="0" Canvas.Top="0" Width="9" Height="10" Fill="#141414"/>
+                    <!-- Big white sparkle catchlight (Upper inner highlight) -->
+                    <Ellipse Canvas.Left="2" Canvas.Top="1.5" Width="4.2" Height="4.2" Fill="#FFFFFF"/>
+                    <!-- Small secondary catchlight (Lower right) -->
+                    <Ellipse Canvas.Left="5.5" Canvas.Top="6.5" Width="1.8" Height="1.8" Fill="#FFFFFF"/>
+                </Canvas>
 
-                <!-- Right Eye -->
-                <Grid x:Name="RightEye" Width="6" Height="7" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,0,7,0" RenderTransformOrigin="0.5,0.5">
-                    <Grid.RenderTransform>
+                <!-- Right Eye: Big cute anime eye looking directly straight forward (Symmetrically placed) -->
+                <Canvas x:Name="RightEye" Canvas.Left="53" Canvas.Top="38" Width="9" Height="10" RenderTransformOrigin="0.5,0.5">
+                    <Canvas.RenderTransform>
                         <ScaleTransform ScaleY="1.0"/>
-                    </Grid.RenderTransform>
-                    <!-- Dark Pupil -->
-                    <Ellipse Fill="#18181B" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
-                    <!-- Large Primary Sparkle Highlight positioned for direct forward gaze -->
-                    <Ellipse Width="2.4" Height="2.4" Fill="#FFFFFF" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,1.0,0,0"/>
-                    <!-- Small Secondary Catchlight -->
-                    <Ellipse Width="1.1" Height="1.1" Fill="#FFFFFF" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="0.9,0,0,1.0"/>
-                </Grid>
+                    </Canvas.RenderTransform>
+                    <!-- Dark pupil -->
+                    <Ellipse Canvas.Left="0" Canvas.Top="0" Width="9" Height="10" Fill="#141414"/>
+                    <!-- Big white sparkle catchlight (Upper inner highlight) -->
+                    <Ellipse Canvas.Left="2.8" Canvas.Top="1.5" Width="4.2" Height="4.2" Fill="#FFFFFF"/>
+                    <!-- Small secondary catchlight (Lower left) -->
+                    <Ellipse Canvas.Left="1.7" Canvas.Top="6.5" Width="1.8" Height="1.8" Fill="#FFFFFF"/>
+                </Canvas>
 
-                <!-- Cute Sweet Cat-curve / Happy Centered Smile (Centered between eyes and above pit) -->
-                <Path Data="M 13.5,8 C 14.8,10.2 17.2,10.2 18.5,8" Stroke="#18181B" StrokeThickness="1.5" StrokeStartLineCap="Round" StrokeEndLineCap="Round" HorizontalAlignment="Center" VerticalAlignment="Top"/>
-            </Grid>
-        </Grid>
+                <!-- Cute Centered Sweet Smile (Right between eyes, curved up cheerfully) -->
+                <Path Data="M 47,46 Q 50,50 53,46" Stroke="#141414" StrokeThickness="2.2" StrokeStartLineCap="Round" StrokeEndLineCap="Round"/>
+            </Canvas>
+        </Viewbox>
         <ControlTemplate.Triggers>
             <EventTrigger RoutedEvent="Loaded">
                 <BeginStoryboard>
                     <Storyboard RepeatBehavior="Forever">
-                        <!-- Idle Cute Breathing / Squash-Stretch -->
-                        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="MascotScale" Storyboard.TargetProperty="ScaleY">
-                            <SplineDoubleKeyFrame KeyTime="0:0:0" Value="1.0"/>
-                            <SplineDoubleKeyFrame KeyTime="0:0:1.3" Value="1.05"/>
-                            <SplineDoubleKeyFrame KeyTime="0:0:2.6" Value="1.0"/>
-                        </DoubleAnimationUsingKeyFrames>
-                        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="MascotScale" Storyboard.TargetProperty="ScaleX">
-                            <SplineDoubleKeyFrame KeyTime="0:0:0" Value="1.0"/>
-                            <SplineDoubleKeyFrame KeyTime="0:0:1.3" Value="0.97"/>
-                            <SplineDoubleKeyFrame KeyTime="0:0:2.6" Value="1.0"/>
-                        </DoubleAnimationUsingKeyFrames>
                         <!-- Sprout leaf breeze wave -->
                         <DoubleAnimationUsingKeyFrames Storyboard.TargetName="SproutLeaf" Storyboard.TargetProperty="(UIElement.RenderTransform).(RotateTransform.Angle)">
                             <SplineDoubleKeyFrame KeyTime="0:0:0" Value="0"/>
-                            <SplineDoubleKeyFrame KeyTime="0:0:0.65" Value="10"/>
-                            <SplineDoubleKeyFrame KeyTime="0:0:1.3" Value="-5"/>
-                            <SplineDoubleKeyFrame KeyTime="0:0:1.95" Value="8"/>
+                            <SplineDoubleKeyFrame KeyTime="0:0:0.65" Value="8"/>
+                            <SplineDoubleKeyFrame KeyTime="0:0:1.3" Value="-4"/>
+                            <SplineDoubleKeyFrame KeyTime="0:0:1.95" Value="6"/>
                             <SplineDoubleKeyFrame KeyTime="0:0:2.6" Value="0"/>
                         </DoubleAnimationUsingKeyFrames>
                         <!-- Cute Eye Blink every 2.6s cycle -->
