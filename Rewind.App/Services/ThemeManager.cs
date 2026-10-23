@@ -289,6 +289,12 @@ namespace Rewind.App.Services
             SyncBrush(dict, "DangerBrush", "DangerColor");
             SyncBrush(dict, "SuccessBrush", "SuccessColor");
             SyncBrush(dict, "WarningBrush", "WarningColor");
+
+            // Sync Topographic Contour Brush (calibrated opacity for clean dark and light visibility)
+            if (dict["BorderColor"] is Color borderCol)
+            {
+                dict["TopoContourBrush"] = new SolidColorBrush(borderCol) { Opacity = isDark ? 0.38 : 0.45 };
+            }
         }
 
         // Backward compatibility method

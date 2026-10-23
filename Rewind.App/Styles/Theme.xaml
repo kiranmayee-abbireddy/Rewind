@@ -55,6 +55,68 @@
         <GradientStop Color="{DynamicResource BgCardColor}" Offset="1.0"/>
     </LinearGradientBrush>
 
+    <!-- Theme-Adaptive Topographic Contour Line Brush -->
+    <SolidColorBrush x:Key="TopoContourBrush" Color="{DynamicResource BorderColor}" Opacity="0.32"/>
+
+    <!-- Devin-Style Topographic Contour Iso-Curves Pattern Brush (Seamless Tile) -->
+    <DrawingBrush x:Key="TopographicContourPatternBrush" TileMode="Tile" Viewport="0,0,520,440" ViewportUnits="Absolute">
+        <DrawingBrush.Drawing>
+            <DrawingGroup>
+                <!-- Transparent background so the rich gradient shows underneath -->
+                <GeometryDrawing Brush="Transparent">
+                    <GeometryDrawing.Geometry>
+                        <RectangleGeometry Rect="0,0,520,440"/>
+                    </GeometryDrawing.Geometry>
+                </GeometryDrawing>
+                
+                <!-- Smooth Curving Iso-Contours (Devin-style topographic flow) -->
+                <!-- Contour Band 1: Large looping corner curves -->
+                <GeometryDrawing>
+                    <GeometryDrawing.Pen>
+                        <Pen Brush="{DynamicResource TopoContourBrush}" Thickness="1.2" LineJoin="Round" StartLineCap="Round" EndLineCap="Round"/>
+                    </GeometryDrawing.Pen>
+                    <GeometryDrawing.Geometry>
+                        <PathGeometry Figures="
+                            M 0,90 C 130,90 190,160 220,240 C 250,320 320,380 520,380
+                            M 0,160 C 100,160 150,210 180,270 C 210,330 270,410 440,440
+                            M 0,230 C 70,230 110,270 140,320 C 170,370 230,440 330,440
+                            M 0,300 C 40,300 80,330 100,370 C 120,410 150,440 210,440
+                            M 0,370 C 20,370 40,390 60,420 C 70,435 80,440 100,440
+                        "/>
+                    </GeometryDrawing.Geometry>
+                </GeometryDrawing>
+
+                <!-- Contour Band 2: Top-right concentric rounded contours -->
+                <GeometryDrawing>
+                    <GeometryDrawing.Pen>
+                        <Pen Brush="{DynamicResource TopoContourBrush}" Thickness="1.2" LineJoin="Round" StartLineCap="Round" EndLineCap="Round"/>
+                    </GeometryDrawing.Pen>
+                    <GeometryDrawing.Geometry>
+                        <PathGeometry Figures="
+                            M 240,0 C 240,110 320,180 520,180
+                            M 310,0 C 310,80 370,130 520,130
+                            M 380,0 C 380,60 420,90 520,90
+                            M 450,0 C 450,35 480,50 520,50
+                        "/>
+                    </GeometryDrawing.Geometry>
+                </GeometryDrawing>
+
+                <!-- Contour Band 3: Meandering Central Ridge flow -->
+                <GeometryDrawing>
+                    <GeometryDrawing.Pen>
+                        <Pen Brush="{DynamicResource TopoContourBrush}" Thickness="1.2" LineJoin="Round" StartLineCap="Round" EndLineCap="Round"/>
+                    </GeometryDrawing.Pen>
+                    <GeometryDrawing.Geometry>
+                        <PathGeometry Figures="
+                            M 60,0 C 60,70 110,120 180,120 C 280,120 340,220 370,300 C 400,380 470,420 520,420
+                            M 120,0 C 120,40 150,70 200,70 C 250,70 300,140 330,220 C 360,300 420,350 520,350
+                        "/>
+                    </GeometryDrawing.Geometry>
+                </GeometryDrawing>
+            </DrawingGroup>
+        </DrawingBrush.Drawing>
+    </DrawingBrush>
+
     <!-- Ultra-Clean Modern Studio Pattern Brushes (Softer, subtle, premium aesthetic) -->
     <VisualBrush x:Key="DevinGridPatternBrush" TileMode="Tile" Viewport="0,0,28,28" ViewportUnits="Absolute">
         <VisualBrush.Visual>
