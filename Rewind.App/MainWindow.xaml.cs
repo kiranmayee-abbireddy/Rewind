@@ -487,7 +487,7 @@ namespace Rewind.App
             }
         }
 
-        private async void GenerateReport_Click(object sender, RoutedEventArgs e)
+        private void GenerateReport_Click(object sender, RoutedEventArgs e)
         {
             if (_activeSession == null) return;
             var bugsList = _dbService.GetBugsForSession(_activeSession.Id);
@@ -517,23 +517,8 @@ namespace Rewind.App
                 }
             }
 
-            string? aiSummary = null;
-            if (_aiAssistant.IsEnabled && bugsList.Count > 0)
-            {
-                var sbTitles = new System.Text.StringBuilder();
-                for (int i = 0; i < bugsList.Count; i++)
-                {
-                    sbTitles.AppendLine($"• Bug #{i + 1}: {bugsList[i].Title} (Status: {bugsList[i].Status})");
-                }
-                aiSummary = await _aiAssistant.SummarizeSessionReportAsync(_activeSession.Title, bugsList.Count, sbTitles.ToString());
-            }
-
-            var cleanList = ReportGenerator.GenerateCleanListReport(_activeSession, bugsList);
-            var md = ReportGenerator.GenerateMarkdownReport(_activeSession, bugsList, aiExecutiveSummary: aiSummary);
-            var jira = ReportGenerator.GenerateJiraFormat(_activeSession, bugsList);
-            var json = ReportGenerator.GenerateJsonReport(_activeSession, bugsList, aiExecutiveSummary: aiSummary);
-
-            var reportWin = new ReportPreviewWindow(cleanList, md, jira, json);
+            // Open dialog immediately so user sees the dialog and smooth loading animations right away!
+            var reportWin = new ReportPreviewWindow(_activeSession, bugsList, _aiAssistant);
             _isModalDialogOpen = true;
             var wasRunning = _captureEngine.IsRunning && !_captureEngine.IsPaused;
             if (wasRunning) _captureEngine.Pause();

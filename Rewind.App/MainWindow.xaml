@@ -114,30 +114,44 @@
                         <!-- Top Controls: Header Mascot & New Session Button -->
                         <StackPanel Grid.Row="0">
                             <!-- Clean Header Identity & Avocado Companion Showcase -->
-                            <!-- Modern Integrated Brand & Companion Header Card -->
-                            <Border Background="{DynamicResource BgCardBrush}" BorderBrush="{DynamicResource BorderBrush}" BorderThickness="1" CornerRadius="8" Padding="12,10" Margin="0,0,0,10">
+                            <!-- Mochi QA Companion Profile Card (Replaces duplicate Rewind brand header) -->
+                            <Border Background="{DynamicResource BgCardBrush}" BorderBrush="{DynamicResource BorderBrush}" BorderThickness="1" CornerRadius="10" Padding="10,9" Margin="0,0,0,10">
                                 <Grid>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="Auto"/>
                                         <ColumnDefinition Width="*"/>
-                                        <ColumnDefinition Width="Auto"/>
                                     </Grid.ColumnDefinitions>
-                                    <!-- Mascot Avatar inside subtle soft rounded container -->
-                                    <Border Grid.Column="0" Width="36" Height="36" CornerRadius="7" Background="{DynamicResource BgSecondaryBrush}" BorderBrush="{DynamicResource BorderBrush}" BorderThickness="1" Margin="0,0,10,0" VerticalAlignment="Center">
-                                        <Viewbox Width="24" Height="28" Stretch="Uniform" HorizontalAlignment="Center" VerticalAlignment="Center">
-                                            <ContentControl Template="{StaticResource AvocadoMascot}"/>
-                                        </Viewbox>
-                                    </Border>
-                                    
-                                    <!-- App Brand & Tagline -->
+
+                                    <!-- Circular Profile Picture with subtle ring border & online status dot -->
+                                    <Grid Grid.Column="0" Margin="0,0,10,0" VerticalAlignment="Center">
+                                        <!-- Profile Picture Circle Container -->
+                                        <Border Width="40" Height="40" CornerRadius="20" Background="{DynamicResource BgSecondaryBrush}" 
+                                                BorderBrush="{DynamicResource AccentBrush}" BorderThickness="1.5" ClipToBounds="True">
+                                            <!-- Subtle gradient background behind Mochi -->
+                                            <Grid>
+                                                <Ellipse Fill="{DynamicResource AccentBrush}" Opacity="0.12"/>
+                                                <Viewbox Width="30" Height="34" Stretch="Uniform" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,2,0,0">
+                                                    <ContentControl Template="{StaticResource AvocadoMascot}"/>
+                                                </Viewbox>
+                                            </Grid>
+                                        </Border>
+
+                                        <!-- Active / Online Badge Indicator -->
+                                        <Border Width="11" Height="11" CornerRadius="6" Background="{DynamicResource SuccessBrush}" 
+                                                BorderBrush="{DynamicResource BgCardBrush}" BorderThickness="2"
+                                                HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,-1,-1"
+                                                ToolTip="Mochi is active and watching your session"/>
+                                    </Grid>
+
+                                    <!-- Mascot Profile Identity & QA Role -->
                                     <StackPanel Grid.Column="1" VerticalAlignment="Center">
                                         <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                                            <TextBlock Text="REWIND" FontSize="13.5" FontWeight="Bold" Foreground="{DynamicResource TextPrimaryBrush}"/>
-                                            <Border Background="{DynamicResource AccentBrush}" CornerRadius="3" Padding="4,1" Margin="6,0,0,0" VerticalAlignment="Center" Opacity="0.9">
-                                                <TextBlock Text="QA" FontSize="8.5" FontWeight="Bold" Foreground="#FFFFFF"/>
+                                            <TextBlock Text="Mochi" FontSize="14" FontWeight="Bold" Foreground="{DynamicResource TextPrimaryBrush}"/>
+                                            <Border Background="{DynamicResource AccentBrush}" CornerRadius="4" Padding="5,1" Margin="6,0,0,0" VerticalAlignment="Center" Opacity="0.9">
+                                                <TextBlock Text="QA BUDDY" FontSize="8.5" FontWeight="Bold" Foreground="#FFFFFF"/>
                                             </Border>
                                         </StackPanel>
-                                        <TextBlock Text="Continuous Buffer Recorder" FontSize="10.5" Foreground="{DynamicResource TextSecondaryBrush}" Margin="0,2,0,0"/>
+                                        <TextBlock Text="Watching for bugs &amp; glitches" FontSize="10.5" Foreground="{DynamicResource TextSecondaryBrush}" Margin="0,2,0,0"/>
                                     </StackPanel>
                                 </Grid>
                             </Border>
