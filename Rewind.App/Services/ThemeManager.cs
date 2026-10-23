@@ -272,6 +272,9 @@ namespace Rewind.App.Services
             dict["LogoOrbGradient"] = CreateGradient(logo1, logo2, logo3);
             dict["GoldOrbGradient"] = CreateGradient("#FCD34D", "#F59E0B", "#B45309");
 
+            // Theme-adaptive smooth ambient studio workspace gradient
+            dict["MainWorkspaceGradientBrush"] = CreateWorkspaceGradient(bgPrimary, bgSecondary, bgCard, isDark);
+
             // Sync all SolidColorBrushes from updated Colors
             SyncBrush(dict, "BgPrimaryBrush", "BgPrimaryColor");
             SyncBrush(dict, "BgSecondaryBrush", "BgSecondaryColor");
@@ -366,6 +369,25 @@ namespace Rewind.App.Services
             brush.GradientStops.Add(new GradientStop((Color)ColorConverter.ConvertFromString(c1), 0));
             brush.GradientStops.Add(new GradientStop((Color)ColorConverter.ConvertFromString(c2), 0.5));
             brush.GradientStops.Add(new GradientStop((Color)ColorConverter.ConvertFromString(c3), 1));
+            return brush;
+        }
+
+        private static LinearGradientBrush CreateWorkspaceGradient(string bgPrimary, string bgSecondary, string bgCard, bool isDark)
+        {
+            // Smooth, rich diagonal studio gradient respecting themes & modes
+            var brush = new LinearGradientBrush
+            {
+                StartPoint = new Point(0, 0),
+                EndPoint = new Point(1, 1)
+            };
+
+            var col1 = (Color)ColorConverter.ConvertFromString(bgPrimary);
+            var col2 = (Color)ColorConverter.ConvertFromString(bgSecondary);
+            var col3 = (Color)ColorConverter.ConvertFromString(bgCard);
+
+            brush.GradientStops.Add(new GradientStop(col1, 0.0));
+            brush.GradientStops.Add(new GradientStop(col2, 0.55));
+            brush.GradientStops.Add(new GradientStop(col3, 1.0));
             return brush;
         }
     }

@@ -48,6 +48,13 @@
         <GradientStop Color="#B45309" Offset="1"/>
     </LinearGradientBrush>
 
+    <!-- Theme-Adaptive Studio Canvas Gradient Brush -->
+    <LinearGradientBrush x:Key="MainWorkspaceGradientBrush" StartPoint="0,0" EndPoint="1,1">
+        <GradientStop Color="{DynamicResource BgPrimaryColor}" Offset="0.0"/>
+        <GradientStop Color="{DynamicResource BgSecondaryColor}" Offset="0.55"/>
+        <GradientStop Color="{DynamicResource BgCardColor}" Offset="1.0"/>
+    </LinearGradientBrush>
+
     <!-- Ultra-Clean Modern Studio Pattern Brushes (Softer, subtle, premium aesthetic) -->
     <VisualBrush x:Key="DevinGridPatternBrush" TileMode="Tile" Viewport="0,0,28,28" ViewportUnits="Absolute">
         <VisualBrush.Visual>
