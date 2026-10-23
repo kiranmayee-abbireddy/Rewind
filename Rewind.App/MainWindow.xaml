@@ -117,17 +117,30 @@
                         <!-- Top Controls: Header Mascot & New Session Button -->
                         <StackPanel Grid.Row="0">
                             <!-- Clean Header Identity & Avocado Companion Showcase -->
-                            <Border Background="{DynamicResource BgCardBrush}" BorderBrush="{DynamicResource BorderBrush}" BorderThickness="1" CornerRadius="8" Padding="12,10" Margin="0,0,0,12">
+                            <!-- Modern Integrated Brand & Companion Header Card -->
+                            <Border Background="{DynamicResource BgCardBrush}" BorderBrush="{DynamicResource BorderBrush}" BorderThickness="1" CornerRadius="8" Padding="12,10" Margin="0,0,0,10">
                                 <Grid>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="Auto"/>
                                         <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
                                     </Grid.ColumnDefinitions>
-                                    <!-- Guac the Avocado QA Companion -->
-                                    <ContentControl Template="{StaticResource AvocadoMascot}" Margin="0,0,12,0" VerticalAlignment="Center" ToolTip="Guac — Your REWIND QA Companion"/>
+                                    <!-- Mascot Avatar inside subtle soft rounded container -->
+                                    <Border Grid.Column="0" Width="36" Height="36" CornerRadius="7" Background="{DynamicResource BgSecondaryBrush}" BorderBrush="{DynamicResource BorderBrush}" BorderThickness="1" Margin="0,0,10,0" VerticalAlignment="Center">
+                                        <Viewbox Width="24" Height="28" Stretch="Uniform" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                            <ContentControl Template="{StaticResource AvocadoMascot}"/>
+                                        </Viewbox>
+                                    </Border>
+                                    
+                                    <!-- App Brand & Tagline -->
                                     <StackPanel Grid.Column="1" VerticalAlignment="Center">
-                                        <TextBlock Text="REWIND" FontSize="14.5" FontWeight="Bold" Foreground="{DynamicResource TextPrimaryBrush}"/>
-                                        <TextBlock Text="Evidence Recorder" FontSize="11" Foreground="{DynamicResource TextSecondaryBrush}" Margin="0,2,0,0"/>
+                                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                            <TextBlock Text="REWIND" FontSize="13.5" FontWeight="Bold" Foreground="{DynamicResource TextPrimaryBrush}"/>
+                                            <Border Background="{DynamicResource AccentBrush}" CornerRadius="3" Padding="4,1" Margin="6,0,0,0" VerticalAlignment="Center" Opacity="0.9">
+                                                <TextBlock Text="QA" FontSize="8.5" FontWeight="Bold" Foreground="#FFFFFF"/>
+                                            </Border>
+                                        </StackPanel>
+                                        <TextBlock Text="Continuous Buffer Recorder" FontSize="10.5" Foreground="{DynamicResource TextSecondaryBrush}" Margin="0,2,0,0"/>
                                     </StackPanel>
                                 </Grid>
                             </Border>
@@ -348,14 +361,16 @@
 
                     <!-- Bugs Items Control / List & Empty State Overlay -->
                     <Grid>
-                        <!-- Empty Bugs Illustration State -->
-                        <Border x:Name="BugsEmptyState" Visibility="Collapsed" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,30,0,40">
-                            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-                                <ContentControl Template="{StaticResource EmptyBugsIllustration}" HorizontalAlignment="Center"/>
-                                <TextBlock Text="No bugs preserved yet" FontSize="15" FontWeight="SemiBold" Foreground="{DynamicResource TextPrimaryBrush}" HorizontalAlignment="Center" Margin="0,16,0,4"/>
-                                <TextBlock Text="Continuous rolling buffer is running silently. When a defect or glitch occurs, press your hotkey or click 'Preserve Evidence' to save the clip." 
-                                           FontSize="12" Foreground="{DynamicResource TextSecondaryBrush}" HorizontalAlignment="Center" TextAlignment="Center" MaxWidth="380" TextWrapping="Wrap" LineHeight="17"/>
-                            </StackPanel>
+                        <!-- Empty Bugs Illustration State (Elevated Card Layout) -->
+                        <Border x:Name="BugsEmptyState" Visibility="Collapsed" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,20,0,30">
+                            <Border Background="{DynamicResource BgCardBrush}" BorderBrush="{DynamicResource BorderBrush}" BorderThickness="1" CornerRadius="12" Padding="32,28" MaxWidth="460">
+                                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                                    <ContentControl Template="{StaticResource EmptyBugsIllustration}" HorizontalAlignment="Center"/>
+                                    <TextBlock Text="No bugs preserved yet" FontSize="16" FontWeight="SemiBold" Foreground="{DynamicResource TextPrimaryBrush}" HorizontalAlignment="Center" Margin="0,18,0,6"/>
+                                    <TextBlock Text="Continuous rolling buffer is running silently. When a defect or glitch occurs, press your hotkey or click 'Preserve Evidence' to save the clip." 
+                                               FontSize="12" Foreground="{DynamicResource TextSecondaryBrush}" HorizontalAlignment="Center" TextAlignment="Center" MaxWidth="360" TextWrapping="Wrap" LineHeight="18"/>
+                                </StackPanel>
+                            </Border>
                         </Border>
 
                         <!-- Bugs Items Control / List (Scrollable without visible scrollbar) -->
