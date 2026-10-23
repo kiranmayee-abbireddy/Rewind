@@ -48,14 +48,14 @@ namespace Rewind.App.Services
                     }
                     else
                     {
-                        // Fresh Mint Porcelain (Light)
-                        bgPrimary = "#F0FDF4";
-                        bgSecondary = "#DCFCE7";
+                        // Clean Studio Sage Porcelain (Light) - Calming, low saturation, professional
+                        bgPrimary = "#F9FAF9";
+                        bgSecondary = "#F0F4F1";
                         bgCard = "#FFFFFF";
-                        border = "#BBF7D0";
+                        border = "#DCE4DE";
                         borderFocus = "#059669";
-                        textPrimary = "#064E3B";
-                        textSecondary = "#047857";
+                        textPrimary = "#111814";
+                        textSecondary = "#4B5E52";
                         accent = "#059669";
                         gold = "#D97706";
                         danger = "#DC2626";
@@ -93,20 +93,20 @@ namespace Rewind.App.Services
                     }
                     else
                     {
-                        // Rose Quartz Porcelain (Light)
-                        bgPrimary = "#FFF1F2";
-                        bgSecondary = "#FFE4E6";
+                        // Clean Studio Rose Porcelain (Light) - Elegant, soft neutral warmth
+                        bgPrimary = "#FAF9F9";
+                        bgSecondary = "#F4F0F1";
                         bgCard = "#FFFFFF";
-                        border = "#FECDD3";
+                        border = "#E6DEDF";
                         borderFocus = "#E11D48";
-                        textPrimary = "#881337";
-                        textSecondary = "#9F1239";
-                        accent = "#E11D48";
+                        textPrimary = "#1A1013";
+                        textSecondary = "#5C4A50";
+                        accent = "#BE123C";
                         gold = "#D97706";
                         danger = "#BE123C";
                         success = "#16A34A";
                         warning = "#D97706";
-                        grad1 = "#E11D48";
+                        grad1 = "#BE123C";
                         grad2 = "#9F1239";
                         logo1 = "#FB7185";
                         logo2 = "#E11D48";
@@ -138,15 +138,15 @@ namespace Rewind.App.Services
                     }
                     else
                     {
-                        // Warm Honey Sunlight (Light)
-                        bgPrimary = "#FFFBEB";
-                        bgSecondary = "#FEF3C7";
+                        // Clean Studio Warm Sand Porcelain (Light) - Grounded, non-flashy parchment
+                        bgPrimary = "#FAF9F6";
+                        bgSecondary = "#F3F1EC";
                         bgCard = "#FFFFFF";
-                        border = "#FDE68A";
+                        border = "#E5E1D8";
                         borderFocus = "#D97706";
-                        textPrimary = "#78350F";
-                        textSecondary = "#92400E";
-                        accent = "#D97706";
+                        textPrimary = "#1C1710";
+                        textSecondary = "#5E5345";
+                        accent = "#B45309";
                         gold = "#B45309";
                         danger = "#DC2626";
                         success = "#16A34A";
@@ -183,14 +183,14 @@ namespace Rewind.App.Services
                     }
                     else
                     {
-                        // Glacial Sky Porcelain (Light)
-                        bgPrimary = "#F0F9FF";
-                        bgSecondary = "#E0F2FE";
+                        // Clean Studio Arctic Slate Porcelain (Light) - Clean, calm corporate tech
+                        bgPrimary = "#F8FAFC";
+                        bgSecondary = "#F0F3F7";
                         bgCard = "#FFFFFF";
-                        border = "#BAE6FD";
+                        border = "#DCE2E9";
                         borderFocus = "#0284C7";
-                        textPrimary = "#0C4A6E";
-                        textSecondary = "#0369A1";
+                        textPrimary = "#0F172A";
+                        textSecondary = "#475569";
                         accent = "#0284C7";
                         gold = "#D97706";
                         danger = "#DC2626";
