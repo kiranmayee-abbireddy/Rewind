@@ -287,11 +287,8 @@
                 </GridSplitter.Template>
             </GridSplitter>
 
-            <!-- Main Workspace Area with Theme-Adaptive Studio Gradient & Elegant Studio Waves -->
+            <!-- Main Workspace Area with Theme-Adaptive Studio Gradient -->
             <Grid x:Name="MainWorkspaceGrid" Grid.Column="2" Background="{DynamicResource MainWorkspaceGradientBrush}" ClipToBounds="True">
-                <!-- Theme-adaptive harmonious wave curves overlay -->
-                <Rectangle Fill="{DynamicResource StudioWavePatternBrush}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" IsHitTestVisible="False"/>
-
                 <Grid Margin="24">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
