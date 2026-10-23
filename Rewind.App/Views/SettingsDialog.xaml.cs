@@ -36,11 +36,11 @@ namespace Rewind.App.Views
                 "burgundy" => 2,
                 "amber" => 3,
                 "sapphire" => 4,
-                "midnight" => 5,
-                "monokai" => 6,
-                "nord" => 7,
-                "cyberpunk" => 8,
-                "forest" => 9,
+                "copper" => 5,
+                "amethyst" => 6,
+                "ocean" => 7,
+                "solar" => 8,
+                "sage" => 9,
                 _ => 0
             };
             DisplayModeCombo.SelectedIndex = current.IsDarkMode ? 0 : 1;
@@ -218,11 +218,11 @@ namespace Rewind.App.Views
                 2 => "Burgundy",
                 3 => "Amber",
                 4 => "Sapphire",
-                5 => "Midnight",
-                6 => "Monokai",
-                7 => "Nord",
-                8 => "Cyberpunk",
-                9 => "Forest",
+                5 => "Copper",
+                6 => "Amethyst",
+                7 => "Ocean",
+                8 => "Solar",
+                9 => "Sage",
                 _ => "Slate"
             };
             var isDark = DisplayModeCombo.SelectedIndex == 0;
@@ -248,11 +248,11 @@ namespace Rewind.App.Views
                 2 => "Burgundy",
                 3 => "Amber",
                 4 => "Sapphire",
-                5 => "Midnight",
-                6 => "Monokai",
-                7 => "Nord",
-                8 => "Cyberpunk",
-                9 => "Forest",
+                5 => "Copper",
+                6 => "Amethyst",
+                7 => "Ocean",
+                8 => "Solar",
+                9 => "Sage",
                 _ => "Slate"
             };
             var isDark = DisplayModeCombo.SelectedIndex == 0;

@@ -204,151 +204,61 @@ namespace Rewind.App.Services
                     }
                     break;
 
-                case "midnight":
+                case "copper":
                     if (isDark)
                     {
-                        // True OLED Deep Space (Dark)
-                        bgPrimary = "#030712";
-                        bgSecondary = "#0B0F1A";
-                        bgCard = "#111827";
-                        border = "#1F2937";
-                        borderFocus = "#6366F1";
-                        textPrimary = "#F9FAFB";
-                        textSecondary = "#9CA3AF";
-                        accent = "#6366F1";
+                        // Industrial Copper & Raw Rust Bronze (Dark)
+                        bgPrimary = "#120D0A";
+                        bgSecondary = "#1A130E";
+                        bgCard = "#241B14";
+                        border = "#3D2B1F";
+                        borderFocus = "#EA580C";
+                        textPrimary = "#FFEDD5";
+                        textSecondary = "#FB923C";
+                        accent = "#EA580C";
                         gold = "#F59E0B";
                         danger = "#EF4444";
                         success = "#10B981";
-                        warning = "#F59E0B";
-                        grad1 = "#6366F1";
-                        grad2 = "#4F46E5";
-                        logo1 = "#818CF8";
-                        logo2 = "#6366F1";
-                        logo3 = "#312E81";
+                        warning = "#F97316";
+                        grad1 = "#EA580C";
+                        grad2 = "#C2410C";
+                        logo1 = "#FDBA74";
+                        logo2 = "#EA580C";
+                        logo3 = "#7C2D12";
                     }
                     else
                     {
-                        // Clean Deep Lavender Porcelain (Light)
-                        bgPrimary = "#F8F9FA";
-                        bgSecondary = "#F1F3F9";
+                        // Clean Terracotta & Clay Porcelain (Light)
+                        bgPrimary = "#FAF9F7";
+                        bgSecondary = "#F4F0EB";
                         bgCard = "#FFFFFF";
-                        border = "#DDE2EC";
-                        borderFocus = "#4F46E5";
-                        textPrimary = "#0F172A";
-                        textSecondary = "#475569";
-                        accent = "#4F46E5";
-                        gold = "#D97706";
-                        danger = "#DC2626";
-                        success = "#16A34A";
-                        warning = "#D97706";
-                        grad1 = "#4F46E5";
-                        grad2 = "#3730A3";
-                        logo1 = "#6366F1";
-                        logo2 = "#4F46E5";
-                        logo3 = "#312E81";
-                    }
-                    break;
-
-                case "monokai":
-                    if (isDark)
-                    {
-                        // Monokai Pro Studio Charcoal (Dark)
-                        bgPrimary = "#19181A";
-                        bgSecondary = "#221F22";
-                        bgCard = "#2D2A2E";
-                        border = "#403E41";
-                        borderFocus = "#FFD866";
-                        textPrimary = "#FCFCFA";
-                        textSecondary = "#939293";
-                        accent = "#FF6188";
-                        gold = "#FFD866";
-                        danger = "#FF6188";
-                        success = "#A9DC76";
-                        warning = "#FC9867";
-                        grad1 = "#FF6188";
-                        grad2 = "#FC9867";
-                        logo1 = "#FFD866";
-                        logo2 = "#FF6188";
-                        logo3 = "#782236";
-                    }
-                    else
-                    {
-                        // Monokai Warm Studio Linen (Light)
-                        bgPrimary = "#FAF9F6";
-                        bgSecondary = "#F2EFE9";
-                        bgCard = "#FFFFFF";
-                        border = "#E2DDD3";
-                        borderFocus = "#D97706";
-                        textPrimary = "#1E1C1A";
-                        textSecondary = "#5E5A54";
-                        accent = "#D946EF";
+                        border = "#E6DDD3";
+                        borderFocus = "#C2410C";
+                        textPrimary = "#1C140E";
+                        textSecondary = "#5C493D";
+                        accent = "#C2410C";
                         gold = "#B45309";
-                        danger = "#E11D48";
-                        success = "#16A34A";
-                        warning = "#D97706";
-                        grad1 = "#C026D3";
-                        grad2 = "#9333EA";
-                        logo1 = "#E879F9";
-                        logo2 = "#C026D3";
-                        logo3 = "#581C87";
-                    }
-                    break;
-
-                case "nord":
-                    if (isDark)
-                    {
-                        // Arctic Polar Night (Dark)
-                        bgPrimary = "#242933";
-                        bgSecondary = "#2E3440";
-                        bgCard = "#3B4252";
-                        border = "#434C5E";
-                        borderFocus = "#88C0D0";
-                        textPrimary = "#ECEFF4";
-                        textSecondary = "#D8DEE9";
-                        accent = "#88C0D0";
-                        gold = "#EBCB8B";
-                        danger = "#BF616A";
-                        success = "#A3BE8C";
-                        warning = "#D08770";
-                        grad1 = "#88C0D0";
-                        grad2 = "#81A1C1";
-                        logo1 = "#8FBCBB";
-                        logo2 = "#88C0D0";
-                        logo3 = "#5E81AC";
-                    }
-                    else
-                    {
-                        // Snow Storm Glacier (Light)
-                        bgPrimary = "#F8FAFC";
-                        bgSecondary = "#F1F5F9";
-                        bgCard = "#FFFFFF";
-                        border = "#CBD5E1";
-                        borderFocus = "#0284C7";
-                        textPrimary = "#1E293B";
-                        textSecondary = "#475569";
-                        accent = "#0284C7";
-                        gold = "#D97706";
                         danger = "#DC2626";
                         success = "#16A34A";
-                        warning = "#D97706";
-                        grad1 = "#0284C7";
-                        grad2 = "#0369A1";
-                        logo1 = "#38BDF8";
-                        logo2 = "#0284C7";
-                        logo3 = "#0C4A6E";
+                        warning = "#EA580C";
+                        grad1 = "#C2410C";
+                        grad2 = "#9A3412";
+                        logo1 = "#EA580C";
+                        logo2 = "#C2410C";
+                        logo3 = "#7C2D12";
                     }
                     break;
 
-                case "cyberpunk":
+                case "amethyst":
                     if (isDark)
                     {
-                        // Night City Neon Noir (Dark)
-                        bgPrimary = "#0D0A14";
-                        bgSecondary = "#151022";
-                        bgCard = "#1D1630";
-                        border = "#2E224D";
-                        borderFocus = "#06B6D4";
-                        textPrimary = "#FDF4FF";
+                        // Imperial Amethyst & Midnight Violet (Dark)
+                        bgPrimary = "#0E0916";
+                        bgSecondary = "#150E22";
+                        bgCard = "#1D1330";
+                        border = "#301F52";
+                        borderFocus = "#A855F7";
+                        textPrimary = "#FAF5FF";
                         textSecondary = "#C084FC";
                         accent = "#A855F7";
                         gold = "#FBBF24";
@@ -356,76 +266,166 @@ namespace Rewind.App.Services
                         success = "#10B981";
                         warning = "#F59E0B";
                         grad1 = "#A855F7";
-                        grad2 = "#06B6D4";
-                        logo1 = "#E879F9";
+                        grad2 = "#7E22CE";
+                        logo1 = "#D8B4FE";
                         logo2 = "#A855F7";
-                        logo3 = "#3B0764";
+                        logo3 = "#581C87";
                     }
                     else
                     {
-                        // High-Tech Clean Violet Porcelain (Light)
+                        // Clean Lavender Quartz Porcelain (Light)
                         bgPrimary = "#FAF9FD";
-                        bgSecondary = "#F3F0F9";
+                        bgSecondary = "#F3EFF9";
                         bgCard = "#FFFFFF";
-                        border = "#E3DEF0";
-                        borderFocus = "#7C3AED";
-                        textPrimary = "#140F24";
-                        textSecondary = "#52446D";
-                        accent = "#7C3AED";
+                        border = "#E2DAEE";
+                        borderFocus = "#7E22CE";
+                        textPrimary = "#170F26";
+                        textSecondary = "#55446D";
+                        accent = "#7E22CE";
                         gold = "#D97706";
                         danger = "#E11D48";
                         success = "#16A34A";
                         warning = "#D97706";
-                        grad1 = "#7C3AED";
-                        grad2 = "#4F46E5";
-                        logo1 = "#A78BFA";
-                        logo2 = "#7C3AED";
-                        logo3 = "#2E1065";
+                        grad1 = "#7E22CE";
+                        grad2 = "#6B21A8";
+                        logo1 = "#A855F7";
+                        logo2 = "#7E22CE";
+                        logo3 = "#3B0764";
                     }
                     break;
 
-                case "forest":
+                case "ocean":
                     if (isDark)
                     {
-                        // Ancient Woodland Pine (Dark)
-                        bgPrimary = "#0A0F0D";
-                        bgSecondary = "#111A16";
-                        bgCard = "#18241F";
-                        border = "#253830";
-                        borderFocus = "#10B981";
-                        textPrimary = "#F0FAF4";
-                        textSecondary = "#86A896";
-                        accent = "#10B981";
-                        gold = "#E5A93C";
+                        // Deep Abyssal Teal & Marine Cyan (Dark)
+                        bgPrimary = "#060F12";
+                        bgSecondary = "#0A171C";
+                        bgCard = "#0F2128";
+                        border = "#183642";
+                        borderFocus = "#06B6D4";
+                        textPrimary = "#ECFEFF";
+                        textSecondary = "#67E8F9";
+                        accent = "#06B6D4";
+                        gold = "#F59E0B";
                         danger = "#EF4444";
                         success = "#10B981";
-                        warning = "#E5A93C";
-                        grad1 = "#10B981";
-                        grad2 = "#059669";
-                        logo1 = "#6EE7B7";
-                        logo2 = "#10B981";
-                        logo3 = "#064E3B";
+                        warning = "#F59E0B";
+                        grad1 = "#06B6D4";
+                        grad2 = "#0891B2";
+                        logo1 = "#67E8F9";
+                        logo2 = "#06B6D4";
+                        logo3 = "#164E63";
                     }
                     else
                     {
-                        // Muted Earth Moss Porcelain (Light)
-                        bgPrimary = "#F9FAF9";
-                        bgSecondary = "#F1F4F1";
+                        // Clean Marine Teal Porcelain (Light)
+                        bgPrimary = "#F8FAFB";
+                        bgSecondary = "#EEF5F7";
                         bgCard = "#FFFFFF";
-                        border = "#DBE3DC";
-                        borderFocus = "#059669";
-                        textPrimary = "#111913";
-                        textSecondary = "#435948";
-                        accent = "#059669";
+                        border = "#D7E6EA";
+                        borderFocus = "#0891B2";
+                        textPrimary = "#081A20";
+                        textSecondary = "#395863";
+                        accent = "#0891B2";
                         gold = "#D97706";
                         danger = "#DC2626";
                         success = "#16A34A";
                         warning = "#D97706";
-                        grad1 = "#059669";
-                        grad2 = "#047857";
-                        logo1 = "#34D399";
-                        logo2 = "#059669";
-                        logo3 = "#064E3B";
+                        grad1 = "#0891B2";
+                        grad2 = "#0E7490";
+                        logo1 = "#06B6D4";
+                        logo2 = "#0891B2";
+                        logo3 = "#155E75";
+                    }
+                    break;
+
+                case "solar":
+                    if (isDark)
+                    {
+                        // Solar Flare & Electric Gold Cyber (Dark)
+                        bgPrimary = "#120E04";
+                        bgSecondary = "#1A1406";
+                        bgCard = "#241C0A";
+                        border = "#3D2E0F";
+                        borderFocus = "#EAB308";
+                        textPrimary = "#FEFCE8";
+                        textSecondary = "#FACC15";
+                        accent = "#EAB308";
+                        gold = "#FACC15";
+                        danger = "#EF4444";
+                        success = "#10B981";
+                        warning = "#F59E0B";
+                        grad1 = "#EAB308";
+                        grad2 = "#CA8A04";
+                        logo1 = "#FEF08A";
+                        logo2 = "#EAB308";
+                        logo3 = "#713F12";
+                    }
+                    else
+                    {
+                        // Clean Champagne Ochre Porcelain (Light)
+                        bgPrimary = "#FAF9F5";
+                        bgSecondary = "#F4F1E7";
+                        bgCard = "#FFFFFF";
+                        border = "#E8E3D2";
+                        borderFocus = "#A16207";
+                        textPrimary = "#1C1705";
+                        textSecondary = "#5D5333";
+                        accent = "#A16207";
+                        gold = "#CA8A04";
+                        danger = "#DC2626";
+                        success = "#16A34A";
+                        warning = "#CA8A04";
+                        grad1 = "#A16207";
+                        grad2 = "#854D0E";
+                        logo1 = "#CA8A04";
+                        logo2 = "#A16207";
+                        logo3 = "#713F12";
+                    }
+                    break;
+
+                case "sage":
+                    if (isDark)
+                    {
+                        // Nordic Lichen & Eucalyptus Sage (Dark)
+                        bgPrimary = "#0D110F";
+                        bgSecondary = "#131916";
+                        bgCard = "#1A221E";
+                        border = "#2A3730";
+                        borderFocus = "#84CC16";
+                        textPrimary = "#F7FEE7";
+                        textSecondary = "#A3E635";
+                        accent = "#84CC16";
+                        gold = "#E5A93C";
+                        danger = "#EF4444";
+                        success = "#84CC16";
+                        warning = "#E5A93C";
+                        grad1 = "#84CC16";
+                        grad2 = "#65A30D";
+                        logo1 = "#BEF264";
+                        logo2 = "#84CC16";
+                        logo3 = "#365314";
+                    }
+                    else
+                    {
+                        // Clean Botanical Herb Porcelain (Light)
+                        bgPrimary = "#FAFBF9";
+                        bgSecondary = "#F1F5EE";
+                        bgCard = "#FFFFFF";
+                        border = "#DCE4D6";
+                        borderFocus = "#65A30D";
+                        textPrimary = "#121A0F";
+                        textSecondary = "#465741";
+                        accent = "#4D7C0F";
+                        gold = "#D97706";
+                        danger = "#DC2626";
+                        success = "#16A34A";
+                        warning = "#D97706";
+                        grad1 = "#4D7C0F";
+                        grad2 = "#3F6212";
+                        logo1 = "#65A30D";
+                        logo2 = "#4D7C0F";
+                        logo3 = "#1A2E05";
                     }
                     break;
 
