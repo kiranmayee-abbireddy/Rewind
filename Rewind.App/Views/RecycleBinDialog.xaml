@@ -65,7 +65,7 @@
             <!-- Empty Bin Vector Illustration -->
             <Border x:Name="BinEmptyState" Visibility="Collapsed" VerticalAlignment="Center" HorizontalAlignment="Center">
                 <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-                    <Viewbox Width="84" Height="84" Stretch="Uniform" HorizontalAlignment="Center" Margin="0,0,0,12">
+                    <Viewbox Width="180" Height="130" Stretch="Uniform" HorizontalAlignment="Center" Margin="0,0,0,12">
                         <ContentControl Template="{StaticResource EmptyRecycleBinIllustration}"/>
                     </Viewbox>
                     <TextBlock Text="Recycle Bin is empty" FontSize="14" FontWeight="SemiBold" Foreground="{DynamicResource TextPrimaryBrush}" HorizontalAlignment="Center"/>
