@@ -56,7 +56,7 @@
     </LinearGradientBrush>
 
     <!-- Theme-Adaptive Topographic Contour Line Brush -->
-    <SolidColorBrush x:Key="TopoContourBrush" Color="{DynamicResource BorderColor}" Opacity="0.55"/>
+    <SolidColorBrush x:Key="TopoContourBrush" Color="{DynamicResource BorderColor}" Opacity="0.28"/>
 
     <!-- Devin-Style Topographic Contour Iso-Curves Pattern Brush (Faithful 800x600 Reference Layout) -->
     <DrawingBrush x:Key="TopographicContourPatternBrush" Stretch="UniformToFill">

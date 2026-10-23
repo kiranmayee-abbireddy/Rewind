@@ -290,10 +290,10 @@ namespace Rewind.App.Services
             SyncBrush(dict, "SuccessBrush", "SuccessColor");
             SyncBrush(dict, "WarningBrush", "WarningColor");
 
-            // Sync Topographic Contour Brush (clearly visible and aligned with Devin reference)
+            // Sync Topographic Contour Brush (balanced transparency: visible yet non-distracting)
             if (dict["BorderColor"] is Color borderCol)
             {
-                dict["TopoContourBrush"] = new SolidColorBrush(borderCol) { Opacity = isDark ? 0.45 : 0.40 };
+                dict["TopoContourBrush"] = new SolidColorBrush(borderCol) { Opacity = isDark ? 0.28 : 0.24 };
             }
         }
 
