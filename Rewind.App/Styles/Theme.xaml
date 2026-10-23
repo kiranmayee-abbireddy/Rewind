@@ -55,70 +55,58 @@
         <GradientStop Color="{DynamicResource BgCardColor}" Offset="1.0"/>
     </LinearGradientBrush>
 
-    <!-- Theme-Adaptive Topographic Contour Line Brush -->
-    <SolidColorBrush x:Key="TopoContourBrush" Color="{DynamicResource BorderColor}" Opacity="0.28"/>
+    <!-- Theme-Adaptive Wave Contour Brushes (Multi-depth layered opacities) -->
+    <SolidColorBrush x:Key="WavePrimaryBrush" Color="{DynamicResource AccentColor}" Opacity="0.12"/>
+    <SolidColorBrush x:Key="WaveSecondaryBrush" Color="{DynamicResource BorderFocusColor}" Opacity="0.22"/>
+    <SolidColorBrush x:Key="WaveTertiaryBrush" Color="{DynamicResource BorderColor}" Opacity="0.30"/>
 
-    <!-- Devin-Style Topographic Contour Iso-Curves Pattern Brush (Faithful 800x600 Reference Layout) -->
-    <DrawingBrush x:Key="TopographicContourPatternBrush" Stretch="UniformToFill">
+    <!-- Theme-Adaptive Smooth Studio Wave Pattern Brush (Clean 900x600 Elegant Flowing Waves) -->
+    <DrawingBrush x:Key="StudioWavePatternBrush" Stretch="UniformToFill">
         <DrawingBrush.Drawing>
             <DrawingGroup>
-                <!-- Transparent background so the rich gradient shows underneath -->
+                <!-- Transparent background letting the theme gradient breathe through -->
                 <GeometryDrawing Brush="Transparent">
                     <GeometryDrawing.Geometry>
-                        <RectangleGeometry Rect="0,0,800,600"/>
+                        <RectangleGeometry Rect="0,0,900,600"/>
                     </GeometryDrawing.Geometry>
                 </GeometryDrawing>
                 
-                <!-- 1. Authentic Devin Large Rounded Hexagonal Mechanical Gear/Aura (Anchored on Left Center) -->
+                <!-- Wave Layer 1: Ambient Deep Background Wave (Primary Accent tinted ribbon) -->
                 <GeometryDrawing>
                     <GeometryDrawing.Pen>
-                        <Pen Brush="{DynamicResource TopoContourBrush}" Thickness="1.4" LineJoin="Round" StartLineCap="Round" EndLineCap="Round"/>
+                        <Pen Brush="{DynamicResource WavePrimaryBrush}" Thickness="2.0" LineJoin="Round" StartLineCap="Round" EndLineCap="Round"/>
                     </GeometryDrawing.Pen>
                     <GeometryDrawing.Geometry>
-                        <!-- Rounded hexagonal contour on left-center -->
                         <PathGeometry Figures="
-                            M -120,80 L 80,180 A 60,60 0 0 1 110,230 L 110,370 A 60,60 0 0 1 80,420 L -120,520
-                            M -170,30 L 120,150 A 90,90 0 0 1 160,220 L 160,380 A 90,90 0 0 1 120,450 L -170,570
+                            M -60,220 C 140,120 280,360 480,260 C 680,160 780,340 960,220
+                            M -60,270 C 140,170 280,410 480,310 C 680,210 780,390 960,270
                         "/>
                     </GeometryDrawing.Geometry>
                 </GeometryDrawing>
 
-                <!-- 2. Smooth Top-Left Flowing S-Curves & Contours -->
+                <!-- Wave Layer 2: Main Dynamic Crest Waves (Focus Tint, gentle sweeping peaks) -->
                 <GeometryDrawing>
                     <GeometryDrawing.Pen>
-                        <Pen Brush="{DynamicResource TopoContourBrush}" Thickness="1.4" LineJoin="Round" StartLineCap="Round" EndLineCap="Round"/>
+                        <Pen Brush="{DynamicResource WaveSecondaryBrush}" Thickness="1.5" LineJoin="Round" StartLineCap="Round" EndLineCap="Round"/>
                     </GeometryDrawing.Pen>
                     <GeometryDrawing.Geometry>
                         <PathGeometry Figures="
-                            M -80,50 C 40,50 80,-40 220,-40 C 360,-40 420,50 560,50 C 700,50 740,-30 840,-30
-                            M -80,-10 C 60,-10 100,-90 240,-90 C 380,-90 440,-10 580,-10 C 720,-10 760,-80 860,-80
+                            M -60,340 C 120,240 260,460 450,380 C 640,300 760,440 960,320
+                            M -60,390 C 120,290 260,510 450,430 C 640,350 760,490 960,370
+                            M -60,440 C 120,340 260,560 450,480 C 640,400 760,540 960,420
                         "/>
                     </GeometryDrawing.Geometry>
                 </GeometryDrawing>
 
-                <!-- 3. Dynamic Organic Flowing Ribbons Traversing Upper-Right to Lower-Left -->
+                <!-- Wave Layer 3: Lower Harmonious Echo Waves (Crisp border-tinted rhythmic curves) -->
                 <GeometryDrawing>
                     <GeometryDrawing.Pen>
-                        <Pen Brush="{DynamicResource TopoContourBrush}" Thickness="1.4" LineJoin="Round" StartLineCap="Round" EndLineCap="Round"/>
+                        <Pen Brush="{DynamicResource WaveTertiaryBrush}" Thickness="1.2" LineJoin="Round" StartLineCap="Round" EndLineCap="Round"/>
                     </GeometryDrawing.Pen>
                     <GeometryDrawing.Geometry>
                         <PathGeometry Figures="
-                            M -40,300 C 60,300 130,220 180,140 C 230,60 310,0 440,0 C 580,0 660,90 710,180 C 760,270 820,330 900,330
-                            M -40,430 C 80,430 160,340 220,240 C 280,140 370,80 500,80 C 630,80 710,170 760,260 C 800,340 850,400 900,410
-                            M -40,560 C 100,560 190,460 260,340 C 330,220 430,160 560,160 C 690,160 760,250 810,340 C 840,400 870,460 900,480
-                        "/>
-                    </GeometryDrawing.Geometry>
-                </GeometryDrawing>
-
-                <!-- 4. Devin Circular Orbit Contour on the Mid-Right (Where the avocado companion floats) -->
-                <GeometryDrawing>
-                    <GeometryDrawing.Pen>
-                        <Pen Brush="{DynamicResource TopoContourBrush}" Thickness="1.4" LineJoin="Round" StartLineCap="Round" EndLineCap="Round"/>
-                    </GeometryDrawing.Pen>
-                    <GeometryDrawing.Geometry>
-                        <PathGeometry Figures="
-                            M 840,110 A 240,240 0 0 0 600,350 A 240,240 0 0 0 840,590
-                            M 840,180 A 170,170 0 0 0 670,350 A 170,170 0 0 0 840,520
+                            M -60,490 C 150,410 300,600 500,520 C 700,440 800,550 960,480
+                            M -60,540 C 150,460 300,650 500,570 C 700,490 800,600 960,530
                         "/>
                     </GeometryDrawing.Geometry>
                 </GeometryDrawing>

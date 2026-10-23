@@ -290,10 +290,18 @@ namespace Rewind.App.Services
             SyncBrush(dict, "SuccessBrush", "SuccessColor");
             SyncBrush(dict, "WarningBrush", "WarningColor");
 
-            // Sync Topographic Contour Brush (balanced transparency: visible yet non-distracting)
+            // Sync Theme-Adaptive Wave Contour Brushes (Dynamic opacities & colors for Dark/Light modes)
+            if (dict["AccentColor"] is Color accentCol)
+            {
+                dict["WavePrimaryBrush"] = new SolidColorBrush(accentCol) { Opacity = isDark ? 0.16 : 0.12 };
+            }
+            if (dict["BorderFocusColor"] is Color borderFocusCol)
+            {
+                dict["WaveSecondaryBrush"] = new SolidColorBrush(borderFocusCol) { Opacity = isDark ? 0.26 : 0.20 };
+            }
             if (dict["BorderColor"] is Color borderCol)
             {
-                dict["TopoContourBrush"] = new SolidColorBrush(borderCol) { Opacity = isDark ? 0.28 : 0.24 };
+                dict["WaveTertiaryBrush"] = new SolidColorBrush(borderCol) { Opacity = isDark ? 0.32 : 0.26 };
             }
         }
 
