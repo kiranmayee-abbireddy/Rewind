@@ -204,6 +204,231 @@ namespace Rewind.App.Services
                     }
                     break;
 
+                case "midnight":
+                    if (isDark)
+                    {
+                        // True OLED Deep Space (Dark)
+                        bgPrimary = "#030712";
+                        bgSecondary = "#0B0F1A";
+                        bgCard = "#111827";
+                        border = "#1F2937";
+                        borderFocus = "#6366F1";
+                        textPrimary = "#F9FAFB";
+                        textSecondary = "#9CA3AF";
+                        accent = "#6366F1";
+                        gold = "#F59E0B";
+                        danger = "#EF4444";
+                        success = "#10B981";
+                        warning = "#F59E0B";
+                        grad1 = "#6366F1";
+                        grad2 = "#4F46E5";
+                        logo1 = "#818CF8";
+                        logo2 = "#6366F1";
+                        logo3 = "#312E81";
+                    }
+                    else
+                    {
+                        // Clean Deep Lavender Porcelain (Light)
+                        bgPrimary = "#F8F9FA";
+                        bgSecondary = "#F1F3F9";
+                        bgCard = "#FFFFFF";
+                        border = "#DDE2EC";
+                        borderFocus = "#4F46E5";
+                        textPrimary = "#0F172A";
+                        textSecondary = "#475569";
+                        accent = "#4F46E5";
+                        gold = "#D97706";
+                        danger = "#DC2626";
+                        success = "#16A34A";
+                        warning = "#D97706";
+                        grad1 = "#4F46E5";
+                        grad2 = "#3730A3";
+                        logo1 = "#6366F1";
+                        logo2 = "#4F46E5";
+                        logo3 = "#312E81";
+                    }
+                    break;
+
+                case "monokai":
+                    if (isDark)
+                    {
+                        // Monokai Pro Studio Charcoal (Dark)
+                        bgPrimary = "#19181A";
+                        bgSecondary = "#221F22";
+                        bgCard = "#2D2A2E";
+                        border = "#403E41";
+                        borderFocus = "#FFD866";
+                        textPrimary = "#FCFCFA";
+                        textSecondary = "#939293";
+                        accent = "#FF6188";
+                        gold = "#FFD866";
+                        danger = "#FF6188";
+                        success = "#A9DC76";
+                        warning = "#FC9867";
+                        grad1 = "#FF6188";
+                        grad2 = "#FC9867";
+                        logo1 = "#FFD866";
+                        logo2 = "#FF6188";
+                        logo3 = "#782236";
+                    }
+                    else
+                    {
+                        // Monokai Warm Studio Linen (Light)
+                        bgPrimary = "#FAF9F6";
+                        bgSecondary = "#F2EFE9";
+                        bgCard = "#FFFFFF";
+                        border = "#E2DDD3";
+                        borderFocus = "#D97706";
+                        textPrimary = "#1E1C1A";
+                        textSecondary = "#5E5A54";
+                        accent = "#D946EF";
+                        gold = "#B45309";
+                        danger = "#E11D48";
+                        success = "#16A34A";
+                        warning = "#D97706";
+                        grad1 = "#C026D3";
+                        grad2 = "#9333EA";
+                        logo1 = "#E879F9";
+                        logo2 = "#C026D3";
+                        logo3 = "#581C87";
+                    }
+                    break;
+
+                case "nord":
+                    if (isDark)
+                    {
+                        // Arctic Polar Night (Dark)
+                        bgPrimary = "#242933";
+                        bgSecondary = "#2E3440";
+                        bgCard = "#3B4252";
+                        border = "#434C5E";
+                        borderFocus = "#88C0D0";
+                        textPrimary = "#ECEFF4";
+                        textSecondary = "#D8DEE9";
+                        accent = "#88C0D0";
+                        gold = "#EBCB8B";
+                        danger = "#BF616A";
+                        success = "#A3BE8C";
+                        warning = "#D08770";
+                        grad1 = "#88C0D0";
+                        grad2 = "#81A1C1";
+                        logo1 = "#8FBCBB";
+                        logo2 = "#88C0D0";
+                        logo3 = "#5E81AC";
+                    }
+                    else
+                    {
+                        // Snow Storm Glacier (Light)
+                        bgPrimary = "#F8FAFC";
+                        bgSecondary = "#F1F5F9";
+                        bgCard = "#FFFFFF";
+                        border = "#CBD5E1";
+                        borderFocus = "#0284C7";
+                        textPrimary = "#1E293B";
+                        textSecondary = "#475569";
+                        accent = "#0284C7";
+                        gold = "#D97706";
+                        danger = "#DC2626";
+                        success = "#16A34A";
+                        warning = "#D97706";
+                        grad1 = "#0284C7";
+                        grad2 = "#0369A1";
+                        logo1 = "#38BDF8";
+                        logo2 = "#0284C7";
+                        logo3 = "#0C4A6E";
+                    }
+                    break;
+
+                case "cyberpunk":
+                    if (isDark)
+                    {
+                        // Night City Neon Noir (Dark)
+                        bgPrimary = "#0D0A14";
+                        bgSecondary = "#151022";
+                        bgCard = "#1D1630";
+                        border = "#2E224D";
+                        borderFocus = "#06B6D4";
+                        textPrimary = "#FDF4FF";
+                        textSecondary = "#C084FC";
+                        accent = "#A855F7";
+                        gold = "#FBBF24";
+                        danger = "#F43F5E";
+                        success = "#10B981";
+                        warning = "#F59E0B";
+                        grad1 = "#A855F7";
+                        grad2 = "#06B6D4";
+                        logo1 = "#E879F9";
+                        logo2 = "#A855F7";
+                        logo3 = "#3B0764";
+                    }
+                    else
+                    {
+                        // High-Tech Clean Violet Porcelain (Light)
+                        bgPrimary = "#FAF9FD";
+                        bgSecondary = "#F3F0F9";
+                        bgCard = "#FFFFFF";
+                        border = "#E3DEF0";
+                        borderFocus = "#7C3AED";
+                        textPrimary = "#140F24";
+                        textSecondary = "#52446D";
+                        accent = "#7C3AED";
+                        gold = "#D97706";
+                        danger = "#E11D48";
+                        success = "#16A34A";
+                        warning = "#D97706";
+                        grad1 = "#7C3AED";
+                        grad2 = "#4F46E5";
+                        logo1 = "#A78BFA";
+                        logo2 = "#7C3AED";
+                        logo3 = "#2E1065";
+                    }
+                    break;
+
+                case "forest":
+                    if (isDark)
+                    {
+                        // Ancient Woodland Pine (Dark)
+                        bgPrimary = "#0A0F0D";
+                        bgSecondary = "#111A16";
+                        bgCard = "#18241F";
+                        border = "#253830";
+                        borderFocus = "#10B981";
+                        textPrimary = "#F0FAF4";
+                        textSecondary = "#86A896";
+                        accent = "#10B981";
+                        gold = "#E5A93C";
+                        danger = "#EF4444";
+                        success = "#10B981";
+                        warning = "#E5A93C";
+                        grad1 = "#10B981";
+                        grad2 = "#059669";
+                        logo1 = "#6EE7B7";
+                        logo2 = "#10B981";
+                        logo3 = "#064E3B";
+                    }
+                    else
+                    {
+                        // Muted Earth Moss Porcelain (Light)
+                        bgPrimary = "#F9FAF9";
+                        bgSecondary = "#F1F4F1";
+                        bgCard = "#FFFFFF";
+                        border = "#DBE3DC";
+                        borderFocus = "#059669";
+                        textPrimary = "#111913";
+                        textSecondary = "#435948";
+                        accent = "#059669";
+                        gold = "#D97706";
+                        danger = "#DC2626";
+                        success = "#16A34A";
+                        warning = "#D97706";
+                        grad1 = "#059669";
+                        grad2 = "#047857";
+                        logo1 = "#34D399";
+                        logo2 = "#059669";
+                        logo3 = "#064E3B";
+                    }
+                    break;
+
                 case "slate":
                 default:
                     if (isDark)

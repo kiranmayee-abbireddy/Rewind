@@ -52,10 +52,15 @@
                         <TextBlock Text="Cinematic Studio Color Theme" FontSize="12.5" FontWeight="SemiBold" Foreground="{DynamicResource TextPrimaryBrush}" Margin="0,0,0,4"/>
                         <ComboBox x:Name="ColorPaletteCombo" SelectionChanged="ThemeSelection_Changed" Background="{DynamicResource BgCardBrush}" Foreground="{DynamicResource TextPrimaryBrush}" BorderBrush="{DynamicResource BorderBrush}">
                             <ComboBoxItem Content="🎬 Studio Slate (DaVinci Neutral)" IsSelected="True"/>
-                            <ComboBoxItem Content="🌲 Imperial Emerald (Cyber / Matrix)"/>
-                            <ComboBoxItem Content="🍷 Velvet Burgundy (Screening Noir)"/>
-                            <ComboBoxItem Content="🍯 Amber Obsidian (Film Director Warm)"/>
+                            <ComboBoxItem Content="🌲 Imperial Emerald (Sage / Studio)"/>
+                            <ComboBoxItem Content="🍷 Velvet Burgundy (Rose / Noir)"/>
+                            <ComboBoxItem Content="🍯 Amber Obsidian (Warm Sand / Honey)"/>
                             <ComboBoxItem Content="💎 Midnight Sapphire (CleanShot Blue)"/>
+                            <ComboBoxItem Content="🌌 Deep Midnight (OLED Indigo)"/>
+                            <ComboBoxItem Content="🎨 Monokai Pro (Dev Studio Warm)"/>
+                            <ComboBoxItem Content="❄️ Nord Frost (Arctic Clean Slate)"/>
+                            <ComboBoxItem Content="⚡ Cyberpunk Neon (Synthwave Violet)"/>
+                            <ComboBoxItem Content="🌿 Woodland Forest (Evergreen Pine)"/>
                         </ComboBox>
                     </StackPanel>
 
