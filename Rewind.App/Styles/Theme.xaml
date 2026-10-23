@@ -332,277 +332,52 @@
         </Viewbox>
     </ControlTemplate>
 
-    <!-- 1. EMPTY SESSIONS ILLUSTRATION (Scenic: Avocado QA Analyst at desk with coffee, holding clipboard, cozy studio backdrop) -->
+    <!-- 1. EMPTY SESSIONS ILLUSTRATION: Curious Eager Avocado with wide sparkly anime eyes & gentle blink holding blank card -->
     <ControlTemplate x:Key="EmptySessionsIllustration">
-        <Viewbox Width="220" Height="170" Stretch="Uniform" HorizontalAlignment="Center" VerticalAlignment="Center">
-            <Canvas Width="260" Height="200">
-                <!-- Atmospheric Scenic Backdrop: Soft Organic Blobs & Studio Lighting -->
-                <Path Data="M 30,120 C 20,60 80,25 150,30 C 220,35 250,90 230,150 C 210,190 120,195 60,180 C 35,170 35,150 30,120 Z" 
-                      Fill="{DynamicResource BgCardBrush}" Opacity="0.85">
-                    <Path.Effect>
-                        <BlurEffect Radius="14"/>
-                    </Path.Effect>
-                </Path>
-                <!-- Secondary decorative pastel blob layer -->
-                <Path Data="M 50,110 C 45,70 95,45 155,50 C 205,55 220,95 210,135 C 195,165 125,175 75,160 Z" 
-                      Fill="{DynamicResource BgSecondaryBrush}" Opacity="0.55"/>
-
-                <!-- Background QA Blueprint / Timeline Grid lines -->
-                <Path Data="M 45,70 L 215,70 M 45,100 L 215,100 M 45,130 L 215,130" Stroke="{DynamicResource BorderBrush}" StrokeThickness="1" StrokeDashArray="3 4" Opacity="0.35"/>
-                <Path Data="M 80,50 L 80,150 M 140,50 L 140,150 M 190,50 L 190,150" Stroke="{DynamicResource BorderBrush}" StrokeThickness="1" StrokeDashArray="3 4" Opacity="0.35"/>
-
-                <!-- Ground / Studio Platform Shadow -->
-                <Ellipse Canvas.Left="35" Canvas.Top="165" Width="190" Height="18" Fill="#16000000"/>
-
-                <!-- Left Prop: Cozy QA Analyst Desk Lamp & Steaming Coffee Cup -->
-                <Canvas Canvas.Left="35" Canvas.Top="90" Width="45" Height="80">
-                    <!-- Desk Surface line -->
-                    <Line X1="0" Y1="75" X2="45" Y2="75" Stroke="{DynamicResource BorderBrush}" StrokeThickness="2" StrokeStartLineCap="Round" StrokeEndLineCap="Round"/>
-                    <!-- Ceramic Coffee Mug -->
-                    <Path Data="M 12,54 L 14,74 C 14,75 26,75 26,74 L 28,54 Z" Fill="{DynamicResource AccentBrush}" Opacity="0.85"/>
-                    <Path Data="M 27,58 C 32,58 32,68 26,69" Stroke="{DynamicResource AccentBrush}" StrokeThickness="2" Fill="Transparent" Opacity="0.85"/>
-                    <!-- Steam Whiffs from Coffee -->
-                    <Path Data="M 17,48 C 15,44 20,40 18,36" Stroke="{DynamicResource TextSecondaryBrush}" StrokeThickness="1.5" StrokeStartLineCap="Round" Fill="Transparent" Opacity="0.45"/>
-                    <Path Data="M 23,50 C 21,45 26,42 24,38" Stroke="{DynamicResource TextSecondaryBrush}" StrokeThickness="1.5" StrokeStartLineCap="Round" Fill="Transparent" Opacity="0.35"/>
-                    <!-- Small Sticky Note pinned -->
-                    <Border Canvas.Left="2" Canvas.Top="20" Width="18" Height="18" Background="#FEF08A" CornerRadius="2" BorderBrush="#EAB308" BorderThickness="0.8">
-                        <Path Data="M 3,5 L 14,5 M 3,9 L 11,9 M 3,13 L 8,13" Stroke="#A16207" StrokeThickness="1.2" StrokeStartLineCap="Round"/>
-                    </Border>
-                </Canvas>
-
-                <!-- Right Prop: Floating Session Clocks & Target Checkmarks -->
-                <Canvas Canvas.Left="195" Canvas.Top="55" Width="50" Height="65">
-                    <!-- Mini Clock Bubble -->
-                    <Border Width="28" Height="28" CornerRadius="14" Background="{DynamicResource BgCardBrush}" BorderBrush="{DynamicResource BorderBrush}" BorderThickness="1.5">
-                        <Canvas>
-                            <Ellipse Canvas.Left="3" Canvas.Top="3" Width="20" Height="20" Stroke="{DynamicResource AccentBrush}" StrokeThickness="1.5" Fill="Transparent"/>
-                            <Line X1="13" Y1="13" X2="13" Y2="8" Stroke="{DynamicResource TextPrimaryBrush}" StrokeThickness="1.5" StrokeStartLineCap="Round"/>
-                            <Line X1="13" Y1="13" X2="18" Y2="13" Stroke="{DynamicResource TextPrimaryBrush}" StrokeThickness="1.5" StrokeStartLineCap="Round"/>
-                            <Ellipse Canvas.Left="11.5" Canvas.Top="11.5" Width="3" Height="3" Fill="{DynamicResource AccentBrush}"/>
-                        </Canvas>
-                    </Border>
-                    <!-- Floating Celebration Gold Sparkle -->
-                    <Path Data="M 0,5 Q 5,5 5,0 Q 5,5 10,5 Q 5,5 5,10 Q 5,5 0,5 Z" Fill="{DynamicResource GoldBrush}" Canvas.Left="30" Canvas.Top="35"/>
-                    <Path Data="M 0,3 Q 3,3 3,0 Q 3,3 6,3 Q 3,3 3,6 Q 3,3 0,3 Z" Fill="{DynamicResource SuccessBrush}" Canvas.Left="4" Canvas.Top="42"/>
-                </Canvas>
-
-                <!-- Center Character: Excited Inquisitive Avocado Mascot Behind a Large Blank QA Sessions Board -->
-                <!-- Mascot Upper Body & Head (Peeking over and around the whiteboard, holding it with both hands) -->
-                <Canvas Canvas.Left="95" Canvas.Top="25" Width="80" Height="100">
-                    <!-- Top Stem & Leaf -->
-                    <Path Data="M 37,20 C 37,12 40,8 40,4 C 44,4 43,8 41,12 C 39,17 39,20 39,20 Z" Fill="#633917" Stroke="#381E09" StrokeThickness="2" StrokeLineJoin="Round"/>
-                    <Path x:Name="SessionsLeafWave" Data="M 40,13 C 58,7 63,17 53,23 C 46,26 41,19 40,13 Z" Fill="#4CAF50" Stroke="#163814" StrokeThickness="2" RenderTransformOrigin="0.0,0.7">
-                        <Path.RenderTransform>
-                            <RotateTransform Angle="0"/>
-                        </Path.RenderTransform>
-                    </Path>
-
-                    <!-- Outer Avocado Rind (Pear Silhouette) -->
-                    <Path Data="M 38,18 C 58,18 70,32 70,54 C 75,72 80,96 68,104 C 56,112 24,112 12,104 C 0,96 5,72 10,54 C 10,32 20,18 38,18 Z"
-                          Fill="#235020" Stroke="#143212" StrokeThickness="3.5" StrokeLineJoin="Round"/>
-                    <!-- Lime Green Inner Layer -->
-                    <Path Data="M 38,21 C 55,21 66,34 66,54 C 71,71 76,93 65,100 C 54,107 26,107 15,100 C 5,93 9,71 14,54 C 14,34 23,21 38,21 Z"
-                          Fill="#80C838"/>
-                    <!-- Creamy Flesh -->
-                    <Path Data="M 38,24 C 52,24 62,36 62,55 C 67,71 72,90 62,97 C 52,104 28,104 18,97 C 9,90 13,71 18,55 C 18,36 26,24 38,24 Z"
-                          Fill="#E6F587"/>
-
-                    <!-- Big Seed Pit with rich 3D sphere gradient -->
-                    <Ellipse Canvas.Left="23" Canvas.Top="57" Width="32" Height="32" Fill="#B35B1C" Stroke="#66310C" StrokeThickness="2.2"/>
-                    <Ellipse Canvas.Left="24" Canvas.Top="58" Width="30" Height="30">
-                        <Ellipse.Fill>
-                            <RadialGradientBrush Center="0.38,0.35" GradientOrigin="0.38,0.35" RadiusX="0.65" RadiusY="0.65">
-                                <GradientStop Color="#FFA756" Offset="0"/>
-                                <GradientStop Color="#DE7B2C" Offset="0.25"/>
-                                <GradientStop Color="#B35B1C" Offset="0.6"/>
-                                <GradientStop Color="#783408" Offset="0.9"/>
-                                <GradientStop Color="#4A1E03" Offset="1"/>
-                            </RadialGradientBrush>
-                        </Ellipse.Fill>
-                    </Ellipse>
-                    <!-- Pit Shine Arc & Specular Dot -->
-                    <Path Data="M 28,67 A 9,9 0 0 1 42,61" Stroke="#FFFFFF" StrokeThickness="2" StrokeStartLineCap="Round" StrokeEndLineCap="Round" Opacity="0.75"/>
-                    <Ellipse Canvas.Left="30" Canvas.Top="64" Width="3.5" Height="2.5" Fill="#FFFFFF" Opacity="0.85"/>
-
-                    <!-- Kawaii Face: Rosy Blushing Cheeks -->
-                    <Ellipse Canvas.Left="19" Canvas.Top="44" Width="9" Height="5.5" Fill="#FFA1A1" Opacity="0.85"/>
-                    <Ellipse Canvas.Left="49" Canvas.Top="44" Width="9" Height="5.5" Fill="#FFA1A1" Opacity="0.85"/>
-
-                    <!-- Cute Eyebrows tilted eagerly -->
-                    <Path Data="M 25,32 Q 30,28 34,31" Stroke="#163814" StrokeThickness="2" StrokeStartLineCap="Round" StrokeEndLineCap="Round"/>
-                    <Path Data="M 43,31 Q 47,28 52,32" Stroke="#163814" StrokeThickness="2" StrokeStartLineCap="Round" StrokeEndLineCap="Round"/>
-
-                    <!-- Wide Sparkly Anime Curious Eyes -->
-                    <Canvas x:Name="SessionsLeftEye" Canvas.Left="26" Canvas.Top="35" Width="10" Height="11">
-                        <Ellipse Width="10" Height="11" Fill="#141414"/>
-                        <Ellipse Canvas.Left="2" Canvas.Top="1.5" Width="4.5" Height="4.5" Fill="#FFFFFF"/>
-                        <Ellipse Canvas.Left="6" Canvas.Top="6.8" Width="2" Height="2" Fill="#FFFFFF"/>
-                    </Canvas>
-                    <Canvas x:Name="SessionsRightEye" Canvas.Left="42" Canvas.Top="35" Width="10" Height="11">
-                        <Ellipse Width="10" Height="11" Fill="#141414"/>
-                        <Ellipse Canvas.Left="3" Canvas.Top="1.5" Width="4.5" Height="4.5" Fill="#FFFFFF"/>
-                        <Ellipse Canvas.Left="2" Canvas.Top="6.8" Width="2" Height="2" Fill="#FFFFFF"/>
-                    </Canvas>
-
-                    <!-- Cheerful Inquisitive Smile -->
-                    <Path Data="M 34,44 Q 38,50 43,44" Stroke="#141414" StrokeThickness="2.2" StrokeStartLineCap="Round" StrokeEndLineCap="Round"/>
-                </Canvas>
-
-                <!-- Foreground Element: Prominent Presentation Whiteboard / QA Session Card Held by Mascot -->
-                <!-- The mascot is holding this large clean board from the sides, exactly like the human holding signboards in the examples -->
-                <Canvas Canvas.Left="55" Canvas.Top="95" Width="150" Height="85">
-                    <!-- Drop Shadow for Board -->
-                    <Border Width="146" Height="80" Canvas.Left="3" Canvas.Top="3" CornerRadius="10" Background="#18000000"/>
-                    <!-- Main Board Card with Clean Accent Header Strip -->
-                    <Border Width="146" Height="80" CornerRadius="10" Background="{DynamicResource BgCardBrush}" BorderBrush="{DynamicResource BorderBrush}" BorderThickness="2">
-                        <Grid Margin="10,8">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="*"/>
-                            </Grid.RowDefinitions>
-                            <!-- Mini Card Title Bar with 3 Window Dots & Header Badge -->
-                            <StackPanel Grid.Row="0" Orientation="Horizontal" VerticalAlignment="Center">
-                                <Ellipse Width="6" Height="6" Fill="#EF4444" Margin="0,0,4,0"/>
-                                <Ellipse Width="6" Height="6" Fill="#F59E0B" Margin="0,0,4,0"/>
-                                <Ellipse Width="6" Height="6" Fill="#10B981" Margin="0,0,10,0"/>
-                                <Border Background="{DynamicResource BgSecondaryBrush}" CornerRadius="4" Padding="6,2">
-                                    <TextBlock Text="TEST LOG" FontSize="8.5" FontWeight="Bold" Foreground="{DynamicResource TextSecondaryBrush}"/>
-                                </Border>
-                            </StackPanel>
-                            <!-- Empty Checklist Mockup Lines with Pending Radio Circles -->
-                            <StackPanel Grid.Row="1" VerticalAlignment="Center" Margin="2,4,0,0">
-                                <StackPanel Orientation="Horizontal" Margin="0,2">
-                                    <Ellipse Width="7" Height="7" Stroke="{DynamicResource AccentBrush}" StrokeThickness="1.5" Margin="0,0,6,0"/>
-                                    <Rectangle Width="90" Height="3" RadiusX="1.5" RadiusY="1.5" Fill="{DynamicResource TextSecondaryBrush}" Opacity="0.5"/>
-                                </StackPanel>
-                                <StackPanel Orientation="Horizontal" Margin="0,4">
-                                    <Ellipse Width="7" Height="7" Stroke="{DynamicResource BorderBrush}" StrokeThickness="1.5" Margin="0,0,6,0"/>
-                                    <Rectangle Width="70" Height="3" RadiusX="1.5" RadiusY="1.5" Fill="{DynamicResource BorderBrush}" Opacity="0.6"/>
-                                </StackPanel>
-                                <StackPanel Orientation="Horizontal" Margin="0,2">
-                                    <Ellipse Width="7" Height="7" Stroke="{DynamicResource BorderBrush}" StrokeThickness="1.5" Margin="0,0,6,0"/>
-                                    <Rectangle Width="50" Height="3" RadiusX="1.5" RadiusY="1.5" Fill="{DynamicResource BorderBrush}" Opacity="0.4"/>
-                                </StackPanel>
-                            </StackPanel>
-                        </Grid>
-                    </Border>
-
-                    <!-- Mascot's Cute Green Paws / Hands Clamping the Board on Left and Right (Overlapping the frame) -->
-                    <!-- Left Paw holding board edge -->
-                    <Canvas Canvas.Left="-8" Canvas.Top="20" Width="18" Height="22">
-                        <Ellipse Width="16" Height="20" Fill="#70B843" Stroke="#163814" StrokeThickness="2.2"/>
-                        <Path Data="M 4,7 C 7,7 9,9 8,14" Stroke="#569A2E" StrokeThickness="1.5" StrokeStartLineCap="Round"/>
-                    </Canvas>
-                    <!-- Right Paw holding board edge -->
-                    <Canvas Canvas.Left="138" Canvas.Top="20" Width="18" Height="22">
-                        <Ellipse Width="16" Height="20" Fill="#70B843" Stroke="#163814" StrokeThickness="2.2"/>
-                        <Path Data="M 12,7 C 9,7 7,9 8,14" Stroke="#569A2E" StrokeThickness="1.5" StrokeStartLineCap="Round"/>
-                    </Canvas>
-                </Canvas>
-            </Canvas>
-        </Viewbox>
-        <ControlTemplate.Triggers>
-            <EventTrigger RoutedEvent="Loaded">
-                <BeginStoryboard>
-                    <Storyboard RepeatBehavior="Forever">
-                        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="SessionsLeafWave" Storyboard.TargetProperty="(UIElement.RenderTransform).(RotateTransform.Angle)">
-                            <SplineDoubleKeyFrame KeyTime="0:0:0" Value="0"/>
-                            <SplineDoubleKeyFrame KeyTime="0:0:0.75" Value="10"/>
-                            <SplineDoubleKeyFrame KeyTime="0:0:1.5" Value="-5"/>
-                            <SplineDoubleKeyFrame KeyTime="0:0:2.25" Value="8"/>
-                            <SplineDoubleKeyFrame KeyTime="0:0:3.0" Value="0"/>
-                        </DoubleAnimationUsingKeyFrames>
-                    </Storyboard>
-                </BeginStoryboard>
-            </EventTrigger>
-        </ControlTemplate.Triggers>
-    </ControlTemplate>
-
-    <!-- 2. EMPTY BUGS & EVIDENCE ILLUSTRATION (Scenic: High-tech QA Command Center, Avocado Detective holding Large Zero-Defect Inspection Shield/Signboard) -->
-    <ControlTemplate x:Key="EmptyBugsIllustration">
-        <Viewbox Width="240" Height="180" Stretch="Uniform" HorizontalAlignment="Center" VerticalAlignment="Center">
-            <Canvas Width="280" Height="210">
-                <!-- Atmospheric Scenic Backdrop: Modern Architectural Hex / Halo Gradient & Cloud Blobs -->
-                <Path Data="M 40,110 C 20,45 85,20 160,25 C 235,30 265,85 250,150 C 235,200 130,205 65,190 C 35,175 45,145 40,110 Z" 
-                      Fill="{DynamicResource BgCardBrush}" Opacity="0.9">
-                    <Path.Effect>
-                        <BlurEffect Radius="18"/>
-                    </Path.Effect>
-                </Path>
-                <!-- Secondary Layer Soft Cyan/Emerald Glow -->
-                <Ellipse Canvas.Left="55" Canvas.Top="35" Width="170" Height="130" Fill="{DynamicResource SuccessBrush}" Opacity="0.08">
+        <Viewbox Width="200" Height="150" Stretch="Uniform" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <Canvas Width="220" Height="170">
+                <!-- Soft Warm Ambient Glow -->
+                <Ellipse Canvas.Left="25" Canvas.Top="15" Width="170" Height="130" Fill="{DynamicResource BgCardBrush}" Opacity="0.85">
                     <Ellipse.Effect>
-                        <BlurEffect Radius="25"/>
+                        <BlurEffect Radius="20"/>
                     </Ellipse.Effect>
                 </Ellipse>
 
-                <!-- Floating QA Radar Screen & Constellation Lines in Background -->
-                <Path Data="M 30,80 L 100,50 L 180,60 L 250,45" Stroke="{DynamicResource BorderBrush}" StrokeThickness="1.5" StrokeDashArray="3 3" Opacity="0.5"/>
-                <Ellipse Canvas.Left="98" Canvas.Top="48" Width="5" Height="5" Fill="{DynamicResource AccentBrush}" Opacity="0.7"/>
-                <Ellipse Canvas.Left="178" Canvas.Top="58" Width="5" Height="5" Fill="{DynamicResource SuccessBrush}" Opacity="0.7"/>
-                <Ellipse Canvas.Left="248" Canvas.Top="43" Width="5" Height="5" Fill="{DynamicResource GoldBrush}" Opacity="0.7"/>
+                <!-- Ground Shadow -->
+                <Ellipse Canvas.Left="35" Canvas.Top="145" Width="150" Height="14" Fill="#14000000"/>
 
-                <!-- Ground Platform Drop Shadow -->
-                <Ellipse Canvas.Left="45" Canvas.Top="180" Width="190" Height="18" Fill="#16000000"/>
-
-                <!-- Left Prop: Detective QA Toolkit / Forensic Recording Cam on Tripod -->
-                <Canvas Canvas.Left="25" Canvas.Top="90" Width="50" Height="85">
-                    <!-- Tripod legs -->
-                    <Line X1="22" Y1="38" X2="6" Y2="80" Stroke="{DynamicResource BorderBrush}" StrokeThickness="2" StrokeStartLineCap="Round"/>
-                    <Line X1="22" Y1="38" X2="22" Y2="82" Stroke="{DynamicResource BorderBrush}" StrokeThickness="2" StrokeStartLineCap="Round"/>
-                    <Line X1="22" Y1="38" X2="38" Y2="80" Stroke="{DynamicResource BorderBrush}" StrokeThickness="2" StrokeStartLineCap="Round"/>
-                    <!-- High-tech Mini Camera / Sensor -->
-                    <Border Canvas.Left="10" Canvas.Top="20" Width="24" Height="18" Background="{DynamicResource BgSecondaryBrush}" BorderBrush="{DynamicResource BorderBrush}" BorderThickness="1.5" CornerRadius="4">
-                        <Canvas>
-                            <!-- Lens -->
-                            <Ellipse Canvas.Left="4" Canvas.Top="2" Width="12" Height="12" Stroke="{DynamicResource AccentBrush}" StrokeThickness="1.5" Fill="{DynamicResource BgCardBrush}"/>
-                            <Ellipse Canvas.Left="7.5" Canvas.Top="5.5" Width="5" Height="5" Fill="{DynamicResource AccentBrush}"/>
-                        </Canvas>
-                    </Border>
-                    <!-- Blinking Standby Green Light -->
-                    <Ellipse Canvas.Left="28" Canvas.Top="17" Width="5" Height="5" Fill="{DynamicResource SuccessBrush}"/>
+                <!-- Left Decorative Prop: Small steaming mug on cozy stand -->
+                <Canvas Canvas.Left="20" Canvas.Top="90" Width="35" Height="50" Opacity="0.75">
+                    <Path Data="M 8,24 L 10,40 C 10,41 20,41 20,40 L 22,24 Z" Fill="{DynamicResource AccentBrush}"/>
+                    <Path Data="M 21,27 C 25,27 25,35 20,36" Stroke="{DynamicResource AccentBrush}" StrokeThickness="1.5" Fill="Transparent"/>
+                    <Path Data="M 13,18 C 11,15 15,12 13,9" Stroke="{DynamicResource TextSecondaryBrush}" StrokeThickness="1.2" StrokeStartLineCap="Round" Fill="Transparent" Opacity="0.6"/>
                 </Canvas>
 
-                <!-- Right Prop: Big Giant Magnifying Glass with Pristine Glass Reflection -->
-                <Canvas Canvas.Left="210" Canvas.Top="70" Width="60" Height="75">
-                    <!-- Lens Ring with Emerald Glow -->
-                    <Ellipse Width="36" Height="36" Stroke="{DynamicResource SuccessBrush}" StrokeThickness="3" Fill="{DynamicResource BgCardBrush}" Opacity="0.95"/>
-                    <!-- Lens Reflection Gloss Arc -->
-                    <Path Data="M 8,8 A 12,12 0 0 1 28,12" Stroke="#FFFFFF" StrokeThickness="2.2" StrokeStartLineCap="Round" StrokeEndLineCap="Round" Opacity="0.75"/>
-                    <!-- Handle with Titanium finish -->
-                    <Line X1="28" Y1="28" X2="50" Y2="50" Stroke="{DynamicResource BorderBrush}" StrokeThickness="5" StrokeStartLineCap="Round" StrokeEndLineCap="Round"/>
-                    <!-- Crisp Emerald Checkmark inside lens -->
-                    <Path Data="M 10,18 L 16,24 L 27,11" Stroke="{DynamicResource SuccessBrush}" StrokeThickness="3.2" StrokeStartLineCap="Round" StrokeEndLineCap="Round"/>
-                </Canvas>
+                <!-- Right Decorative Prop: Floating Sparkles -->
+                <Path Data="M 0,5 Q 5,5 5,0 Q 5,5 10,5 Q 5,5 5,10 Q 5,5 0,5 Z" Fill="{DynamicResource GoldBrush}" Canvas.Left="180" Canvas.Top="45" Opacity="0.85"/>
+                <Path Data="M 0,3 Q 3,3 3,0 Q 3,3 6,3 Q 3,3 3,6 Q 3,3 0,3 Z" Fill="{DynamicResource AccentBrush}" Canvas.Left="195" Canvas.Top="75" Opacity="0.6"/>
 
-                <!-- Celebration Sparkle Stars -->
-                <Path Data="M 0,6 Q 6,6 6,0 Q 6,6 12,6 Q 6,6 6,12 Q 6,6 0,6 Z" Fill="{DynamicResource GoldBrush}" Canvas.Left="70" Canvas.Top="28"/>
-                <Path Data="M 0,4 Q 4,4 4,0 Q 4,4 8,4 Q 4,4 4,8 Q 4,4 0,4 Z" Fill="{DynamicResource SuccessBrush}" Canvas.Left="205" Canvas.Top="38"/>
-                <Path Data="M 0,3 Q 3,3 3,0 Q 3,3 6,3 Q 3,3 3,6 Q 3,3 0,3 Z" Fill="{DynamicResource AccentBrush}" Canvas.Left="48" Canvas.Top="60"/>
-
-                <!-- Center Character: Proud, Cheerful Detective Avocado QA Standing and Holding a Crisp Big Verification Board -->
-                <Canvas Canvas.Left="100" Canvas.Top="20" Width="80" Height="110">
-                    <!-- Top Stem & Leaf -->
-                    <Path Data="M 37,20 C 37,12 40,8 40,4 C 44,4 43,8 41,12 C 39,17 39,20 39,20 Z" Fill="#633917" Stroke="#381E09" StrokeThickness="2" StrokeLineJoin="Round"/>
-                    <Path x:Name="BugsLeafWave" Data="M 40,13 C 58,7 63,17 53,23 C 46,26 41,19 40,13 Z" Fill="#4CAF50" Stroke="#163814" StrokeThickness="2" RenderTransformOrigin="0.0,0.7">
+                <!-- Avocado Character (Center) -->
+                <Canvas Canvas.Left="75" Canvas.Top="10" Width="70" Height="100">
+                    <!-- Stem & Animated Sway Leaf -->
+                    <Path Data="M 32,20 C 32,12 35,8 35,4 C 39,4 38,8 36,12 C 34,17 34,20 34,20 Z" Fill="#633917" Stroke="#381E09" StrokeThickness="1.8" StrokeLineJoin="Round"/>
+                    <Path x:Name="SessionsSprout" Data="M 35,13 C 51,7 56,17 46,23 C 40,26 36,19 35,13 Z" Fill="#4CAF50" Stroke="#163814" StrokeThickness="1.8" RenderTransformOrigin="0.0,0.7">
                         <Path.RenderTransform>
                             <RotateTransform Angle="0"/>
                         </Path.RenderTransform>
                     </Path>
 
                     <!-- Outer Avocado Rind (Pear Silhouette) -->
-                    <Path Data="M 38,18 C 58,18 70,32 70,54 C 75,72 80,96 68,104 C 56,112 24,112 12,104 C 0,96 5,72 10,54 C 10,32 20,18 38,18 Z"
-                          Fill="#235020" Stroke="#143212" StrokeThickness="3.5" StrokeLineJoin="Round"/>
-                    <!-- Lime Green Margin -->
-                    <Path Data="M 38,21 C 55,21 66,34 66,54 C 71,71 76,93 65,100 C 54,107 26,107 15,100 C 5,93 9,71 14,54 C 14,34 23,21 38,21 Z"
+                    <Path Data="M 33,18 C 51,18 61,32 61,54 C 66,72 70,95 59,103 C 48,111 20,111 9,103 C -2,95 2,72 7,54 C 7,32 16,18 33,18 Z"
+                          Fill="#235020" Stroke="#143212" StrokeThickness="3" StrokeLineJoin="Round"/>
+                    <Path Data="M 33,21 C 48,21 57,34 57,54 C 62,71 66,92 56,99 C 46,106 22,106 12,99 C 3,92 6,71 11,54 C 11,34 19,21 33,21 Z"
                           Fill="#80C838"/>
-                    <!-- Creamy Flesh -->
-                    <Path Data="M 38,24 C 52,24 62,36 62,55 C 67,71 72,90 62,97 C 52,104 28,104 18,97 C 9,90 13,71 18,55 C 18,36 26,24 38,24 Z"
+                    <Path Data="M 33,24 C 45,24 54,36 54,55 C 58,71 62,89 53,96 C 44,103 23,103 15,96 C 7,89 10,71 15,55 C 15,36 22,24 33,24 Z"
                           Fill="#E6F587"/>
 
-                    <!-- Big Seed Pit with 3D sphere gradient -->
-                    <Ellipse Canvas.Left="23" Canvas.Top="57" Width="32" Height="32" Fill="#B35B1C" Stroke="#66310C" StrokeThickness="2.2"/>
-                    <Ellipse Canvas.Left="24" Canvas.Top="58" Width="30" Height="30">
+                    <!-- Big Seed Pit with 3D gradient -->
+                    <Ellipse Canvas.Left="19" Canvas.Top="57" Width="30" Height="30" Fill="#B35B1C" Stroke="#66310C" StrokeThickness="2"/>
+                    <Ellipse Canvas.Left="20" Canvas.Top="58" Width="28" Height="28">
                         <Ellipse.Fill>
                             <RadialGradientBrush Center="0.38,0.35" GradientOrigin="0.38,0.35" RadiusX="0.65" RadiusY="0.65">
                                 <GradientStop Color="#FFA756" Offset="0"/>
@@ -613,66 +388,54 @@
                             </RadialGradientBrush>
                         </Ellipse.Fill>
                     </Ellipse>
-                    <Path Data="M 28,67 A 9,9 0 0 1 42,61" Stroke="#FFFFFF" StrokeThickness="2" StrokeStartLineCap="Round" StrokeEndLineCap="Round" Opacity="0.75"/>
-                    <Ellipse Canvas.Left="30" Canvas.Top="64" Width="3.5" Height="2.5" Fill="#FFFFFF" Opacity="0.85"/>
+                    <Path Data="M 24,66 A 8,8 0 0 1 36,60" Stroke="#FFFFFF" StrokeThickness="1.8" StrokeStartLineCap="Round" StrokeEndLineCap="Round" Opacity="0.75"/>
+                    <Ellipse Canvas.Left="25" Canvas.Top="63" Width="3" Height="2" Fill="#FFFFFF" Opacity="0.85"/>
 
                     <!-- Rosy Cheeks -->
-                    <Ellipse Canvas.Left="19" Canvas.Top="44" Width="9" Height="5.5" Fill="#FFA1A1" Opacity="0.85"/>
-                    <Ellipse Canvas.Left="49" Canvas.Top="44" Width="9" Height="5.5" Fill="#FFA1A1" Opacity="0.85"/>
+                    <Ellipse Canvas.Left="15" Canvas.Top="45" Width="8" Height="5" Fill="#FFA1A1" Opacity="0.85"/>
+                    <Ellipse Canvas.Left="43" Canvas.Top="45" Width="8" Height="5" Fill="#FFA1A1" Opacity="0.85"/>
 
-                    <!-- Proud, Happy Curved Smiling Eyes (^ _ ^) -->
-                    <Path Data="M 24,36 Q 30,29 35,36" Stroke="#141414" StrokeThickness="2.6" StrokeStartLineCap="Round" StrokeEndLineCap="Round"/>
-                    <Path Data="M 43,36 Q 49,29 54,36" Stroke="#141414" StrokeThickness="2.6" StrokeStartLineCap="Round" StrokeEndLineCap="Round"/>
+                    <!-- Expressive Eyes: Eager, Curious Anime Eyes with White Sparkle Highlights & Live Blink -->
+                    <Canvas x:Name="SessionsLeftEye" Canvas.Left="22" Canvas.Top="35" Width="9" Height="10" RenderTransformOrigin="0.5,0.5">
+                        <Canvas.RenderTransform>
+                            <ScaleTransform ScaleY="1.0"/>
+                        </Canvas.RenderTransform>
+                        <Ellipse Width="9" Height="10" Fill="#141414"/>
+                        <Ellipse Canvas.Left="1.8" Canvas.Top="1.2" Width="4.2" Height="4.2" Fill="#FFFFFF"/>
+                        <Ellipse Canvas.Left="5.2" Canvas.Top="6.2" Width="1.8" Height="1.8" Fill="#FFFFFF"/>
+                    </Canvas>
+                    <Canvas x:Name="SessionsRightEye" Canvas.Left="36" Canvas.Top="35" Width="9" Height="10" RenderTransformOrigin="0.5,0.5">
+                        <Canvas.RenderTransform>
+                            <ScaleTransform ScaleY="1.0"/>
+                        </Canvas.RenderTransform>
+                        <Ellipse Width="9" Height="10" Fill="#141414"/>
+                        <Ellipse Canvas.Left="2.6" Canvas.Top="1.2" Width="4.2" Height="4.2" Fill="#FFFFFF"/>
+                        <Ellipse Canvas.Left="1.6" Canvas.Top="6.2" Width="1.8" Height="1.8" Fill="#FFFFFF"/>
+                    </Canvas>
 
-                    <!-- Confident & Sweet Grin -->
-                    <Path Data="M 33,45 Q 39,52 45,45" Stroke="#141414" StrokeThickness="2.2" StrokeStartLineCap="Round" StrokeEndLineCap="Round"/>
+                    <!-- Cheerful Upward Inquisitive Smile -->
+                    <Path Data="M 30,46 Q 34,51 38,46" Stroke="#141414" StrokeThickness="2.2" StrokeStartLineCap="Round" StrokeEndLineCap="Round"/>
                 </Canvas>
 
-                <!-- Foreground Element: Big Prominent '0 DEFECTS / ALL CLEAR' Signboard Held by the Avocado Mascot -->
-                <!-- Styled like the presentation placards held in modern editorial illustrations -->
-                <Canvas Canvas.Left="60" Canvas.Top="92" Width="160" Height="90">
-                    <!-- Drop Shadow for Placard -->
-                    <Border Width="156" Height="86" Canvas.Left="3" Canvas.Top="3" CornerRadius="12" Background="#18000000"/>
-                    <!-- Placard Body -->
-                    <Border Width="156" Height="86" CornerRadius="12" Background="{DynamicResource BgCardBrush}" BorderBrush="{DynamicResource BorderBrush}" BorderThickness="2">
+                <!-- Foreground: Large Pure Minimalist Signboard Held by Character (Zero text inside) -->
+                <Canvas Canvas.Left="42" Canvas.Top="82" Width="136" Height="70">
+                    <Border Width="132" Height="66" Canvas.Left="2" Canvas.Top="2" CornerRadius="10" Background="#14000000"/>
+                    <Border Width="132" Height="66" CornerRadius="10" Background="{DynamicResource BgCardBrush}" BorderBrush="{DynamicResource BorderBrush}" BorderThickness="2">
+                        <!-- Clean abstract card mockup lines (no readable text) -->
                         <Grid Margin="12,10">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="*"/>
-                            </Grid.RowDefinitions>
-                            <!-- Header with Success Tag & All-Clear Shield Badge -->
-                            <StackPanel Grid.Row="0" Orientation="Horizontal" VerticalAlignment="Center">
-                                <Border Background="{DynamicResource SuccessBrush}" CornerRadius="10" Width="16" Height="16" Margin="0,0,6,0">
-                                    <Path Data="M 4,8 L 7,11 L 12,5" Stroke="#FFFFFF" StrokeThickness="1.8" StrokeStartLineCap="Round" StrokeEndLineCap="Round"/>
-                                </Border>
-                                <TextBlock Text="ZERO DEFECTS" FontSize="9" FontWeight="Bold" Foreground="{DynamicResource SuccessBrush}" VerticalAlignment="Center"/>
-                                <TextBlock Text=" • 100% HEALTHY" FontSize="8.5" FontWeight="SemiBold" Foreground="{DynamicResource TextSecondaryBrush}" VerticalAlignment="Center" Margin="4,0,0,0"/>
+                            <StackPanel VerticalAlignment="Center">
+                                <Rectangle Width="40" Height="4" RadiusX="2" RadiusY="2" Fill="{DynamicResource AccentBrush}" HorizontalAlignment="Left" Opacity="0.8" Margin="0,0,0,8"/>
+                                <Rectangle Width="95" Height="3" RadiusX="1.5" RadiusY="1.5" Fill="{DynamicResource TextSecondaryBrush}" HorizontalAlignment="Left" Opacity="0.3" Margin="0,0,0,5"/>
+                                <Rectangle Width="70" Height="3" RadiusX="1.5" RadiusY="1.5" Fill="{DynamicResource TextSecondaryBrush}" HorizontalAlignment="Left" Opacity="0.2"/>
                             </StackPanel>
-                            <!-- Big Clean Metric or Mock Data Display inside Placard -->
-                            <Border Grid.Row="1" Background="{DynamicResource BgSecondaryBrush}" CornerRadius="6" Margin="0,6,0,0" Padding="8,4">
-                                <Grid VerticalAlignment="Center">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="Auto"/>
-                                        <ColumnDefinition Width="*"/>
-                                    </Grid.ColumnDefinitions>
-                                    <TextBlock Grid.Column="0" Text="✓" FontSize="18" FontWeight="Bold" Foreground="{DynamicResource SuccessBrush}" Margin="0,0,8,0" VerticalAlignment="Center"/>
-                                    <StackPanel Grid.Column="1" VerticalAlignment="Center">
-                                        <TextBlock Text="System Running Clean" FontSize="10" FontWeight="SemiBold" Foreground="{DynamicResource TextPrimaryBrush}"/>
-                                        <TextBlock Text="Rolling buffer armed &amp; ready" FontSize="8.5" Foreground="{DynamicResource TextSecondaryBrush}"/>
-                                    </StackPanel>
-                                </Grid>
-                            </Border>
                         </Grid>
                     </Border>
-
-                    <!-- Mascot Paws Clamping Both Sides of Placard -->
-                    <Canvas Canvas.Left="-8" Canvas.Top="24" Width="18" Height="22">
-                        <Ellipse Width="16" Height="20" Fill="#70B843" Stroke="#163814" StrokeThickness="2.2"/>
-                        <Path Data="M 4,7 C 7,7 9,9 8,14" Stroke="#569A2E" StrokeThickness="1.5" StrokeStartLineCap="Round"/>
+                    <!-- Green Character Paws holding board on edges -->
+                    <Canvas Canvas.Left="-7" Canvas.Top="18" Width="16" Height="20">
+                        <Ellipse Width="15" Height="19" Fill="#70B843" Stroke="#163814" StrokeThickness="2"/>
                     </Canvas>
-                    <Canvas Canvas.Left="148" Canvas.Top="24" Width="18" Height="22">
-                        <Ellipse Width="16" Height="20" Fill="#70B843" Stroke="#163814" StrokeThickness="2.2"/>
-                        <Path Data="M 12,7 C 9,7 7,9 8,14" Stroke="#569A2E" StrokeThickness="1.5" StrokeStartLineCap="Round"/>
+                    <Canvas Canvas.Left="123" Canvas.Top="18" Width="16" Height="20">
+                        <Ellipse Width="15" Height="19" Fill="#70B843" Stroke="#163814" StrokeThickness="2"/>
                     </Canvas>
                 </Canvas>
             </Canvas>
@@ -681,79 +444,81 @@
             <EventTrigger RoutedEvent="Loaded">
                 <BeginStoryboard>
                     <Storyboard RepeatBehavior="Forever">
-                        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="BugsLeafWave" Storyboard.TargetProperty="(UIElement.RenderTransform).(RotateTransform.Angle)">
+                        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="SessionsSprout" Storyboard.TargetProperty="(UIElement.RenderTransform).(RotateTransform.Angle)">
                             <SplineDoubleKeyFrame KeyTime="0:0:0" Value="0"/>
                             <SplineDoubleKeyFrame KeyTime="0:0:0.75" Value="9"/>
                             <SplineDoubleKeyFrame KeyTime="0:0:1.5" Value="-4"/>
                             <SplineDoubleKeyFrame KeyTime="0:0:2.25" Value="7"/>
                             <SplineDoubleKeyFrame KeyTime="0:0:3.0" Value="0"/>
                         </DoubleAnimationUsingKeyFrames>
+                        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="SessionsLeftEye" Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleY)">
+                            <DiscreteDoubleKeyFrame KeyTime="0:0:0" Value="1.0"/>
+                            <DiscreteDoubleKeyFrame KeyTime="0:0:2.3" Value="1.0"/>
+                            <DiscreteDoubleKeyFrame KeyTime="0:0:2.36" Value="0.08"/>
+                            <DiscreteDoubleKeyFrame KeyTime="0:0:2.46" Value="1.0"/>
+                        </DoubleAnimationUsingKeyFrames>
+                        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="SessionsRightEye" Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleY)">
+                            <DiscreteDoubleKeyFrame KeyTime="0:0:0" Value="1.0"/>
+                            <DiscreteDoubleKeyFrame KeyTime="0:0:2.3" Value="1.0"/>
+                            <DiscreteDoubleKeyFrame KeyTime="0:0:2.36" Value="0.08"/>
+                            <DiscreteDoubleKeyFrame KeyTime="0:0:2.46" Value="1.0"/>
+                        </DoubleAnimationUsingKeyFrames>
                     </Storyboard>
                 </BeginStoryboard>
             </EventTrigger>
         </ControlTemplate.Triggers>
     </ControlTemplate>
 
-    <!-- 3. EMPTY RECYCLE BIN ILLUSTRATION (Scenic: Sparkling Clean Sanctuary, Avocado Mascot holding 'Clean Slate' Placard & Recycling Bin) -->
-    <ControlTemplate x:Key="EmptyRecycleBinIllustration">
-        <Viewbox Width="220" Height="170" Stretch="Uniform" HorizontalAlignment="Center" VerticalAlignment="Center">
-            <Canvas Width="260" Height="200">
-                <!-- Atmospheric Scenic Backdrop -->
-                <Path Data="M 35,115 C 20,55 80,25 150,28 C 220,32 250,85 235,145 C 215,190 125,195 65,180 C 40,170 40,145 35,115 Z" 
-                      Fill="{DynamicResource BgCardBrush}" Opacity="0.85">
-                    <Path.Effect>
-                        <BlurEffect Radius="14"/>
-                    </Path.Effect>
-                </Path>
-                <!-- Secondary Clean Breeze Ripple -->
-                <Path Data="M 50,110 C 45,70 95,45 155,50 C 205,55 220,95 210,135 C 195,165 125,175 75,160 Z" 
-                      Fill="{DynamicResource BgSecondaryBrush}" Opacity="0.55"/>
+    <!-- 2. EMPTY BUGS & EVIDENCE ILLUSTRATION: Joyful, Proud Victory Avocado holding Clean Presentation Placard (NO SEARCH ICON, NO TEXT) -->
+    <ControlTemplate x:Key="EmptyBugsIllustration">
+        <Viewbox Width="220" Height="160" Stretch="Uniform" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <Canvas Width="240" Height="180">
+                <!-- Soft Atmospheric Aura Glow -->
+                <Ellipse Canvas.Left="30" Canvas.Top="15" Width="180" Height="140" Fill="{DynamicResource BgCardBrush}" Opacity="0.9">
+                    <Ellipse.Effect>
+                        <BlurEffect Radius="22"/>
+                    </Ellipse.Effect>
+                </Ellipse>
+                <Ellipse Canvas.Left="50" Canvas.Top="25" Width="140" Height="100" Fill="{DynamicResource SuccessBrush}" Opacity="0.08">
+                    <Ellipse.Effect>
+                        <BlurEffect Radius="20"/>
+                    </Ellipse.Effect>
+                </Ellipse>
 
                 <!-- Ground Shadow -->
-                <Ellipse Canvas.Left="35" Canvas.Top="165" Width="190" Height="18" Fill="#16000000"/>
+                <Ellipse Canvas.Left="40" Canvas.Top="155" Width="160" Height="15" Fill="#14000000"/>
 
-                <!-- Left Prop: Sparkling Clean Recycling Container with 30-Day Retention Badge -->
-                <Canvas Canvas.Left="28" Canvas.Top="75" Width="50" Height="90">
-                    <!-- Bin Body (Tapered) -->
-                    <Path Data="M 6,18 L 10,74 L 38,74 L 42,18 Z" Fill="{DynamicResource BgSecondaryBrush}" Stroke="{DynamicResource BorderBrush}" StrokeThickness="2" StrokeLineJoin="Round"/>
-                    <!-- Bin Lid -->
-                    <Rectangle Canvas.Left="2" Canvas.Top="12" Width="44" Height="6" RadiusX="3" RadiusY="3" Fill="{DynamicResource BorderBrush}"/>
-                    <Path Data="M 16,12 L 16,7 L 32,7 L 32,12" Stroke="{DynamicResource BorderBrush}" StrokeThickness="2" Fill="Transparent"/>
-                    <!-- Clean recycle 3-arrows emblem -->
-                    <Path Data="M 24,32 L 30,40 L 18,40 Z" Fill="{DynamicResource AccentBrush}" Opacity="0.5"/>
-                    <Ellipse Canvas.Left="20" Canvas.Top="44" Width="8" Height="8" Stroke="{DynamicResource AccentBrush}" StrokeThickness="1.5" Opacity="0.5"/>
-                    <!-- Sparkle rising from clean bin -->
-                    <Path Data="M 0,4 Q 4,4 4,0 Q 4,4 8,4 Q 4,4 4,8 Q 4,4 0,4 Z" Fill="{DynamicResource GoldBrush}" Canvas.Left="36" Canvas.Top="2"/>
-                </Canvas>
+                <!-- Floating QA Sparkle Stars & Emerald Checks around the scene -->
+                <Path Data="M 0,6 Q 6,6 6,0 Q 6,6 12,6 Q 6,6 6,12 Q 6,6 0,6 Z" Fill="{DynamicResource GoldBrush}" Canvas.Left="35" Canvas.Top="45" Opacity="0.85"/>
+                <Path Data="M 0,4 Q 4,4 4,0 Q 4,4 8,4 Q 4,4 4,8 Q 4,4 0,4 Z" Fill="{DynamicResource SuccessBrush}" Canvas.Left="195" Canvas.Top="40" Opacity="0.85"/>
+                <Path Data="M 0,3 Q 3,3 3,0 Q 3,3 6,3 Q 3,3 3,6 Q 3,3 0,3 Z" Fill="{DynamicResource AccentBrush}" Canvas.Left="205" Canvas.Top="75" Opacity="0.6"/>
 
-                <!-- Right Prop: Cleaning Sparkles & Magic Wand Whiff -->
-                <Canvas Canvas.Left="198" Canvas.Top="50" Width="45" Height="70">
-                    <Path Data="M 0,6 Q 6,6 6,0 Q 6,6 12,6 Q 6,6 6,12 Q 6,6 0,6 Z" Fill="{DynamicResource GoldBrush}" Canvas.Left="15" Canvas.Top="10"/>
-                    <Path Data="M 0,4 Q 4,4 4,0 Q 4,4 8,4 Q 4,4 4,8 Q 4,4 0,4 Z" Fill="{DynamicResource AccentBrush}" Canvas.Left="4" Canvas.Top="38"/>
-                    <Path Data="M 0,3 Q 3,3 3,0 Q 3,3 6,3 Q 3,3 3,6 Q 3,3 0,3 Z" Fill="{DynamicResource SuccessBrush}" Canvas.Left="28" Canvas.Top="45"/>
-                </Canvas>
+                <!-- Small Floating Clean Checkmark Badge on Top Right -->
+                <Border Canvas.Left="175" Canvas.Top="22" Width="24" Height="24" CornerRadius="12" Background="{DynamicResource SuccessBrush}">
+                    <Path Data="M 6,12 L 10,16 L 18,8" Stroke="#FFFFFF" StrokeThickness="2.2" StrokeStartLineCap="Round" StrokeEndLineCap="Round" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                </Border>
 
-                <!-- Center Character: Relieved, Peaceful Avocado QA Mascot Holding Clean Signboard -->
-                <Canvas Canvas.Left="95" Canvas.Top="25" Width="80" Height="100">
+                <!-- Center Character: Proud, Joyful Happy Avocado Mascot with Wide Cheerful Anime Eyes & Rosy Smile -->
+                <Canvas Canvas.Left="85" Canvas.Top="12" Width="70" Height="100">
                     <!-- Stem & Leaf -->
-                    <Path Data="M 37,20 C 37,12 40,8 40,4 C 44,4 43,8 41,12 C 39,17 39,20 39,20 Z" Fill="#633917" Stroke="#381E09" StrokeThickness="2" StrokeLineJoin="Round"/>
-                    <Path x:Name="BinLeafWave" Data="M 40,13 C 58,7 63,17 53,23 C 46,26 41,19 40,13 Z" Fill="#4CAF50" Stroke="#163814" StrokeThickness="2" RenderTransformOrigin="0.0,0.7">
+                    <Path Data="M 32,20 C 32,12 35,8 35,4 C 39,4 38,8 36,12 C 34,17 34,20 34,20 Z" Fill="#633917" Stroke="#381E09" StrokeThickness="1.8" StrokeLineJoin="Round"/>
+                    <Path x:Name="BugsSprout" Data="M 35,13 C 51,7 56,17 46,23 C 40,26 36,19 35,13 Z" Fill="#4CAF50" Stroke="#163814" StrokeThickness="1.8" RenderTransformOrigin="0.0,0.7">
                         <Path.RenderTransform>
                             <RotateTransform Angle="0"/>
                         </Path.RenderTransform>
                     </Path>
 
                     <!-- Outer Avocado Rind (Pear Silhouette) -->
-                    <Path Data="M 38,18 C 58,18 70,32 70,54 C 75,72 80,96 68,104 C 56,112 24,112 12,104 C 0,96 5,72 10,54 C 10,32 20,18 38,18 Z"
-                          Fill="#235020" Stroke="#143212" StrokeThickness="3.5" StrokeLineJoin="Round"/>
-                    <Path Data="M 38,21 C 55,21 66,34 66,54 C 71,71 76,93 65,100 C 54,107 26,107 15,100 C 5,93 9,71 14,54 C 14,34 23,21 38,21 Z"
+                    <Path Data="M 33,18 C 51,18 61,32 61,54 C 66,72 70,95 59,103 C 48,111 20,111 9,103 C -2,95 2,72 7,54 C 7,32 16,18 33,18 Z"
+                          Fill="#235020" Stroke="#143212" StrokeThickness="3" StrokeLineJoin="Round"/>
+                    <Path Data="M 33,21 C 48,21 57,34 57,54 C 62,71 66,92 56,99 C 46,106 22,106 12,99 C 3,92 6,71 11,54 C 11,34 19,21 33,21 Z"
                           Fill="#80C838"/>
-                    <Path Data="M 38,24 C 52,24 62,36 62,55 C 67,71 72,90 62,97 C 52,104 28,104 18,97 C 9,90 13,71 18,55 C 18,36 26,24 38,24 Z"
+                    <Path Data="M 33,24 C 45,24 54,36 54,55 C 58,71 62,89 53,96 C 44,103 23,103 15,96 C 7,89 10,71 15,55 C 15,36 22,24 33,24 Z"
                           Fill="#E6F587"/>
 
-                    <!-- Big Pit with 3D gradient -->
-                    <Ellipse Canvas.Left="23" Canvas.Top="57" Width="32" Height="32" Fill="#B35B1C" Stroke="#66310C" StrokeThickness="2.2"/>
-                    <Ellipse Canvas.Left="24" Canvas.Top="58" Width="30" Height="30">
+                    <!-- Big Seed Pit with 3D sphere gradient -->
+                    <Ellipse Canvas.Left="19" Canvas.Top="57" Width="30" Height="30" Fill="#B35B1C" Stroke="#66310C" StrokeThickness="2"/>
+                    <Ellipse Canvas.Left="20" Canvas.Top="58" Width="28" Height="28">
                         <Ellipse.Fill>
                             <RadialGradientBrush Center="0.38,0.35" GradientOrigin="0.38,0.35" RadiusX="0.65" RadiusY="0.65">
                                 <GradientStop Color="#FFA756" Offset="0"/>
@@ -764,51 +529,62 @@
                             </RadialGradientBrush>
                         </Ellipse.Fill>
                     </Ellipse>
-                    <Path Data="M 28,67 A 9,9 0 0 1 42,61" Stroke="#FFFFFF" StrokeThickness="2" StrokeStartLineCap="Round" StrokeEndLineCap="Round" Opacity="0.75"/>
-                    <Ellipse Canvas.Left="30" Canvas.Top="64" Width="3.5" Height="2.5" Fill="#FFFFFF" Opacity="0.85"/>
+                    <Path Data="M 24,66 A 8,8 0 0 1 36,60" Stroke="#FFFFFF" StrokeThickness="1.8" StrokeStartLineCap="Round" StrokeEndLineCap="Round" Opacity="0.75"/>
+                    <Ellipse Canvas.Left="25" Canvas.Top="63" Width="3" Height="2" Fill="#FFFFFF" Opacity="0.85"/>
 
                     <!-- Rosy Cheeks -->
-                    <Ellipse Canvas.Left="19" Canvas.Top="44" Width="9" Height="5.5" Fill="#FFA1A1" Opacity="0.85"/>
-                    <Ellipse Canvas.Left="49" Canvas.Top="44" Width="9" Height="5.5" Fill="#FFA1A1" Opacity="0.85"/>
+                    <Ellipse Canvas.Left="15" Canvas.Top="45" Width="8" Height="5" Fill="#FFA1A1" Opacity="0.9"/>
+                    <Ellipse Canvas.Left="43" Canvas.Top="45" Width="8" Height="5" Fill="#FFA1A1" Opacity="0.9"/>
 
-                    <!-- Relieved, Serene Closed Eyes (Zen / Peace curves) -->
-                    <Path Data="M 24,36 Q 30,42 35,36" Stroke="#141414" StrokeThickness="2.5" StrokeStartLineCap="Round" StrokeEndLineCap="Round"/>
-                    <Path Data="M 43,36 Q 49,42 54,36" Stroke="#141414" StrokeThickness="2.5" StrokeStartLineCap="Round" StrokeEndLineCap="Round"/>
+                    <!-- Expressive Eyes: Joyful, Proud Anime Eyes Looking Directly Forward with Sweet Double Catchlights & Live Blink -->
+                    <Canvas x:Name="BugsLeftEye" Canvas.Left="22" Canvas.Top="35" Width="9" Height="10" RenderTransformOrigin="0.5,0.5">
+                        <Canvas.RenderTransform>
+                            <ScaleTransform ScaleY="1.0"/>
+                        </Canvas.RenderTransform>
+                        <Ellipse Width="9" Height="10" Fill="#141414"/>
+                        <Ellipse Canvas.Left="1.8" Canvas.Top="1.2" Width="4.2" Height="4.2" Fill="#FFFFFF"/>
+                        <Ellipse Canvas.Left="5.2" Canvas.Top="6.2" Width="1.8" Height="1.8" Fill="#FFFFFF"/>
+                    </Canvas>
+                    <Canvas x:Name="BugsRightEye" Canvas.Left="36" Canvas.Top="35" Width="9" Height="10" RenderTransformOrigin="0.5,0.5">
+                        <Canvas.RenderTransform>
+                            <ScaleTransform ScaleY="1.0"/>
+                        </Canvas.RenderTransform>
+                        <Ellipse Width="9" Height="10" Fill="#141414"/>
+                        <Ellipse Canvas.Left="2.6" Canvas.Top="1.2" Width="4.2" Height="4.2" Fill="#FFFFFF"/>
+                        <Ellipse Canvas.Left="1.6" Canvas.Top="6.2" Width="1.8" Height="1.8" Fill="#FFFFFF"/>
+                    </Canvas>
 
-                    <!-- Sweet Peaceful Smile -->
-                    <Path Data="M 34,45 Q 39,50 44,45" Stroke="#141414" StrokeThickness="2.2" StrokeStartLineCap="Round" StrokeEndLineCap="Round"/>
+                    <!-- Big Warm Happy Smile -->
+                    <Path Data="M 29,45 Q 34,51 39,45" Stroke="#141414" StrokeThickness="2.4" StrokeStartLineCap="Round" StrokeEndLineCap="Round"/>
                 </Canvas>
 
-                <!-- Foreground Element: Clean Slate Placard Held by Character -->
-                <Canvas Canvas.Left="55" Canvas.Top="95" Width="150" Height="85">
-                    <Border Width="146" Height="80" Canvas.Left="3" Canvas.Top="3" CornerRadius="10" Background="#18000000"/>
-                    <Border Width="146" Height="80" CornerRadius="10" Background="{DynamicResource BgCardBrush}" BorderBrush="{DynamicResource BorderBrush}" BorderThickness="2">
-                        <Grid Margin="10,8">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="*"/>
-                            </Grid.RowDefinitions>
-                            <StackPanel Grid.Row="0" Orientation="Horizontal" VerticalAlignment="Center">
-                                <Border Background="{DynamicResource AccentBrush}" CornerRadius="4" Padding="6,2">
-                                    <TextBlock Text="CLEAN SLATE" FontSize="8.5" FontWeight="Bold" Foreground="#FFFFFF"/>
-                                </Border>
-                                <TextBlock Text=" • 0 Items" FontSize="8.5" Foreground="{DynamicResource TextSecondaryBrush}" VerticalAlignment="Center" Margin="6,0,0,0"/>
-                            </StackPanel>
-                            <StackPanel Grid.Row="1" VerticalAlignment="Center" Margin="0,4,0,0">
-                                <TextBlock Text="Recycle Bin is All Clear" FontSize="10.5" FontWeight="SemiBold" Foreground="{DynamicResource TextPrimaryBrush}"/>
-                                <TextBlock Text="No deleted files in 30 days" FontSize="9" Foreground="{DynamicResource TextSecondaryBrush}" Margin="0,2,0,0"/>
+                <!-- Foreground: Large Pure Clean Signboard Held by Avocado Mascot (Zero text inside, clean modern frame) -->
+                <Canvas Canvas.Left="48" Canvas.Top="85" Width="144" Height="75">
+                    <Border Width="140" Height="70" Canvas.Left="2" Canvas.Top="2" CornerRadius="12" Background="#14000000"/>
+                    <Border Width="140" Height="70" CornerRadius="12" Background="{DynamicResource BgCardBrush}" BorderBrush="{DynamicResource BorderBrush}" BorderThickness="2">
+                        <!-- Clean abstract graphical card layout with emerald badge & placeholder bars -->
+                        <Grid Margin="12,10">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <!-- Big Emerald Clean Badge icon -->
+                            <Border Grid.Column="0" Width="28" Height="28" CornerRadius="8" Background="{DynamicResource SuccessBrush}" VerticalAlignment="Center" Margin="0,0,10,0">
+                                <Path Data="M 7,14 L 12,19 L 21,9" Stroke="#FFFFFF" StrokeThickness="2.2" StrokeStartLineCap="Round" StrokeEndLineCap="Round"/>
+                            </Border>
+                            <!-- Minimalist Graphic Metric Bars -->
+                            <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                                <Rectangle Width="75" Height="4" RadiusX="2" RadiusY="2" Fill="{DynamicResource TextPrimaryBrush}" HorizontalAlignment="Left" Opacity="0.75" Margin="0,0,0,5"/>
+                                <Rectangle Width="50" Height="3" RadiusX="1.5" RadiusY="1.5" Fill="{DynamicResource TextSecondaryBrush}" HorizontalAlignment="Left" Opacity="0.4"/>
                             </StackPanel>
                         </Grid>
                     </Border>
-
                     <!-- Mascot Paws holding edges -->
-                    <Canvas Canvas.Left="-8" Canvas.Top="20" Width="18" Height="22">
-                        <Ellipse Width="16" Height="20" Fill="#70B843" Stroke="#163814" StrokeThickness="2.2"/>
-                        <Path Data="M 4,7 C 7,7 9,9 8,14" Stroke="#569A2E" StrokeThickness="1.5" StrokeStartLineCap="Round"/>
+                    <Canvas Canvas.Left="-7" Canvas.Top="20" Width="16" Height="20">
+                        <Ellipse Width="15" Height="19" Fill="#70B843" Stroke="#163814" StrokeThickness="2"/>
                     </Canvas>
-                    <Canvas Canvas.Left="138" Canvas.Top="20" Width="18" Height="22">
-                        <Ellipse Width="16" Height="20" Fill="#70B843" Stroke="#163814" StrokeThickness="2.2"/>
-                        <Path Data="M 12,7 C 9,7 7,9 8,14" Stroke="#569A2E" StrokeThickness="1.5" StrokeStartLineCap="Round"/>
+                    <Canvas Canvas.Left="131" Canvas.Top="20" Width="16" Height="20">
+                        <Ellipse Width="15" Height="19" Fill="#70B843" Stroke="#163814" StrokeThickness="2"/>
                     </Canvas>
                 </Canvas>
             </Canvas>
@@ -817,12 +593,137 @@
             <EventTrigger RoutedEvent="Loaded">
                 <BeginStoryboard>
                     <Storyboard RepeatBehavior="Forever">
-                        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="BinLeafWave" Storyboard.TargetProperty="(UIElement.RenderTransform).(RotateTransform.Angle)">
+                        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="BugsSprout" Storyboard.TargetProperty="(UIElement.RenderTransform).(RotateTransform.Angle)">
                             <SplineDoubleKeyFrame KeyTime="0:0:0" Value="0"/>
-                            <SplineDoubleKeyFrame KeyTime="0:0:0.8" Value="8"/>
-                            <SplineDoubleKeyFrame KeyTime="0:0:1.6" Value="-4"/>
-                            <SplineDoubleKeyFrame KeyTime="0:0:2.4" Value="6"/>
-                            <SplineDoubleKeyFrame KeyTime="0:0:3.2" Value="0"/>
+                            <SplineDoubleKeyFrame KeyTime="0:0:0.75" Value="9"/>
+                            <SplineDoubleKeyFrame KeyTime="0:0:1.5" Value="-4"/>
+                            <SplineDoubleKeyFrame KeyTime="0:0:2.25" Value="7"/>
+                            <SplineDoubleKeyFrame KeyTime="0:0:3.0" Value="0"/>
+                        </DoubleAnimationUsingKeyFrames>
+                        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="BugsLeftEye" Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleY)">
+                            <DiscreteDoubleKeyFrame KeyTime="0:0:0" Value="1.0"/>
+                            <DiscreteDoubleKeyFrame KeyTime="0:0:2.4" Value="1.0"/>
+                            <DiscreteDoubleKeyFrame KeyTime="0:0:2.46" Value="0.08"/>
+                            <DiscreteDoubleKeyFrame KeyTime="0:0:2.56" Value="1.0"/>
+                        </DoubleAnimationUsingKeyFrames>
+                        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="BugsRightEye" Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleY)">
+                            <DiscreteDoubleKeyFrame KeyTime="0:0:0" Value="1.0"/>
+                            <DiscreteDoubleKeyFrame KeyTime="0:0:2.4" Value="1.0"/>
+                            <DiscreteDoubleKeyFrame KeyTime="0:0:2.46" Value="0.08"/>
+                            <DiscreteDoubleKeyFrame KeyTime="0:0:2.56" Value="1.0"/>
+                        </DoubleAnimationUsingKeyFrames>
+                    </Storyboard>
+                </BeginStoryboard>
+            </EventTrigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+
+    <!-- 3. EMPTY RECYCLE BIN ILLUSTRATION: Relieved Peaceful Avocado holding Clean Placard & Sleek Tapered Bin (NO TEXT) -->
+    <ControlTemplate x:Key="EmptyRecycleBinIllustration">
+        <Viewbox Width="200" Height="150" Stretch="Uniform" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <Canvas Width="220" Height="170">
+                <!-- Soft Ambient Halo -->
+                <Ellipse Canvas.Left="25" Canvas.Top="15" Width="170" Height="130" Fill="{DynamicResource BgCardBrush}" Opacity="0.85">
+                    <Ellipse.Effect>
+                        <BlurEffect Radius="20"/>
+                    </Ellipse.Effect>
+                </Ellipse>
+
+                <!-- Ground Shadow -->
+                <Ellipse Canvas.Left="35" Canvas.Top="145" Width="150" Height="14" Fill="#14000000"/>
+
+                <!-- Left Decorative Prop: Sleek Clean Recycling Bin Container with Emblem -->
+                <Canvas Canvas.Left="20" Canvas.Top="80" Width="36" Height="60" Opacity="0.85">
+                    <Path Data="M 4,14 L 8,50 L 26,50 L 30,14 Z" Fill="{DynamicResource BgSecondaryBrush}" Stroke="{DynamicResource BorderBrush}" StrokeThickness="1.5" StrokeLineJoin="Round"/>
+                    <Rectangle Canvas.Left="2" Canvas.Top="10" Width="30" Height="4" RadiusX="2" RadiusY="2" Fill="{DynamicResource BorderBrush}"/>
+                    <Path Data="M 11,10 L 11,6 L 21,6 L 21,10" Stroke="{DynamicResource BorderBrush}" StrokeThickness="1.5" Fill="Transparent"/>
+                    <Path Data="M 17,24 L 21,29 L 13,29 Z" Fill="{DynamicResource AccentBrush}" Opacity="0.6"/>
+                    <Ellipse Canvas.Left="14" Canvas.Top="32" Width="6" Height="6" Stroke="{DynamicResource AccentBrush}" StrokeThickness="1.2" Opacity="0.6"/>
+                </Canvas>
+
+                <!-- Right Prop: Cleaning Sparkles -->
+                <Path Data="M 0,5 Q 5,5 5,0 Q 5,5 10,5 Q 5,5 5,10 Q 5,5 0,5 Z" Fill="{DynamicResource GoldBrush}" Canvas.Left="185" Canvas.Top="45" Opacity="0.85"/>
+                <Path Data="M 0,3 Q 3,3 3,0 Q 3,3 6,3 Q 3,3 3,6 Q 3,3 0,3 Z" Fill="{DynamicResource SuccessBrush}" Canvas.Left="195" Canvas.Top="75" Opacity="0.7"/>
+
+                <!-- Avocado Character (Center): Relieved & Peaceful Expression with Happy Closed Eyes & Sweet Smile -->
+                <Canvas Canvas.Left="75" Canvas.Top="10" Width="70" Height="100">
+                    <!-- Stem & Animated Leaf -->
+                    <Path Data="M 32,20 C 32,12 35,8 35,4 C 39,4 38,8 36,12 C 34,17 34,20 34,20 Z" Fill="#633917" Stroke="#381E09" StrokeThickness="1.8" StrokeLineJoin="Round"/>
+                    <Path x:Name="BinSprout" Data="M 35,13 C 51,7 56,17 46,23 C 40,26 36,19 35,13 Z" Fill="#4CAF50" Stroke="#163814" StrokeThickness="1.8" RenderTransformOrigin="0.0,0.7">
+                        <Path.RenderTransform>
+                            <RotateTransform Angle="0"/>
+                        </Path.RenderTransform>
+                    </Path>
+
+                    <!-- Outer Avocado Rind (Pear Silhouette) -->
+                    <Path Data="M 33,18 C 51,18 61,32 61,54 C 66,72 70,95 59,103 C 48,111 20,111 9,103 C -2,95 2,72 7,54 C 7,32 16,18 33,18 Z"
+                          Fill="#235020" Stroke="#143212" StrokeThickness="3" StrokeLineJoin="Round"/>
+                    <Path Data="M 33,21 C 48,21 57,34 57,54 C 62,71 66,92 56,99 C 46,106 22,106 12,99 C 3,92 6,71 11,54 C 11,34 19,21 33,21 Z"
+                          Fill="#80C838"/>
+                    <Path Data="M 33,24 C 45,24 54,36 54,55 C 58,71 62,89 53,96 C 44,103 23,103 15,96 C 7,89 10,71 15,55 C 15,36 22,24 33,24 Z"
+                          Fill="#E6F587"/>
+
+                    <!-- Big Seed Pit with 3D gradient -->
+                    <Ellipse Canvas.Left="19" Canvas.Top="57" Width="30" Height="30" Fill="#B35B1C" Stroke="#66310C" StrokeThickness="2"/>
+                    <Ellipse Canvas.Left="20" Canvas.Top="58" Width="28" Height="28">
+                        <Ellipse.Fill>
+                            <RadialGradientBrush Center="0.38,0.35" GradientOrigin="0.38,0.35" RadiusX="0.65" RadiusY="0.65">
+                                <GradientStop Color="#FFA756" Offset="0"/>
+                                <GradientStop Color="#DE7B2C" Offset="0.25"/>
+                                <GradientStop Color="#B35B1C" Offset="0.6"/>
+                                <GradientStop Color="#783408" Offset="0.9"/>
+                                <GradientStop Color="#4A1E03" Offset="1"/>
+                            </RadialGradientBrush>
+                        </Ellipse.Fill>
+                    </Ellipse>
+                    <Path Data="M 24,66 A 8,8 0 0 1 36,60" Stroke="#FFFFFF" StrokeThickness="1.8" StrokeStartLineCap="Round" StrokeEndLineCap="Round" Opacity="0.75"/>
+                    <Ellipse Canvas.Left="25" Canvas.Top="63" Width="3" Height="2" Fill="#FFFFFF" Opacity="0.85"/>
+
+                    <!-- Rosy Cheeks -->
+                    <Ellipse Canvas.Left="15" Canvas.Top="45" Width="8" Height="5" Fill="#FFA1A1" Opacity="0.85"/>
+                    <Ellipse Canvas.Left="43" Canvas.Top="45" Width="8" Height="5" Fill="#FFA1A1" Opacity="0.85"/>
+
+                    <!-- Relieved Happy Eyes (Sweet smiling curved arches) -->
+                    <Path Data="M 22,37 Q 27,31 32,37" Stroke="#141414" StrokeThickness="2.4" StrokeStartLineCap="Round" StrokeEndLineCap="Round"/>
+                    <Path Data="M 36,37 Q 41,31 46,37" Stroke="#141414" StrokeThickness="2.4" StrokeStartLineCap="Round" StrokeEndLineCap="Round"/>
+
+                    <!-- Sweet Peaceful Smile -->
+                    <Path Data="M 30,46 Q 34,51 38,46" Stroke="#141414" StrokeThickness="2.2" StrokeStartLineCap="Round" StrokeEndLineCap="Round"/>
+                </Canvas>
+
+                <!-- Foreground: Large Pure Minimalist Signboard Held by Avocado Mascot (Zero text inside) -->
+                <Canvas Canvas.Left="42" Canvas.Top="82" Width="136" Height="70">
+                    <Border Width="132" Height="66" Canvas.Left="2" Canvas.Top="2" CornerRadius="10" Background="#14000000"/>
+                    <Border Width="132" Height="66" CornerRadius="10" Background="{DynamicResource BgCardBrush}" BorderBrush="{DynamicResource BorderBrush}" BorderThickness="2">
+                        <!-- Clean abstract card mockup lines (no readable text) -->
+                        <Grid Margin="12,10">
+                            <StackPanel VerticalAlignment="Center">
+                                <Rectangle Width="45" Height="4" RadiusX="2" RadiusY="2" Fill="{DynamicResource AccentBrush}" HorizontalAlignment="Left" Opacity="0.8" Margin="0,0,0,8"/>
+                                <Rectangle Width="85" Height="3" RadiusX="1.5" RadiusY="1.5" Fill="{DynamicResource TextSecondaryBrush}" HorizontalAlignment="Left" Opacity="0.3" Margin="0,0,0,5"/>
+                                <Rectangle Width="60" Height="3" RadiusX="1.5" RadiusY="1.5" Fill="{DynamicResource TextSecondaryBrush}" HorizontalAlignment="Left" Opacity="0.2"/>
+                            </StackPanel>
+                        </Grid>
+                    </Border>
+                    <!-- Character Paws holding edges -->
+                    <Canvas Canvas.Left="-7" Canvas.Top="18" Width="16" Height="20">
+                        <Ellipse Width="15" Height="19" Fill="#70B843" Stroke="#163814" StrokeThickness="2"/>
+                    </Canvas>
+                    <Canvas Canvas.Left="123" Canvas.Top="18" Width="16" Height="20">
+                        <Ellipse Width="15" Height="19" Fill="#70B843" Stroke="#163814" StrokeThickness="2"/>
+                    </Canvas>
+                </Canvas>
+            </Canvas>
+        </Viewbox>
+        <ControlTemplate.Triggers>
+            <EventTrigger RoutedEvent="Loaded">
+                <BeginStoryboard>
+                    <Storyboard RepeatBehavior="Forever">
+                        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="BinSprout" Storyboard.TargetProperty="(UIElement.RenderTransform).(RotateTransform.Angle)">
+                            <SplineDoubleKeyFrame KeyTime="0:0:0" Value="0"/>
+                            <SplineDoubleKeyFrame KeyTime="0:0:0.75" Value="8"/>
+                            <SplineDoubleKeyFrame KeyTime="0:0:1.5" Value="-4"/>
+                            <SplineDoubleKeyFrame KeyTime="0:0:2.25" Value="6"/>
+                            <SplineDoubleKeyFrame KeyTime="0:0:3.0" Value="0"/>
                         </DoubleAnimationUsingKeyFrames>
                     </Storyboard>
                 </BeginStoryboard>
