@@ -48,41 +48,29 @@
         <GradientStop Color="#B45309" Offset="1"/>
     </LinearGradientBrush>
 
-    <!-- Modern Designer Flowy & Gradient Background Brushes (Organic, Silky & Calming) -->
-    <!-- Base Deep Workspace Gradient with subtle organic lighting -->
-    <LinearGradientBrush x:Key="MainWorkspaceGradientBrush" StartPoint="0,0" EndPoint="1,1">
-        <GradientStop Color="#0F1216" Offset="0"/>
-        <GradientStop Color="#141820" Offset="0.45"/>
-        <GradientStop Color="#161B24" Offset="0.8"/>
-        <GradientStop Color="#12151B" Offset="1"/>
-    </LinearGradientBrush>
-
-    <!-- Flowing Curvature & Organic Topographic Wave Ribbon Brush -->
-    <VisualBrush x:Key="FlowingWavePatternBrush" TileMode="Tile" Viewport="0,0,320,180" ViewportUnits="Absolute">
+    <!-- Ultra-Clean Modern Studio Pattern Brushes (Softer, subtle, premium aesthetic) -->
+    <VisualBrush x:Key="DevinGridPatternBrush" TileMode="Tile" Viewport="0,0,28,28" ViewportUnits="Absolute">
         <VisualBrush.Visual>
-            <Canvas Width="320" Height="180" Background="Transparent">
-                <!-- Flowy Ribbon Curve 1 -->
-                <Path Data="M 0,40 C 90,15 160,75 250,35 C 290,18 310,25 320,30" 
-                      Stroke="{DynamicResource BorderBrush}" StrokeThickness="1.2" Opacity="0.14" Fill="Transparent"/>
-                <!-- Flowy Ribbon Curve 2 (Gentle Echo) -->
-                <Path Data="M 0,85 C 80,55 170,120 260,80 C 295,65 310,70 320,72" 
-                      Stroke="{DynamicResource BorderBrush}" StrokeThickness="1" Opacity="0.10" Fill="Transparent"/>
-                <!-- Flowy Ribbon Curve 3 (Deep Bottom Swell) -->
-                <Path Data="M 0,140 C 70,110 150,165 240,130 C 285,115 310,125 320,128" 
-                      Stroke="{DynamicResource BorderBrush}" StrokeThickness="0.8" Opacity="0.08" Fill="Transparent"/>
-                <!-- Subtle flowing harmonic accent trace -->
-                <Path Data="M 0,55 C 100,30 180,95 270,55 C 300,42 315,48 320,50" 
-                      Stroke="{DynamicResource AccentBrush}" StrokeThickness="0.7" Opacity="0.06" Fill="Transparent"/>
+            <Canvas Width="28" Height="28" Background="Transparent">
+                <Line X1="0" Y1="0" X2="28" Y2="0" Stroke="{DynamicResource BorderBrush}" StrokeThickness="0.5" Opacity="0.18"/>
+                <Line X1="0" Y1="0" X2="0" Y2="28" Stroke="{DynamicResource BorderBrush}" StrokeThickness="0.5" Opacity="0.18"/>
+                <!-- Subtle soft intersection dot -->
+                <Ellipse Width="1" Height="1" Canvas.Left="-0.5" Canvas.Top="-0.5" Fill="{DynamicResource BorderBrush}" Opacity="0.25"/>
             </Canvas>
         </VisualBrush.Visual>
     </VisualBrush>
 
-    <!-- Sidebar Soft Ambient Gradient (No harsh box grid) -->
-    <LinearGradientBrush x:Key="SidebarAmbientGradientBrush" StartPoint="0,0" EndPoint="0,1">
-        <GradientStop Color="#161920" Offset="0"/>
-        <GradientStop Color="#181C23" Offset="0.6"/>
-        <GradientStop Color="#14171E" Offset="1"/>
-    </LinearGradientBrush>
+    <!-- Main Workspace Studio Grid (Calm, expansive 36x36 with radial aura capability) -->
+    <VisualBrush x:Key="DevinStudioPatternBrush" TileMode="Tile" Viewport="0,0,36,36" ViewportUnits="Absolute">
+        <VisualBrush.Visual>
+            <Canvas Width="36" Height="36" Background="Transparent">
+                <Line X1="0" Y1="0" X2="36" Y2="0" Stroke="{DynamicResource BorderBrush}" StrokeThickness="0.5" Opacity="0.12"/>
+                <Line X1="0" Y1="0" X2="0" Y2="36" Stroke="{DynamicResource BorderBrush}" StrokeThickness="0.5" Opacity="0.12"/>
+                <!-- Minimal clean corner tick -->
+                <Ellipse Width="1" Height="1" Canvas.Left="-0.5" Canvas.Top="-0.5" Fill="{DynamicResource BorderBrush}" Opacity="0.18"/>
+            </Canvas>
+        </VisualBrush.Visual>
+    </VisualBrush>
 
     <!-- Vector Icons Geometries -->
     <Geometry x:Key="RewindArrowsGeometry">M13,6 L4,12 L13,18 L13,13 L21,18 L21,6 L13,11 Z</Geometry>

@@ -98,9 +98,11 @@
                 <ColumnDefinition x:Name="RightColDef" Width="*" MinWidth="350"/>
             </Grid.ColumnDefinitions>
 
-            <!-- Sidebar: Sessions List & Controls (Smooth Ambient Designer Gradient) -->
-            <Border x:Name="SidebarBorder" Grid.Column="0" Background="{DynamicResource SidebarAmbientGradientBrush}" BorderBrush="{DynamicResource BorderBrush}" BorderThickness="0,0,1,0" ClipToBounds="True">
+            <!-- Sidebar: Sessions List & Controls (Smart Devin-style precision lines background) -->
+            <Border x:Name="SidebarBorder" Grid.Column="0" Background="{DynamicResource BgSecondaryBrush}" BorderBrush="{DynamicResource BorderBrush}" BorderThickness="0,0,1,0" ClipToBounds="True">
                 <Grid>
+                    <!-- Devin-style subtle architectural geometric lines overlay -->
+                    <Rectangle Fill="{DynamicResource DevinGridPatternBrush}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" IsHitTestVisible="False"/>
 
                     <Grid Margin="14">
                         <Grid.RowDefinitions>
@@ -288,32 +290,10 @@
                 </GridSplitter.Template>
             </GridSplitter>
 
-            <!-- Main Workspace Area with Designer Flowy Gradient & Wave Mesh Backdrop -->
-            <Grid x:Name="MainWorkspaceGrid" Grid.Column="2" ClipToBounds="True" Background="{DynamicResource MainWorkspaceGradientBrush}">
-                <!-- Ambient Designer Glowing Auras (Soft luminous fluid shapes) -->
-                <Canvas HorizontalAlignment="Stretch" VerticalAlignment="Stretch" IsHitTestVisible="False">
-                    <!-- Top-Left Cyan/Blue Fluid Aura -->
-                    <Ellipse Canvas.Left="-80" Canvas.Top="-100" Width="360" Height="280" Fill="#1E293B" Opacity="0.45">
-                        <Ellipse.Effect>
-                            <BlurEffect Radius="90"/>
-                        </Ellipse.Effect>
-                    </Ellipse>
-                    <!-- Center-Right Subtle Emerald Fluid Glow -->
-                    <Ellipse Canvas.Right="-60" Canvas.Top="120" Width="400" Height="320" Fill="#0F3820" Opacity="0.22">
-                        <Ellipse.Effect>
-                            <BlurEffect Radius="110"/>
-                        </Ellipse.Effect>
-                    </Ellipse>
-                    <!-- Bottom Ambient Swell -->
-                    <Ellipse Canvas.Left="120" Canvas.Bottom="-120" Width="500" Height="300" Fill="#1A1E29" Opacity="0.5">
-                        <Ellipse.Effect>
-                            <BlurEffect Radius="100"/>
-                        </Ellipse.Effect>
-                    </Ellipse>
-                </Canvas>
-
-                <!-- Flowing Smooth Wave Ribbon Overlay (No box grids) -->
-                <Rectangle Fill="{DynamicResource FlowingWavePatternBrush}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" IsHitTestVisible="False"/>
+            <!-- Main Workspace Area with Smart Precision Pattern Background -->
+            <Grid x:Name="MainWorkspaceGrid" Grid.Column="2" ClipToBounds="True">
+                <!-- Devin-style subtle architectural geometric studio lines overlay -->
+                <Rectangle Fill="{DynamicResource DevinStudioPatternBrush}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" IsHitTestVisible="False"/>
 
                 <Grid Margin="24">
                     <Grid.RowDefinitions>
