@@ -19,6 +19,9 @@ namespace Rewind.Tests
         [Fact]
         public void GenerateAllScreenshots()
         {
+            var outDir = Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\..\..\docs\screenshots"));
+            Directory.CreateDirectory(outDir);
+
             var thread = new Thread(() =>
             {
                 var app = new Rewind.App.App();
@@ -26,9 +29,6 @@ namespace Rewind.Tests
 
                 var tempDbPath = Path.Combine(Path.GetTempPath(), "RewindScreenshots_" + Guid.NewGuid().ToString("N"));
                 var dbService = new DatabaseService(tempDbPath);
-
-                var outDir = Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\..\..\docs\screenshots"));
-                Directory.CreateDirectory(outDir);
 
                 // Sample test data
                 var sampleSession = new Session
@@ -216,18 +216,18 @@ namespace Rewind.Tests
             thread.Start();
             thread.Join();
 
-            Assert.True(File.Exists(@"d:\projects\Rewind\docs\screenshots\main_studio_dark.png"));
-            Assert.True(File.Exists(@"d:\projects\Rewind\docs\screenshots\theme_emerald_dark.png"));
-            Assert.True(File.Exists(@"d:\projects\Rewind\docs\screenshots\theme_sapphire_dark.png"));
-            Assert.True(File.Exists(@"d:\projects\Rewind\docs\screenshots\theme_amethyst_dark.png"));
-            Assert.True(File.Exists(@"d:\projects\Rewind\docs\screenshots\theme_studio_light.png"));
-            Assert.True(File.Exists(@"d:\projects\Rewind\docs\screenshots\floating_hud_peeking_edge.png"));
-            Assert.True(File.Exists(@"d:\projects\Rewind\docs\screenshots\floating_hud_expanded.png"));
-            Assert.True(File.Exists(@"d:\projects\Rewind\docs\screenshots\settings_dialog.png"));
-            Assert.True(File.Exists(@"d:\projects\Rewind\docs\screenshots\report_preview_window.png"));
-            Assert.True(File.Exists(@"d:\projects\Rewind\docs\screenshots\bug_detail_view.png"));
-            Assert.True(File.Exists(@"d:\projects\Rewind\docs\screenshots\timeline_redaction_studio.png"));
-            Assert.True(File.Exists(@"d:\projects\Rewind\docs\screenshots\recycle_bin_dialog.png"));
+            Assert.True(File.Exists(Path.Combine(outDir, "main_studio_dark.png")));
+            Assert.True(File.Exists(Path.Combine(outDir, "theme_emerald_dark.png")));
+            Assert.True(File.Exists(Path.Combine(outDir, "theme_sapphire_dark.png")));
+            Assert.True(File.Exists(Path.Combine(outDir, "theme_amethyst_dark.png")));
+            Assert.True(File.Exists(Path.Combine(outDir, "theme_studio_light.png")));
+            Assert.True(File.Exists(Path.Combine(outDir, "floating_hud_peeking_edge.png")));
+            Assert.True(File.Exists(Path.Combine(outDir, "floating_hud_expanded.png")));
+            Assert.True(File.Exists(Path.Combine(outDir, "settings_dialog.png")));
+            Assert.True(File.Exists(Path.Combine(outDir, "report_preview_window.png")));
+            Assert.True(File.Exists(Path.Combine(outDir, "bug_detail_view.png")));
+            Assert.True(File.Exists(Path.Combine(outDir, "timeline_redaction_studio.png")));
+            Assert.True(File.Exists(Path.Combine(outDir, "recycle_bin_dialog.png")));
         }
 
         private static void RenderWindowWithOpaqueBackground(Window window, string filePath, string palette, bool isDark)
@@ -356,78 +356,20 @@ namespace Rewind.Tests
             var content = (FrameworkElement)hudWindow.Content;
             hudWindow.Content = null;
 
-            int w = 380;
-            int h = 340;
+            int w = 260;
+            int h = 240;
 
-            // Sleek desktop mockup background
+            // Pure, authentic desktop background showing the actual quick-ball orbit as it appears on Windows
             var container = new Grid
             {
                 Width = w,
                 Height = h,
-                Background = new SolidColorBrush(Color.FromRgb(0x0B, 0x11, 0x1E)) // Deep slate wallpaper
+                Background = new SolidColorBrush(Color.FromRgb(0x0D, 0x11, 0x1A)) // Deep desktop backdrop
             };
-
-            // Glow aura behind floating orbit
-            var orbitGlow = new Ellipse
-            {
-                Width = 240,
-                Height = 220,
-                HorizontalAlignment = HorizontalAlignment.Center,
-                VerticalAlignment = VerticalAlignment.Center,
-                Margin = new Thickness(0, 20, 0, 0),
-                Fill = new RadialGradientBrush
-                {
-                    GradientStops = new GradientStopCollection
-                    {
-                        new GradientStop(Color.FromArgb(0x30, 0x10, 0xB9, 0x81), 0),
-                        new GradientStop(Color.FromArgb(0x00, 0x10, 0xB9, 0x81), 1)
-                    }
-                }
-            };
-            container.Children.Add(orbitGlow);
-
-            // Circular orbit dashed ring around Mochi connecting all satellite buttons
-            var orbitGuideRing = new Ellipse
-            {
-                Width = 170,
-                Height = 150,
-                HorizontalAlignment = HorizontalAlignment.Center,
-                VerticalAlignment = VerticalAlignment.Center,
-                Margin = new Thickness(0, 20, 0, 0),
-                Stroke = new SolidColorBrush(Color.FromArgb(0x55, 0x10, 0xB9, 0x81)),
-                StrokeThickness = 1.5,
-                StrokeDashArray = new DoubleCollection { 3, 3 },
-                IsHitTestVisible = false
-            };
-            container.Children.Add(orbitGuideRing);
-
-            var hudLabel = new TextBlock
-            {
-                Text = "REWIND DESKTOP COMPANION • CIRCULAR QUICK-BALL ORBIT",
-                FontSize = 9.5,
-                FontWeight = FontWeights.Bold,
-                Foreground = new SolidColorBrush(Color.FromRgb(0x94, 0xA3, 0xB8)),
-                HorizontalAlignment = HorizontalAlignment.Center,
-                VerticalAlignment = VerticalAlignment.Top,
-                Margin = new Thickness(0, 16, 0, 0)
-            };
-            container.Children.Add(hudLabel);
-
-            // Add subtitle explaining the action buttons around the mascot
-            var hudSub = new TextBlock
-            {
-                Text = "⚡ Preserve • ⏸ Pause/Resume • 📑 Dashboard • ✕ Dock to Edge",
-                FontSize = 9,
-                Foreground = new SolidColorBrush(Color.FromRgb(0x64, 0x74, 0x8B)),
-                HorizontalAlignment = HorizontalAlignment.Center,
-                VerticalAlignment = VerticalAlignment.Bottom,
-                Margin = new Thickness(0, 0, 0, 12)
-            };
-            container.Children.Add(hudSub);
 
             content.HorizontalAlignment = HorizontalAlignment.Center;
             content.VerticalAlignment = VerticalAlignment.Center;
-            content.Margin = new Thickness(0, 20, 0, 0);
+            content.Margin = new Thickness(0);
             container.Children.Add(content);
 
             container.Measure(new Size(w, h));
