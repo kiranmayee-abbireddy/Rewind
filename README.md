@@ -22,7 +22,7 @@
 
 **REWIND** is a local-first desktop application designed specifically for QA engineers, software testers, and developers. It runs silently in the background, continuously maintaining a rolling buffer of your screen. 
 
-When an elusive, intermittent bug occurs, there is **zero need to reproduce it**. Simply tap the global hotkey (`Ctrl+Shift+R`) or hit **⚡ Preserve Bug** on the floating HUD overlay to immortalize the preceding footage into an MP4 clip with full timeline playback, redaction masking, and formatted bug reports.
+When an elusive, intermittent bug occurs, there is **zero need to reproduce it**. Simply tap the global hotkey (`Ctrl+Shift+R`) or hit **⚡ Preserve Bug** on Mochi (your floating desktop companion) to immortalize the preceding footage into an MP4 clip with full timeline playback, redaction masking, and formatted bug reports.
 
 ---
 
@@ -32,61 +32,107 @@ When an elusive, intermittent bug occurs, there is **zero need to reproduce it**
 The primary workstation where past test sessions, defect cards, storage footprint metrics, and Mochi (your QA companion mascot) live. Switch color palettes, browse past recordings, play back evidence, or export reports with a single click.
 
 <p align="center">
-  <img src="docs/screenshots/main_studio_dark.png" alt="REWIND Main Studio" width="800" />
+  <img src="docs/screenshots/main_studio_dark.png" alt="REWIND Main Studio (Slate Noir)" width="820" />
 </p>
 
 ---
 
-### 2. Instant QA Report Generation & Multi-Export
-Preview structured reports before dispatching them to your team. Features an animated loader, multi-format export buttons (**Markdown**, **Jira Markup**, **JSON Data**), copy-to-clipboard shortcuts, and an overview of captured defects.
+### 2. Desktop Companion HUD — Two Adaptive Modes
+Mochi stays with you during manual testing without blocking your viewport or test workspace:
 
-<p align="center">
-  <img src="docs/screenshots/report_preview_window.png" alt="Report Preview & Export Dialog" width="700" />
-</p>
+<table>
+  <tr>
+    <td align="center" width="50%">
+      <strong>Secret Edge Peeking Mode</strong><br>
+      <em>Mochi docks inclined against the screen bezel, watching secretly.</em><br><br>
+      <img src="docs/screenshots/floating_hud_peeking_edge.png" alt="Mochi Peeking on Screen Edge" width="340" />
+    </td>
+    <td align="center" width="50%">
+      <strong>Quick Ball Orbit Mode</strong><br>
+      <em>Click Mochi to emerge into an active orbit with REC timer &amp; actions.</em><br><br>
+      <img src="docs/screenshots/floating_hud_expanded.png" alt="Floating Quick Ball Orbit" width="340" />
+    </td>
+  </tr>
+</table>
+
+- **⚡ Preserve Bug Action**: Captures the rolling buffer footage instantly.
+- **⏸ / ▶ Pause & Resume**: Freeze screen recording during breaks or confidential entry.
+- **📑 Studio Dashboard Shortcut**: Brings the main recording studio into focus.
+- **✕ Dock to Edge**: Retracts Mochi cleanly back to the nearest screen bezel.
 
 ---
 
-### 3. Defect Detail & In-App Media Player
-Inspect individual bug clips with hardware-accelerated playback, frame scrubber, severity indicators, and AI-assisted defect documentation.
-
-<p align="center">
-  <img src="docs/screenshots/bug_detail_view.png" alt="Bug Detail View with Media Player" width="700" />
-</p>
-
----
-
-### 4. Precision Timeline Scrubber & Sensitive Data Redaction
+### 3. Precision Timeline Scrubber & Sensitive Data Redaction
 Scrub recent footage frame-by-frame with 15s, 30s, and 60s preset buttons. Draw black masking bounding boxes directly over the preview to permanently redact passwords, auth tokens, or PII before encoding.
 
 <p align="center">
-  <img src="docs/screenshots/timeline_redaction_studio.png" alt="Timeline Redaction Studio" width="700" />
+  <img src="docs/screenshots/timeline_redaction_studio.png" alt="Timeline Redaction Studio" width="750" />
 </p>
 
 ---
 
-### 5. Settings, Buffer Control & 10 Distinct Themes
-Configure rolling buffer duration (15 to 180 seconds), toggle audio capture, manage AI documentation providers, and personalize your experience with 10 carefully curated themes (Midnight, Emerald, Amethyst, Ocean, Rose, Amber, Coral, Cyan, Slate, and Sunset).
+### 4. Defect Detail & In-App Media Player
+Inspect individual bug clips with hardware-accelerated playback, frame scrubber, severity indicators, and AI-assisted defect documentation.
 
 <p align="center">
-  <img src="docs/screenshots/settings_dialog.png" alt="Settings and Preferences Dialog" width="600" />
+  <img src="docs/screenshots/bug_detail_view.png" alt="Bug Detail View with Media Player" width="750" />
 </p>
 
 ---
 
-### 6. 30-Day Safe Retention & Recycle Bin
+### 5. Instant QA Report Generation & Multi-Export
+Preview structured reports before dispatching them to your team. Features an animated loader, multi-format export buttons (**Markdown**, **Jira Markup**, **JSON Data**), copy-to-clipboard shortcuts, and an overview of captured defects.
+
+<p align="center">
+  <img src="docs/screenshots/report_preview_window.png" alt="Report Preview & Export Dialog" width="750" />
+</p>
+
+---
+
+### 6. Settings, Buffer Control & 10 Studio Themes
+Configure rolling buffer duration (15 to 180 seconds), toggle audio capture, manage AI documentation providers, and personalize your experience with 10 carefully curated themes with full Light/Dark mode support.
+
+<p align="center">
+  <img src="docs/screenshots/settings_dialog.png" alt="Settings and Preferences Dialog" width="620" />
+</p>
+
+---
+
+### 7. Studio Color Theme Showcase
+Tailor REWIND to your preferred visual aesthetic with bespoke color palettes designed for low eye strain:
+
+<table>
+  <tr>
+    <td align="center" width="50%">
+      <strong>🌲 Imperial Emerald (Dark Obsidian)</strong><br>
+      <img src="docs/screenshots/theme_emerald_dark.png" alt="Imperial Emerald Dark" width="400" />
+    </td>
+    <td align="center" width="50%">
+      <strong>💎 Midnight Sapphire (CleanShot Blue)</strong><br>
+      <img src="docs/screenshots/theme_sapphire_dark.png" alt="Midnight Sapphire Dark" width="400" />
+    </td>
+  </tr>
+  <tr>
+    <td align="center" width="50%">
+      <strong>🔮 Royal Amethyst (Imperial Violet)</strong><br>
+      <img src="docs/screenshots/theme_amethyst_dark.png" alt="Royal Amethyst Dark" width="400" />
+    </td>
+    <td align="center" width="50%">
+      <strong>☀️ Clean Studio Porcelain (Light Mode)</strong><br>
+      <img src="docs/screenshots/theme_studio_light.png" alt="Studio Porcelain Light Mode" width="400" />
+    </td>
+  </tr>
+</table>
+
+*Also includes Velvet Burgundy, Amber Obsidian, Industrial Copper, Abyssal Ocean, Solar Flare, and Nordic Sage.*
+
+---
+
+### 8. 30-Day Safe Retention & Recycle Bin
 Deleted sessions and bug clips remain restorable for 30 days before permanent deletion, safeguarding your evidence against accidental removal.
 
 <p align="center">
-  <img src="docs/screenshots/recycle_bin_dialog.png" alt="Recycle Bin Dialog" width="650" />
-</p>
-
----
-
-### 7. Floating Draggable HUD Overlay
-A lightweight, always-on-top HUD with a live recording heartbeat, elapsed timer, and one-click **⚡ Preserve Bug** button.
-
-<p align="center">
-  <img src="docs/screenshots/floating_hud_overlay.png" alt="Floating HUD Overlay" width="160" />
+  <img src="docs/screenshots/recycle_bin_dialog.png" alt="Recycle Bin Dialog" width="680" />
 </p>
 
 ---
@@ -95,8 +141,8 @@ A lightweight, always-on-top HUD with a live recording heartbeat, elapsed timer,
 
 - 🔄 **Continuous Rolling Buffer**: Retains the last 15–180 seconds of screen history with bounded RAM and disk usage (auto-pruned in the background).
 - ⚡ **Global Win32 Hotkey (`Ctrl+Shift+R`)**: Preserve the bug instantly from any active application under test without window switching.
-- 🐱 **Mochi QA Mascot Companion**: Friendly mascot avatar integrated into the sidebar profile card and report headers.
-- 🎨 **10 Curated Color Themes**: Includes Midnight, Emerald, Amethyst, Ocean, Rose, Amber, Coral, Cyan, Slate, and Sunset with full Light/Dark mode support.
+- 🥑 **Mochi QA Mascot Companion**: Floating interactive desktop companion that peeks from the screen edge or expands into a quick ball orbit.
+- 🎨 **10 Curated Color Themes**: Includes Slate, Emerald, Burgundy, Amber, Sapphire, Copper, Amethyst, Ocean, Solar, and Sage with full Light/Dark mode support.
 - 🛡️ **Zero-Leak Redaction Masking**: Overlay bounding boxes over sensitive credentials, personal customer data, or API keys prior to MP4 compilation.
 - 🎬 **Hardware-Accelerated In-App Player**: Embedded video player with scrub controls and timestamps directly inside the bug review window.
 - 🤖 **Multi-Provider AI Documentation**:
