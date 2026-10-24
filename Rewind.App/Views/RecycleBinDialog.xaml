@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Recycle Bin - Rewind" Height="590" Width="760"
         MinHeight="480" MinWidth="600"
-        Icon="pack://application:,,,/app.ico"
+        Icon="pack://application:,,,/Rewind.App;component/app.ico"
         WindowStartupLocation="CenterOwner" 
         WindowStyle="None" AllowsTransparency="False"
         Background="{DynamicResource BgPrimaryBrush}" Foreground="{DynamicResource TextPrimaryBrush}">

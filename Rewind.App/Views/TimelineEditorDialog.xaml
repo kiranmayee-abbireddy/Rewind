@@ -1,7 +1,7 @@
 <Window x:Class="Rewind.App.Views.TimelineEditorDialog"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Preserve Bug — Time-Range Selection" Height="720" Width="1040" Icon="pack://application:,,,/app.ico"
+        Title="Preserve Bug — Time-Range Selection" Height="720" Width="1040" Icon="pack://application:,,,/Rewind.App;component/app.ico"
         MinHeight="600" MinWidth="850" ResizeMode="CanResizeWithGrip"
         WindowStartupLocation="CenterScreen" 
         WindowStyle="None" AllowsTransparency="False"

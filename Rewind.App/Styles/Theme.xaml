@@ -108,10 +108,9 @@
     <Geometry x:Key="SidebarHideGeometry">M3,3 L21,3 L21,21 L3,21 Z M5,5 L19,5 L19,19 L5,19 Z</Geometry>
 
     <!-- Adorable Chubby Avocado QA Mascot (Exactly matching reference artwork - 100x120 vector canvas) -->
-    <ControlTemplate x:Key="AvocadoMascot">
-        <Viewbox Width="54" Height="65" Stretch="Uniform" HorizontalAlignment="Center" VerticalAlignment="Center">
-            <Canvas Width="100" Height="120">
-                <!-- Drop shadow beneath feet -->
+    <ControlTemplate x:Key="AvocadoMascot" TargetType="Control">
+        <Canvas Width="100" Height="120">
+            <!-- Drop shadow beneath feet -->
                 <Ellipse Canvas.Left="20" Canvas.Top="108" Width="60" Height="10" Fill="#15000000"/>
 
                 <!-- Stubby Feet (Dark forest avocado green with dark outline, like in reference) -->
@@ -199,44 +198,42 @@
 
                 <!-- Cute Centered Sweet Smile (Right between eyes, curved up cheerfully) -->
                 <Path Data="M 47,46 Q 50,50 53,46" Stroke="#141414" StrokeThickness="2.2" StrokeStartLineCap="Round" StrokeEndLineCap="Round"/>
+                <Canvas.Triggers>
+                    <EventTrigger RoutedEvent="FrameworkElement.Loaded">
+                        <BeginStoryboard>
+                            <Storyboard RepeatBehavior="Forever">
+                                <!-- Sprout leaf breeze wave -->
+                                <DoubleAnimationUsingKeyFrames Storyboard.TargetName="SproutLeaf" Storyboard.TargetProperty="(UIElement.RenderTransform).(RotateTransform.Angle)">
+                                    <SplineDoubleKeyFrame KeyTime="0:0:0" Value="0"/>
+                                    <SplineDoubleKeyFrame KeyTime="0:0:0.65" Value="8"/>
+                                    <SplineDoubleKeyFrame KeyTime="0:0:1.3" Value="-4"/>
+                                    <SplineDoubleKeyFrame KeyTime="0:0:1.95" Value="6"/>
+                                    <SplineDoubleKeyFrame KeyTime="0:0:2.6" Value="0"/>
+                                </DoubleAnimationUsingKeyFrames>
+                                <!-- Cute Eye Blink every 2.6s cycle -->
+                                <DoubleAnimationUsingKeyFrames Storyboard.TargetName="LeftEye" Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleY)">
+                                    <DiscreteDoubleKeyFrame KeyTime="0:0:0" Value="1.0"/>
+                                    <DiscreteDoubleKeyFrame KeyTime="0:0:2.2" Value="1.0"/>
+                                    <DiscreteDoubleKeyFrame KeyTime="0:0:2.26" Value="0.08"/>
+                                    <DiscreteDoubleKeyFrame KeyTime="0:0:2.36" Value="1.0"/>
+                                </DoubleAnimationUsingKeyFrames>
+                                <DoubleAnimationUsingKeyFrames Storyboard.TargetName="RightEye" Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleY)">
+                                    <DiscreteDoubleKeyFrame KeyTime="0:0:0" Value="1.0"/>
+                                    <DiscreteDoubleKeyFrame KeyTime="0:0:2.2" Value="1.0"/>
+                                    <DiscreteDoubleKeyFrame KeyTime="0:0:2.26" Value="0.08"/>
+                                    <DiscreteDoubleKeyFrame KeyTime="0:0:2.36" Value="1.0"/>
+                                </DoubleAnimationUsingKeyFrames>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger>
+                </Canvas.Triggers>
             </Canvas>
-        </Viewbox>
-        <ControlTemplate.Triggers>
-            <EventTrigger RoutedEvent="Loaded">
-                <BeginStoryboard>
-                    <Storyboard RepeatBehavior="Forever">
-                        <!-- Sprout leaf breeze wave -->
-                        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="SproutLeaf" Storyboard.TargetProperty="(UIElement.RenderTransform).(RotateTransform.Angle)">
-                            <SplineDoubleKeyFrame KeyTime="0:0:0" Value="0"/>
-                            <SplineDoubleKeyFrame KeyTime="0:0:0.65" Value="8"/>
-                            <SplineDoubleKeyFrame KeyTime="0:0:1.3" Value="-4"/>
-                            <SplineDoubleKeyFrame KeyTime="0:0:1.95" Value="6"/>
-                            <SplineDoubleKeyFrame KeyTime="0:0:2.6" Value="0"/>
-                        </DoubleAnimationUsingKeyFrames>
-                        <!-- Cute Eye Blink every 2.6s cycle -->
-                        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="LeftEye" Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleY)">
-                            <DiscreteDoubleKeyFrame KeyTime="0:0:0" Value="1.0"/>
-                            <DiscreteDoubleKeyFrame KeyTime="0:0:2.2" Value="1.0"/>
-                            <DiscreteDoubleKeyFrame KeyTime="0:0:2.26" Value="0.08"/>
-                            <DiscreteDoubleKeyFrame KeyTime="0:0:2.36" Value="1.0"/>
-                        </DoubleAnimationUsingKeyFrames>
-                        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="RightEye" Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleY)">
-                            <DiscreteDoubleKeyFrame KeyTime="0:0:0" Value="1.0"/>
-                            <DiscreteDoubleKeyFrame KeyTime="0:0:2.2" Value="1.0"/>
-                            <DiscreteDoubleKeyFrame KeyTime="0:0:2.26" Value="0.08"/>
-                            <DiscreteDoubleKeyFrame KeyTime="0:0:2.36" Value="1.0"/>
-                        </DoubleAnimationUsingKeyFrames>
-                    </Storyboard>
-                </BeginStoryboard>
-            </EventTrigger>
-        </ControlTemplate.Triggers>
     </ControlTemplate>
 
     <!-- Side-Glancing Peeking Avocado QA Mascot (Clean peeking head and face tilted from edge, NO limbs or legs) -->
-    <ControlTemplate x:Key="AvocadoMascotPeeking">
-        <Viewbox Width="54" Height="65" Stretch="Uniform" HorizontalAlignment="Center" VerticalAlignment="Center">
-            <Canvas Width="100" Height="120">
-                <!-- Top Stem & Leaf tilted forward curiously -->
+    <ControlTemplate x:Key="AvocadoMascotPeeking" TargetType="Control">
+        <Canvas Width="100" Height="120">
+            <!-- Top Stem & Leaf tilted forward curiously -->
                 <Path Data="M 45,22 C 45,13 49,9 49,5 C 52,5 52,8 50,13 C 48,18 48,22 48,22 Z" Fill="#633917" Stroke="#381E09" StrokeThickness="2" StrokeLineJoin="Round"/>
                 <Path x:Name="PeekSproutLeaf" Data="M 49,14 C 65,9 71,18 61,24 C 54,28 49,20 49,14 Z" Fill="#4CAF50" Stroke="#163814" StrokeThickness="2" RenderTransformOrigin="0.0,0.7">
                     <Path.RenderTransform>
@@ -301,37 +298,36 @@
 
                 <!-- Cute Sneaky Side Smirk / Smile peeking inward -->
                 <Path Data="M 42,47 Q 45,51 49,48" Stroke="#141414" StrokeThickness="2.2" StrokeStartLineCap="Round" StrokeEndLineCap="Round"/>
+                <Canvas.Triggers>
+                    <EventTrigger RoutedEvent="FrameworkElement.Loaded">
+                        <BeginStoryboard>
+                            <Storyboard RepeatBehavior="Forever">
+                                <!-- Sprout leaf gentle wobble -->
+                                <DoubleAnimationUsingKeyFrames Storyboard.TargetName="PeekSproutLeaf" Storyboard.TargetProperty="(UIElement.RenderTransform).(RotateTransform.Angle)">
+                                    <SplineDoubleKeyFrame KeyTime="0:0:0" Value="0"/>
+                                    <SplineDoubleKeyFrame KeyTime="0:0:0.65" Value="8"/>
+                                    <SplineDoubleKeyFrame KeyTime="0:0:1.3" Value="-4"/>
+                                    <SplineDoubleKeyFrame KeyTime="0:0:1.95" Value="6"/>
+                                    <SplineDoubleKeyFrame KeyTime="0:0:2.6" Value="0"/>
+                                </DoubleAnimationUsingKeyFrames>
+                                <!-- Cute Eye Blink every 2.6s cycle -->
+                                <DoubleAnimationUsingKeyFrames Storyboard.TargetName="PeekLeftEye" Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleY)">
+                                    <DiscreteDoubleKeyFrame KeyTime="0:0:0" Value="1.0"/>
+                                    <DiscreteDoubleKeyFrame KeyTime="0:0:2.1" Value="1.0"/>
+                                    <DiscreteDoubleKeyFrame KeyTime="0:0:2.16" Value="0.08"/>
+                                    <DiscreteDoubleKeyFrame KeyTime="0:0:2.26" Value="1.0"/>
+                                </DoubleAnimationUsingKeyFrames>
+                                <DoubleAnimationUsingKeyFrames Storyboard.TargetName="PeekRightEye" Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleY)">
+                                    <DiscreteDoubleKeyFrame KeyTime="0:0:0" Value="1.0"/>
+                                    <DiscreteDoubleKeyFrame KeyTime="0:0:2.1" Value="1.0"/>
+                                    <DiscreteDoubleKeyFrame KeyTime="0:0:2.16" Value="0.08"/>
+                                    <DiscreteDoubleKeyFrame KeyTime="0:0:2.26" Value="1.0"/>
+                                </DoubleAnimationUsingKeyFrames>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger>
+                </Canvas.Triggers>
             </Canvas>
-        </Viewbox>
-        <ControlTemplate.Triggers>
-            <EventTrigger RoutedEvent="Loaded">
-                <BeginStoryboard>
-                    <Storyboard RepeatBehavior="Forever">
-                        <!-- Sprout leaf gentle wobble -->
-                        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="PeekSproutLeaf" Storyboard.TargetProperty="(UIElement.RenderTransform).(RotateTransform.Angle)">
-                            <SplineDoubleKeyFrame KeyTime="0:0:0" Value="0"/>
-                            <SplineDoubleKeyFrame KeyTime="0:0:0.65" Value="8"/>
-                            <SplineDoubleKeyFrame KeyTime="0:0:1.3" Value="-4"/>
-                            <SplineDoubleKeyFrame KeyTime="0:0:1.95" Value="6"/>
-                            <SplineDoubleKeyFrame KeyTime="0:0:2.6" Value="0"/>
-                        </DoubleAnimationUsingKeyFrames>
-                        <!-- Cute Eye Blink every 2.6s cycle -->
-                        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="PeekLeftEye" Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleY)">
-                            <DiscreteDoubleKeyFrame KeyTime="0:0:0" Value="1.0"/>
-                            <DiscreteDoubleKeyFrame KeyTime="0:0:2.1" Value="1.0"/>
-                            <DiscreteDoubleKeyFrame KeyTime="0:0:2.16" Value="0.08"/>
-                            <DiscreteDoubleKeyFrame KeyTime="0:0:2.26" Value="1.0"/>
-                        </DoubleAnimationUsingKeyFrames>
-                        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="PeekRightEye" Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleY)">
-                            <DiscreteDoubleKeyFrame KeyTime="0:0:0" Value="1.0"/>
-                            <DiscreteDoubleKeyFrame KeyTime="0:0:2.1" Value="1.0"/>
-                            <DiscreteDoubleKeyFrame KeyTime="0:0:2.16" Value="0.08"/>
-                            <DiscreteDoubleKeyFrame KeyTime="0:0:2.26" Value="1.0"/>
-                        </DoubleAnimationUsingKeyFrames>
-                    </Storyboard>
-                </BeginStoryboard>
-            </EventTrigger>
-        </ControlTemplate.Triggers>
     </ControlTemplate>
 
     <!-- Consistent Compact Avocado Mascot for Headers & Title Bars (Clean 24x26 ViewBox) -->
@@ -447,35 +443,35 @@
                         <Ellipse Width="15" Height="19" Fill="#70B843" Stroke="#163814" StrokeThickness="2"/>
                     </Canvas>
                 </Canvas>
+                <Canvas.Triggers>
+                    <EventTrigger RoutedEvent="FrameworkElement.Loaded">
+                        <BeginStoryboard>
+                            <Storyboard RepeatBehavior="Forever">
+                                <DoubleAnimationUsingKeyFrames Storyboard.TargetName="SessionsSprout" Storyboard.TargetProperty="(UIElement.RenderTransform).(RotateTransform.Angle)">
+                                    <SplineDoubleKeyFrame KeyTime="0:0:0" Value="0"/>
+                                    <SplineDoubleKeyFrame KeyTime="0:0:0.75" Value="9"/>
+                                    <SplineDoubleKeyFrame KeyTime="0:0:1.5" Value="-4"/>
+                                    <SplineDoubleKeyFrame KeyTime="0:0:2.25" Value="7"/>
+                                    <SplineDoubleKeyFrame KeyTime="0:0:3.0" Value="0"/>
+                                </DoubleAnimationUsingKeyFrames>
+                                <DoubleAnimationUsingKeyFrames Storyboard.TargetName="SessionsLeftEye" Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleY)">
+                                    <DiscreteDoubleKeyFrame KeyTime="0:0:0" Value="1.0"/>
+                                    <DiscreteDoubleKeyFrame KeyTime="0:0:2.3" Value="1.0"/>
+                                    <DiscreteDoubleKeyFrame KeyTime="0:0:2.36" Value="0.08"/>
+                                    <DiscreteDoubleKeyFrame KeyTime="0:0:2.46" Value="1.0"/>
+                                </DoubleAnimationUsingKeyFrames>
+                                <DoubleAnimationUsingKeyFrames Storyboard.TargetName="SessionsRightEye" Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleY)">
+                                    <DiscreteDoubleKeyFrame KeyTime="0:0:0" Value="1.0"/>
+                                    <DiscreteDoubleKeyFrame KeyTime="0:0:2.3" Value="1.0"/>
+                                    <DiscreteDoubleKeyFrame KeyTime="0:0:2.36" Value="0.08"/>
+                                    <DiscreteDoubleKeyFrame KeyTime="0:0:2.46" Value="1.0"/>
+                                </DoubleAnimationUsingKeyFrames>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger>
+                </Canvas.Triggers>
             </Canvas>
         </Viewbox>
-        <ControlTemplate.Triggers>
-            <EventTrigger RoutedEvent="Loaded">
-                <BeginStoryboard>
-                    <Storyboard RepeatBehavior="Forever">
-                        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="SessionsSprout" Storyboard.TargetProperty="(UIElement.RenderTransform).(RotateTransform.Angle)">
-                            <SplineDoubleKeyFrame KeyTime="0:0:0" Value="0"/>
-                            <SplineDoubleKeyFrame KeyTime="0:0:0.75" Value="9"/>
-                            <SplineDoubleKeyFrame KeyTime="0:0:1.5" Value="-4"/>
-                            <SplineDoubleKeyFrame KeyTime="0:0:2.25" Value="7"/>
-                            <SplineDoubleKeyFrame KeyTime="0:0:3.0" Value="0"/>
-                        </DoubleAnimationUsingKeyFrames>
-                        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="SessionsLeftEye" Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleY)">
-                            <DiscreteDoubleKeyFrame KeyTime="0:0:0" Value="1.0"/>
-                            <DiscreteDoubleKeyFrame KeyTime="0:0:2.3" Value="1.0"/>
-                            <DiscreteDoubleKeyFrame KeyTime="0:0:2.36" Value="0.08"/>
-                            <DiscreteDoubleKeyFrame KeyTime="0:0:2.46" Value="1.0"/>
-                        </DoubleAnimationUsingKeyFrames>
-                        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="SessionsRightEye" Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleY)">
-                            <DiscreteDoubleKeyFrame KeyTime="0:0:0" Value="1.0"/>
-                            <DiscreteDoubleKeyFrame KeyTime="0:0:2.3" Value="1.0"/>
-                            <DiscreteDoubleKeyFrame KeyTime="0:0:2.36" Value="0.08"/>
-                            <DiscreteDoubleKeyFrame KeyTime="0:0:2.46" Value="1.0"/>
-                        </DoubleAnimationUsingKeyFrames>
-                    </Storyboard>
-                </BeginStoryboard>
-            </EventTrigger>
-        </ControlTemplate.Triggers>
     </ControlTemplate>
 
     <!-- 2. EMPTY BUGS & EVIDENCE ILLUSTRATION: Joyful, Proud Victory Avocado holding Clean Presentation Placard (NO SEARCH ICON, NO TEXT) -->
@@ -596,35 +592,35 @@
                         <Ellipse Width="15" Height="19" Fill="#70B843" Stroke="#163814" StrokeThickness="2"/>
                     </Canvas>
                 </Canvas>
+                <Canvas.Triggers>
+                    <EventTrigger RoutedEvent="FrameworkElement.Loaded">
+                        <BeginStoryboard>
+                            <Storyboard RepeatBehavior="Forever">
+                                <DoubleAnimationUsingKeyFrames Storyboard.TargetName="BugsSprout" Storyboard.TargetProperty="(UIElement.RenderTransform).(RotateTransform.Angle)">
+                                    <SplineDoubleKeyFrame KeyTime="0:0:0" Value="0"/>
+                                    <SplineDoubleKeyFrame KeyTime="0:0:0.75" Value="9"/>
+                                    <SplineDoubleKeyFrame KeyTime="0:0:1.5" Value="-4"/>
+                                    <SplineDoubleKeyFrame KeyTime="0:0:2.25" Value="7"/>
+                                    <SplineDoubleKeyFrame KeyTime="0:0:3.0" Value="0"/>
+                                </DoubleAnimationUsingKeyFrames>
+                                <DoubleAnimationUsingKeyFrames Storyboard.TargetName="BugsLeftEye" Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleY)">
+                                    <DiscreteDoubleKeyFrame KeyTime="0:0:0" Value="1.0"/>
+                                    <DiscreteDoubleKeyFrame KeyTime="0:0:2.4" Value="1.0"/>
+                                    <DiscreteDoubleKeyFrame KeyTime="0:0:2.46" Value="0.08"/>
+                                    <DiscreteDoubleKeyFrame KeyTime="0:0:2.56" Value="1.0"/>
+                                </DoubleAnimationUsingKeyFrames>
+                                <DoubleAnimationUsingKeyFrames Storyboard.TargetName="BugsRightEye" Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleY)">
+                                    <DiscreteDoubleKeyFrame KeyTime="0:0:0" Value="1.0"/>
+                                    <DiscreteDoubleKeyFrame KeyTime="0:0:2.4" Value="1.0"/>
+                                    <DiscreteDoubleKeyFrame KeyTime="0:0:2.46" Value="0.08"/>
+                                    <DiscreteDoubleKeyFrame KeyTime="0:0:2.56" Value="1.0"/>
+                                </DoubleAnimationUsingKeyFrames>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger>
+                </Canvas.Triggers>
             </Canvas>
         </Viewbox>
-        <ControlTemplate.Triggers>
-            <EventTrigger RoutedEvent="Loaded">
-                <BeginStoryboard>
-                    <Storyboard RepeatBehavior="Forever">
-                        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="BugsSprout" Storyboard.TargetProperty="(UIElement.RenderTransform).(RotateTransform.Angle)">
-                            <SplineDoubleKeyFrame KeyTime="0:0:0" Value="0"/>
-                            <SplineDoubleKeyFrame KeyTime="0:0:0.75" Value="9"/>
-                            <SplineDoubleKeyFrame KeyTime="0:0:1.5" Value="-4"/>
-                            <SplineDoubleKeyFrame KeyTime="0:0:2.25" Value="7"/>
-                            <SplineDoubleKeyFrame KeyTime="0:0:3.0" Value="0"/>
-                        </DoubleAnimationUsingKeyFrames>
-                        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="BugsLeftEye" Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleY)">
-                            <DiscreteDoubleKeyFrame KeyTime="0:0:0" Value="1.0"/>
-                            <DiscreteDoubleKeyFrame KeyTime="0:0:2.4" Value="1.0"/>
-                            <DiscreteDoubleKeyFrame KeyTime="0:0:2.46" Value="0.08"/>
-                            <DiscreteDoubleKeyFrame KeyTime="0:0:2.56" Value="1.0"/>
-                        </DoubleAnimationUsingKeyFrames>
-                        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="BugsRightEye" Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleY)">
-                            <DiscreteDoubleKeyFrame KeyTime="0:0:0" Value="1.0"/>
-                            <DiscreteDoubleKeyFrame KeyTime="0:0:2.4" Value="1.0"/>
-                            <DiscreteDoubleKeyFrame KeyTime="0:0:2.46" Value="0.08"/>
-                            <DiscreteDoubleKeyFrame KeyTime="0:0:2.56" Value="1.0"/>
-                        </DoubleAnimationUsingKeyFrames>
-                    </Storyboard>
-                </BeginStoryboard>
-            </EventTrigger>
-        </ControlTemplate.Triggers>
     </ControlTemplate>
 
     <!-- 3. EMPTY RECYCLE BIN ILLUSTRATION: Relieved Peaceful Avocado holding Clean Placard & Sleek Tapered Bin (NO TEXT) -->
@@ -721,23 +717,23 @@
                         <Ellipse Width="15" Height="19" Fill="#70B843" Stroke="#163814" StrokeThickness="2"/>
                     </Canvas>
                 </Canvas>
+                <Canvas.Triggers>
+                    <EventTrigger RoutedEvent="FrameworkElement.Loaded">
+                        <BeginStoryboard>
+                            <Storyboard RepeatBehavior="Forever">
+                                <DoubleAnimationUsingKeyFrames Storyboard.TargetName="BinSprout" Storyboard.TargetProperty="(UIElement.RenderTransform).(RotateTransform.Angle)">
+                                    <SplineDoubleKeyFrame KeyTime="0:0:0" Value="0"/>
+                                    <SplineDoubleKeyFrame KeyTime="0:0:0.75" Value="8"/>
+                                    <SplineDoubleKeyFrame KeyTime="0:0:1.5" Value="-4"/>
+                                    <SplineDoubleKeyFrame KeyTime="0:0:2.25" Value="6"/>
+                                    <SplineDoubleKeyFrame KeyTime="0:0:3.0" Value="0"/>
+                                </DoubleAnimationUsingKeyFrames>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger>
+                </Canvas.Triggers>
             </Canvas>
         </Viewbox>
-        <ControlTemplate.Triggers>
-            <EventTrigger RoutedEvent="Loaded">
-                <BeginStoryboard>
-                    <Storyboard RepeatBehavior="Forever">
-                        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="BinSprout" Storyboard.TargetProperty="(UIElement.RenderTransform).(RotateTransform.Angle)">
-                            <SplineDoubleKeyFrame KeyTime="0:0:0" Value="0"/>
-                            <SplineDoubleKeyFrame KeyTime="0:0:0.75" Value="8"/>
-                            <SplineDoubleKeyFrame KeyTime="0:0:1.5" Value="-4"/>
-                            <SplineDoubleKeyFrame KeyTime="0:0:2.25" Value="6"/>
-                            <SplineDoubleKeyFrame KeyTime="0:0:3.0" Value="0"/>
-                        </DoubleAnimationUsingKeyFrames>
-                    </Storyboard>
-                </BeginStoryboard>
-            </EventTrigger>
-        </ControlTemplate.Triggers>
     </ControlTemplate>
 
     <!-- Global Base Window & Font Styling -->
