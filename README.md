@@ -45,20 +45,23 @@ Mochi stays with you during manual testing without blocking your viewport or tes
     <td align="center" width="50%">
       <strong>Secret Edge Peeking Mode</strong><br>
       <em>Mochi docks inclined against the screen bezel, watching secretly.</em><br><br>
-      <img src="docs/screenshots/floating_hud_peeking_edge.png" alt="Mochi Peeking on Screen Edge" width="340" />
+      <img src="docs/screenshots/floating_hud_peeking_edge.png" alt="Mochi Peeking on Screen Edge" width="360" />
     </td>
     <td align="center" width="50%">
-      <strong>Quick Ball Orbit Mode</strong><br>
-      <em>Click Mochi to emerge into an active orbit with REC timer &amp; actions.</em><br><br>
-      <img src="docs/screenshots/floating_hud_expanded.png" alt="Floating Quick Ball Orbit" width="340" />
+      <strong>Circular Quick Ball Orbit Mode</strong><br>
+      <em>Circular satellite actions orbit directly around Mochi on your desktop.</em><br><br>
+      <img src="docs/screenshots/floating_hud_expanded.png" alt="Circular Quick Ball Orbit Menu around Mochi" width="360" />
     </td>
   </tr>
 </table>
 
-- **⚡ Preserve Bug Action**: Captures the rolling buffer footage instantly.
-- **⏸ / ▶ Pause & Resume**: Freeze screen recording during breaks or confidential entry.
-- **📑 Studio Dashboard Shortcut**: Brings the main recording studio into focus.
-- **✕ Dock to Edge**: Retracts Mochi cleanly back to the nearest screen bezel.
+#### Circular Orbit Actions Around Mochi:
+- ⏱️ **Live Buffer Timer (Top Center)**: Displays real-time `REC` state and elapsed rolling buffer time (`00:48`) with monospace typography.
+- ⚡ **Preserve Bug Action (Right Orb)**: Gold lightning-bolt button that instantly freezes and extracts preceding screen history.
+- ⏸ / ▶ **Pause & Resume (Left Orb)**: Temporarily halt screen recording during confidential credential entry or pauses.
+- 📑 **Studio Dashboard (Bottom Left Orb)**: Summons the main REWIND studio and session list.
+- ✕ **Dock to Edge (Bottom Right Orb)**: Retracts Mochi secretly back to the nearest screen bezel.
+- 🥑 **Center Mochi Avatar**: Click to toggle between docked and expanded circular orbital mode.
 
 ---
 
