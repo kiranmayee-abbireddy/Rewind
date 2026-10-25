@@ -335,10 +335,10 @@ namespace Rewind.Tests
             };
             container.Children.Add(edgeLabel);
 
-            // Position the peeking mascot container right against the bezel
+            // Position the peeking mascot container right against the bezel (half tucked into the edge)
             content.HorizontalAlignment = HorizontalAlignment.Right;
             content.VerticalAlignment = VerticalAlignment.Center;
-            content.Margin = new Thickness(0, 0, -22, 0); // half-out against the right edge
+            content.Margin = new Thickness(0, 0, -2, 0);
             container.Children.Add(content);
 
             container.Measure(new Size(w, h));

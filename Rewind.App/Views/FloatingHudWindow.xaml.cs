@@ -76,9 +76,9 @@ namespace Rewind.App.Views
             BeginAnimation(Window.LeftProperty, null);
             BeginAnimation(Window.TopProperty, null);
 
-            // In peeking mode, the window is strictly 102x108 (54x60 mascot + 24px margins)
-            Width = 102;
-            Height = 108;
+            // In peeking mode, the window is strictly 92x100 (52x60 mascot + 20px margins)
+            Width = 92;
+            Height = 100;
             UpdateLayout();
 
             var workingArea = SystemParameters.WorkArea;
@@ -98,22 +98,22 @@ namespace Rewind.App.Views
             switch (_currentEdge)
             {
                 case DockEdge.Right:
-                    targetLeft = workingArea.Right - 58;
+                    targetLeft = workingArea.Right - 42;
                     MascotPeekScale.ScaleX = 1.0;
                     MascotPeekRotate.Angle = -32;
                     break;
                 case DockEdge.Left:
-                    targetLeft = workingArea.Left - 44;
+                    targetLeft = workingArea.Left - 30;
                     MascotPeekScale.ScaleX = -1.0;
                     MascotPeekRotate.Angle = 32;
                     break;
                 case DockEdge.Top:
-                    targetTop = workingArea.Top - 44;
+                    targetTop = workingArea.Top - 30;
                     MascotPeekScale.ScaleX = 1.0;
                     MascotPeekRotate.Angle = 180;
                     break;
                 case DockEdge.Bottom:
-                    targetTop = workingArea.Bottom - 58;
+                    targetTop = workingArea.Bottom - 42;
                     MascotPeekScale.ScaleX = 1.0;
                     MascotPeekRotate.Angle = 0;
                     break;
@@ -166,9 +166,9 @@ namespace Rewind.App.Views
             PeekingMascotCapsule.Visibility = Visibility.Collapsed;
             QuickBallCapsule.Visibility = Visibility.Visible;
 
-            // Set explicit QuickBall mode dimensions (240x220 + 48 margins = 288x268)
-            Width = 288;
-            Height = 268;
+            // Set explicit QuickBall mode dimensions (220x210 + 40 margins = 260x250)
+            Width = 260;
+            Height = 250;
             UpdateLayout();
 
             var workingArea = SystemParameters.WorkArea;
@@ -295,7 +295,7 @@ namespace Rewind.App.Views
         private void DetermineNearestEdgeAndDock()
         {
             var workingArea = SystemParameters.WorkArea;
-            var w = 102.0;
+            var w = 72.0;
 
             var distLeft = Math.Abs(Left - workingArea.Left);
             var distRight = Math.Abs((workingArea.Right - w) - Left);
@@ -324,7 +324,7 @@ namespace Rewind.App.Views
                     {
                         DragMove();
                         var workingArea = SystemParameters.WorkArea;
-                        var w = 288.0;
+                        var w = 220.0;
                         var distLeft = Math.Abs(Left - workingArea.Left);
                         var distRight = Math.Abs((workingArea.Right - w) - Left);
                         _currentEdge = (distLeft < distRight) ? DockEdge.Left : DockEdge.Right;

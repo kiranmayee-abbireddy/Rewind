@@ -22,3 +22,13 @@ temp/
 # Environment
 .env
 .env.local
+
+# Video Render Artifacts
+video_render/
+*.mp4
+*.wav
+*.mp3
+*.webm
+
+# Installer Output
+installer/installer_output/
