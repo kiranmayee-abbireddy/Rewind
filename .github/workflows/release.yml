@@ -1,0 +1,61 @@
+name: Release REWIND
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    name: Build, Package & Release
+    runs-on: windows-latest
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v4
+
+    - name: Setup .NET 8 SDK
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: 8.0.x
+
+    - name: Setup FFmpeg
+      uses: FedericoCarboni/setup-ffmpeg@v3
+      with:
+        ffmpeg-version: release
+
+    - name: Restore Dependencies
+      run: dotnet restore Rewind.sln
+
+    - name: Build Solution
+      run: dotnet build Rewind.sln -c Release --no-restore
+
+    - name: Run Automated Tests
+      run: dotnet test Rewind.sln -c Release --no-build --verbosity normal
+
+    - name: Publish Standalone Binary (win-x64)
+      run: dotnet publish Rewind.App/Rewind.App.csproj -c Release -r win-x64 --self-contained true -p:PublishSingleFile=true -o ./release
+
+    - name: Install Inno Setup
+      run: choco install innosetup -y
+
+    - name: Compile Inno Setup Installer
+      run: |
+        & "C:\Program Files (x86)\Inno Setup 6\ISCC.exe" installer/setup.iss
+
+    - name: Create GitHub Release and Upload Assets
+      uses: softprops/action-gh-release@v2
+      with:
+        name: REWIND ${{ github.ref_name }}
+        tag_name: ${{ github.ref }}
+        generate_release_notes: true
+        draft: false
+        prerelease: false
+        files: |
+          ./release/Rewind.App.exe
+          ./installer/installer_output/Rewind-Setup-1.0.0.exe
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
