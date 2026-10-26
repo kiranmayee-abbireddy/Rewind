@@ -37,14 +37,25 @@ jobs:
       run: dotnet test Rewind.sln -c Release --no-build --verbosity normal
 
     - name: Publish Standalone Binary (win-x64)
-      run: dotnet publish Rewind.App/Rewind.App.csproj -c Release -r win-x64 --self-contained true -p:PublishSingleFile=true -o ./release
+      run: |
+        dotnet publish Rewind.App/Rewind.App.csproj -c Release -r win-x64 --self-contained true -p:PublishSingleFile=true -o ./release
+        # Ensure bin release directory expected by Inno Setup contains the published files
+        New-Item -ItemType Directory -Force -Path "Rewind.App\bin\Release\net8.0-windows\win-x64"
+        Copy-Item -Path "release\*" -Destination "Rewind.App\bin\Release\net8.0-windows\win-x64\" -Recurse -Force
 
     - name: Install Inno Setup
       run: choco install innosetup -y
 
     - name: Compile Inno Setup Installer
       run: |
-        & "C:\Program Files (x86)\Inno Setup 6\ISCC.exe" installer/setup.iss
+        $isccPath = if (Test-Path "C:\Program Files (x86)\Inno Setup 6\ISCC.exe") {
+          "C:\Program Files (x86)\Inno Setup 6\ISCC.exe"
+        } elseif (Test-Path "C:\Program Files\Inno Setup 6\ISCC.exe") {
+          "C:\Program Files\Inno Setup 6\ISCC.exe"
+        } else {
+          (Get-Command ISCC.exe).Source
+        }
+        & $isccPath installer/setup.iss
 
     - name: Create GitHub Release and Upload Assets
       uses: softprops/action-gh-release@v2
