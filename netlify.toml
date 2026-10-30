@@ -1,5 +1,6 @@
 # Netlify configuration for REWIND presentation website
 [build]
+  base = ""
   publish = "site"
 
 [[headers]]
