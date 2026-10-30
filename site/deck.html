@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>REWIND — Every bug has a past. Capture it before it disappears.</title>
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
+  
+  <!-- Modern Clean Typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&family=Inter+Tight:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  
+  <!-- Phosphor Icons Official CDN -->
+  <link rel="stylesheet" type="text/css" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
+  <link rel="stylesheet" type="text/css" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/bold/style.css">
+  
+  <!-- Lenis Smooth Scroll -->
+  <link rel="stylesheet" href="https://unpkg.com/lenis@1.1.18/dist/lenis.css">
+  
+  <!-- Presentation Deck Stylesheet -->
+  <link rel="stylesheet" href="deck.css">
+</head>
+<body>
+
+  <!-- Ambient Luxury Background Grid -->
+  <div class="deck-ambient-bg" aria-hidden="true"></div>
+
+  <!-- Sleek Floating Navbar (Restored Original REWIND Navbar) -->
+  <div class="header-wrapper">
+    <header class="navbar" id="mainNavbar">
+      <a href="#slide1" class="nav-brand-text">REWIND</a>
+
+      <nav aria-label="Main Navigation">
+        <ul class="nav-links">
+          <li><a href="#slide2" class="nav-link">Architecture</a></li>
+          <li><a href="#slide3" class="nav-link">Capabilities</a></li>
+          <li><a href="#slide4" class="nav-link">Privacy</a></li>
+          <li><a href="#slide5" class="nav-link">Download</a></li>
+        </ul>
+      </nav>
+
+      <div class="nav-actions">
+        <!-- Dark / Light Theme Toggle -->
+        <button id="themeToggleBtn" class="theme-toggle-btn" aria-label="Toggle Dark and Light Mode" title="Toggle Theme">
+          <i class="ph ph-sun"></i>
+        </button>
+
+        <a href="https://github.com/kiranmayee-abbireddy/Rewind" target="_blank" rel="noopener noreferrer" class="btn btn-secondary" title="View Source on GitHub">
+          <i class="ph ph-github-logo" style="font-size:1.05rem;"></i>
+          <span>GitHub</span>
+        </a>
+        <a href="#slide5" class="btn btn-primary" id="navDownloadBtn">
+          <span>Get Rewind</span>
+          <i class="ph ph-arrow-right" style="font-size:0.95rem;"></i>
+        </a>
+      </div>
+    </header>
+  </div>
+
+    <!-- Presentation Slide Navigation Dots (Right Margin) -->
+    <nav class="story-slide-nav" id="storySlideNav" aria-label="Slide Deck Rail">
+      <button class="story-slide-dot active" data-step="0" title="Hero: Meet Mochi"></button>
+      <button class="story-slide-dot" data-step="1" title="Close-Up: Mochi Face Zoom"></button>
+      <button class="story-slide-dot" data-step="2" title="Slide 2: Architecture & Studio"></button>
+      <button class="story-slide-dot" data-step="3" title="Slide 3: Ring Buffer Pipeline"></button>
+      <button class="story-slide-dot" data-step="4" title="Slide 4: Privacy & Shader Redaction"></button>
+      <button class="story-slide-dot" data-step="5" title="Slide 5: Verified Settlement"></button>
+    </nav>
+
+  <!-- =========================================================================
+       MAIN FULLSCREEN PRESENTATION DECK (1 SCROLL = 1 SCREEN SLIDE)
+       ========================================================================= -->
+  <main class="slides-deck-wrapper">
+
+    <!-- -----------------------------------------------------------------------
+         STEP 0: HERO SPOTLIGHT (POSTER COMPOSITION)
+         - Giant typography wordmark 'M - [O] - CHI' with Mochi in spotlight circle 'O'
+         ----------------------------------------------------------------------- -->
+    <section class="deck-slide" id="slide1">
+      <div class="hero-slide-layout" id="heroTextLayer">
+        <!-- Interactive cursor-following ambient gradient glow behind hero -->
+        <div class="hero-ambient-glow" id="heroAmbientGlow" aria-hidden="true"></div>
+
+        <!-- Giant Integrated Wordmark with Circle 'O' Holding Mochi -->
+        <div class="hero-giant-wordmark" id="heroWordmarkWrap" aria-label="MOCHI">
+          <span class="letter-m">M</span>
+          <div class="hero-spotlight-circle-mount letter-o" id="heroSpotlightCircle" aria-label="O — Mochi Sanctuary"></div>
+          <span class="letters-chi">CHI</span>
+        </div>
+
+        <!-- Bottom Cues & CTA Bar (All perfectly leveled on the baseline) -->
+        <div class="hero-bottom-bar-leveled">
+          <span class="cue-left">SCROLL TO UNROLL THE BUFFER ↓</span>
+          <div class="hero-center-cta-wrap">
+            <a href="downloads/Rewind-Setup-1.0.0.exe" download="Rewind-Setup-1.0.0.exe" class="btn-pill-hero">
+              <span>Explore REWIND</span>
+              <i class="ph ph-arrow-up-right" style="font-size:1.05rem;"></i>
+            </a>
+          </div>
+          <span class="cue-right">100% LOCAL SCREEN TELEMETRY</span>
+        </div>
+
+        <!-- Tagline Lowered Down (Sits comfortably below the spotlight circle) -->
+        <div class="hero-tagline-mount">
+          <p class="hero-tagline-text">
+            A little QA companion. Rolling time capture.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- -----------------------------------------------------------------------
+         STEP 1: DEDICATED CLOSE-UP STAGE (FULL SCREEN DEDICATED TO MOCHI ALONE)
+         - Flanked side text: Left "Wait... did you see that bug?" / Right "Don't panic. I already caught it."
+         ----------------------------------------------------------------------- -->
+    <section class="deck-slide" id="slideCloseup" style="position:relative; pointer-events:none;">
+      <div class="mochi-side-text-container" id="mochiSideTextWrap">
+        <div class="mochi-side-callout left">
+          <span class="side-callout-tag">MOCHI ALERT</span>
+          <h3 class="side-callout-heading">Wait... did you see that bug?</h3>
+          <p class="side-callout-sub">Foresight isn't needed when your screen's past is already in RAM.</p>
+        </div>
+        <div class="mochi-side-callout right">
+          <span class="side-callout-tag">BUFFER CAPTURED</span>
+          <h3 class="side-callout-heading">Don’t panic. I already caught it.</h3>
+          <p class="side-callout-sub">Rolling 60-second telemetry preserved and ready to inspect.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- -----------------------------------------------------------------------
+         SLIDE 2: ARCHITECTURE & STUDIO
+         - Layout: MOCHI ON LEFT SIDE, EDITORIAL & STUDIO CARD ON RIGHT
+         - Emotion: Alert / Surprised (Sunglasses slid down nose, cartoon eyes)
+         ----------------------------------------------------------------------- -->
+    <section class="deck-slide" id="slide2">
+      <div class="split-left-stage">
+        <!-- Left Side: Mochi Anchor Zone (Clean, spacious, zero text on head) -->
+        <div class="mochi-left-anchor-zone" id="anchorSlide2"></div>
+
+        <!-- Right Side: Editorial Typography & Studio Preview Window -->
+        <div class="right-editorial-column">
+          <span class="kicker-tag">ARCHITECTURE</span>
+          <h2 class="slide-heading">
+            A rolling window into your screen’s <span class="heading-serif-elevated">recent history.</span>
+          </h2>
+          <p class="slide-body">
+            Traditional screen recorders demand foresight. REWIND runs silently in the background, continuously keeping the last few moments in high-speed volatile RAM.
+          </p>
+
+          <!-- Studio Window Card -->
+          <div class="studio-card-preview">
+            <div class="studio-window-bar">
+              <div class="window-dots">
+                <span class="w-dot red"></span>
+                <span class="w-dot yellow"></span>
+                <span class="w-dot green"></span>
+              </div>
+              <span class="window-title">REWIND — TELEMETRY STUDIO</span>
+              <span class="mono" style="font-size:0.7rem; color:var(--accent-color);">BUFFER: ACTIVE</span>
+            </div>
+            <div class="studio-body-content">
+              <div class="studio-stats-row">
+                <div class="stat-chip">
+                  <div class="stat-chip-num">0.0<span style="font-size:1rem; font-style:normal;">ms</span></div>
+                  <div class="stat-chip-label">Latency to Freeze</div>
+                </div>
+                <div class="stat-chip">
+                  <div class="stat-chip-num">60<span style="font-size:1rem; font-style:normal;">s</span></div>
+                  <div class="stat-chip-label">Rolling Buffer Window</div>
+                </div>
+                <div class="stat-chip">
+                  <div class="stat-chip-num">0<span style="font-size:1rem; font-style:normal;">B</span></div>
+                  <div class="stat-chip-label">Disk Writes Until Saved</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- -----------------------------------------------------------------------
+         SLIDE 3: DETERMINISTIC TELEMETRY PIPELINE
+         - Layout: MOCHI IN CENTER, PREMIUM CAPABILITY CARDS ON BOTH SIDES
+         - Emotion: Focused Detective (Concentrated squint, focused eyebrows)
+         ----------------------------------------------------------------------- -->
+    <section class="deck-slide" id="slide3">
+      <div class="split-center-stage">
+        
+        <!-- Capabilities Header Banner -->
+        <div class="capabilities-header-bar">
+          <span class="kicker-tag">CORE CAPABILITIES</span>
+          <h2 class="capabilities-headline">
+            Deterministic capture. <span class="heading-serif-elevated">Zero performance tax.</span>
+          </h2>
+        </div>
+
+        <div class="capabilities-interactive-grid">
+          <!-- Left Column: Step 1 & Step 2 -->
+          <div class="center-left-column">
+            <div class="feature-box">
+              <span class="feature-category-label">LOW LEVEL PIPELINE</span>
+              <h4 class="feature-card-title">Circular GPU VRAM Buffer</h4>
+              <p class="feature-card-desc">Direct GPU desktop duplication writes dirty rectangles into circular memory. Zero SSD write wear.</p>
+              <div class="feature-micro-ui">
+                <span>VRAM POOL: ACTIVE</span>
+                <span class="ui-accent-stat">0.0ms DISK I/O</span>
+              </div>
+            </div>
+
+            <div class="feature-box">
+              <span class="feature-category-label">SCRUB TIMELINE</span>
+              <h4 class="feature-card-title">Sub-Second Retroactive Scrub</h4>
+              <p class="feature-card-desc">Scrub backwards through time with sub-second precision to grab the exact moments before the crash.</p>
+              <div class="feature-micro-ui">
+                <span>PLAYHEAD: -14.2s</span>
+                <span class="ui-accent-stat">60 FPS LOSSLESS</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Center Column: Mochi Anchor Zone -->
+          <div class="mochi-center-anchor-zone" id="anchorSlide3"></div>
+
+          <!-- Right Column: Step 3 & Step 4 -->
+          <div class="center-right-column">
+            <div class="feature-box">
+              <span class="feature-category-label">GPU SHADER PASS</span>
+              <h4 class="feature-card-title">Spatial Hardware Redaction</h4>
+              <p class="feature-card-desc">Mask sensitive client tokens, passwords, and API keys with hardware spatial blurs before saving.</p>
+              <div class="feature-micro-ui">
+                <span>PIPELINE: COMPUTE HLSL</span>
+                <span class="ui-accent-stat">100% AIR-GAPPED</span>
+              </div>
+            </div>
+
+            <div class="feature-box">
+              <span class="feature-category-label">ONE-CLICK EXPORT</span>
+              <h4 class="feature-card-title">Multi-Artifact QA Dossier</h4>
+              <p class="feature-card-desc">Instantly packages frame-perfect MP4 clips and Jira-ready reproduction Markdown in one click.</p>
+              <div class="feature-micro-ui">
+                <span>EXPORT: .MP4 + .MD</span>
+                <span class="ui-accent-stat">JIRA VERIFIED</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- -----------------------------------------------------------------------
+         SLIDE 4: ON-DEVICE PRIVACY & SECURITY
+         - Layout: CONTENT ON LEFT, MOCHI ON RIGHT SIDE
+         - Emotion: Happy & Confident (Smirk with sunglasses glint)
+         ----------------------------------------------------------------------- -->
+    <section class="deck-slide" id="slide4">
+      <div class="split-right-stage">
+        <!-- Left Column: Editorial & Redaction Demo -->
+        <div class="left-editorial-column">
+          <span class="kicker-tag">PRIVACY &amp; SECURITY</span>
+          <h2 class="slide-heading">
+            Privacy sealed on-device <span class="heading-serif-elevated">before pixels touch disk.</span>
+          </h2>
+          <p class="slide-body">
+            Security audits shouldn't prevent retroactive evidence capture. Draw spatial redaction rectangles right on the timeline. Sensitive data never leaves your GPU unmasked.
+          </p>
+
+          <!-- Interactive Redaction Terminal Box -->
+          <div class="redaction-demo-box">
+            <div style="display:flex; justify-content:space-between; color:#64748b; font-size:0.75rem;">
+              <span>HTTP/1.1 POST /api/v1/checkout/session</span>
+              <span style="color:var(--accent-color);">SHADER REDACTED</span>
+            </div>
+            <div>
+              <span>Authorization: Bearer </span>
+              <span class="blur-token">sk_live_948f2c01e5bb49</span>
+            </div>
+            <div style="font-size:0.75rem; color:#64748b; border-top:1px solid rgba(255,255,255,0.06); padding-top:6px;">
+              <span>All masking applied in Direct3D compute pass.</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Side: Mochi Anchor Zone -->
+        <div class="mochi-right-anchor-zone" id="anchorSlide4"></div>
+      </div>
+    </section>
+
+    <!-- -----------------------------------------------------------------------
+         SLIDE 5: FOOTER SETTLEMENT & REWIND WORDMARK
+         - Layout: GIANT CAPITAL 'REWIND' WORDMARK WITH MOCHI INSIDE 'D' PORTAL
+         - Tagline, description, and download buttons below
+         - Emotion: Wink with playful smirk
+         ----------------------------------------------------------------------- -->
+    <section class="deck-slide" id="slide5">
+      <div class="slide-footer-layout" id="footerTextLayer">
+        <!-- Interactive cursor-following ambient gradient glow behind footer -->
+        <div class="hero-ambient-glow footer-ambient-glow" id="footerAmbientGlow" aria-hidden="true"></div>
+
+        <!-- Giant Capital REWIND Wordmark with Mochi Peeking from Inside D Frame -->
+        <div class="footer-giant-wordmark" id="footerWordmarkWrap" aria-label="REWIND">
+          <span class="letters-rewin">REWIN</span>
+          <div class="footer-letter-d-wrap" id="footerDWrap">
+            <div class="d-frame-backdrop" aria-hidden="true"></div>
+            <div class="footer-d-aperture" id="anchorSlide5" aria-label="Mochi Inside D Frame"></div>
+            <span class="letter-d-char">D</span>
+          </div>
+        </div>
+
+        <h2 class="footer-hero-heading">Every bug has a past. <span class="heading-serif-elevated">Capture it.</span></h2>
+        <p class="footer-sub-text">
+          Standalone native Windows application built with C# and DirectX 11. Zero background bloat, zero cloud dependencies.
+        </p>
+
+        <div class="footer-cta-row">
+          <a href="downloads/Rewind-Setup-1.0.0.exe" download="Rewind-Setup-1.0.0.exe" class="btn-download-exe">
+            <i class="ph ph-download-simple" style="font-size:1.15rem;"></i>
+            <span>Download for Windows (.EXE)</span>
+          </a>
+          <a href="https://github.com/kiranmayee-abbireddy/Rewind" target="_blank" rel="noopener noreferrer" class="btn-github-secondary">
+            <i class="ph ph-github-logo" style="font-size:1.15rem;"></i>
+            <span>View GitHub</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- GSAP & Plugins (ScrollTrigger, ScrollToPlugin) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollToPlugin.min.js"></script>
+
+  <!-- Mochi Slide Deck Engine -->
+  <script src="deck.js"></script>
+</body>
+</html>
+
